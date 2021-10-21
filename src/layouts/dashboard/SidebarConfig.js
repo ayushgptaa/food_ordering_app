@@ -14,12 +14,12 @@ const sidebarConfig = [
   },
   {
     title: 'Promote',
-    path: '/dashboard/user',
+    path: '/dashboard/products',
     icon: getIcon(peopleFill)
   },
   {
     title: 'My orders',
-    path: '/dashboard/products',
+    path: '/dashboard/user',
     icon: getIcon(shoppingBagFill)
   },
   {
