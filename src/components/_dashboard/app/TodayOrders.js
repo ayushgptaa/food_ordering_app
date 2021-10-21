@@ -1,5 +1,3 @@
-import { Icon } from '@iconify/react';
-import appleFilled from '@iconify/icons-ant-design/apple-filled';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
@@ -34,18 +32,18 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const TOTAL = 1352831;
+const TODAY_ORDERS = '037';
 
-export default function AppNewUsers() {
+export default function TodayOrders() {
   return (
     <RootStyle>
-      <IconWrapperStyle>
+      {/* <IconWrapperStyle>
         <Icon icon={appleFilled} width={24} height={24} />
-      </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
+      </IconWrapperStyle> */}
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        New Users
+        TODAY ORDERS
       </Typography>
+      <Typography variant="h3">{TODAY_ORDERS}</Typography>
     </RootStyle>
   );
 }
