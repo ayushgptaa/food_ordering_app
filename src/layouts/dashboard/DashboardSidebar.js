@@ -48,8 +48,16 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         '& .simplebar-content': { height: '100%', display: 'flex', flexDirection: 'column' }
       }}
     >
-      <Box sx={{ py: 3, mx: 'auto', mt: 4 }}>
-        <Box component={RouterLink} to="/" sx={{ display: 'inline-flex' }}>
+      <Box
+        sx={{
+          mt: 4,
+          py: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
+      >
+        <Box component={RouterLink} to="/">
           <Logo />
         </Box>
       </Box>
