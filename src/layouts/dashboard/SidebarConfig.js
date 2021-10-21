@@ -14,7 +14,7 @@ const sidebarConfig = [
   },
   {
     title: 'Promote',
-    path: '/dashboard/products',
+    path: '/dashboard/promote',
     icon: getIcon(peopleFill)
   },
   {
