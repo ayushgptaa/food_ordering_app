@@ -14,7 +14,7 @@ import sidebarConfig from './SidebarConfig';
 
 // ----------------------------------------------------------------------
 
-const DRAWER_WIDTH = 250;
+const DRAWER_WIDTH = 220;
 
 const RootStyle = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
@@ -54,7 +54,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         </Box>
       </Box>
 
-      <NavSection navConfig={sidebarConfig} />
+      <NavSection navConfig={sidebarConfig} sx={{ mt: 5 }} />
     </Scrollbar>
   );
 
