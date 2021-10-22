@@ -1,5 +1,5 @@
-// import { Icon } from '@iconify/react';
-// import windowsFilled from '@iconify/icons-ant-design/windows-filled';
+import { Icon } from '@iconify/react';
+import windowsFilled from '@iconify/icons-ant-design/windows-filled';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
@@ -39,9 +39,9 @@ const TOTAL_AMOUNT = '30K';
 export default function TotalAmount() {
   return (
     <RootStyle>
-      {/* <IconWrapperStyle>
-        <Icon icon={windowsFilled} width={24} height={24} />
-      </IconWrapperStyle> */}
+      <IconWrapperStyle>
+        <Icon icon="ant-design:dollar-circle-filled" width={24} height={24} />
+      </IconWrapperStyle>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
         TOTAL AMOUNT
       </Typography>

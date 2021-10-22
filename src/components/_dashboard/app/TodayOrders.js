@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
@@ -37,9 +38,9 @@ const TODAY_ORDERS = '037';
 export default function TodayOrders() {
   return (
     <RootStyle>
-      {/* <IconWrapperStyle>
-        <Icon icon={appleFilled} width={24} height={24} />
-      </IconWrapperStyle> */}
+      <IconWrapperStyle>
+        <Icon icon="ant-design:shopping-outlined" width={24} height={24} />
+      </IconWrapperStyle>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
         TODAY ORDERS
       </Typography>

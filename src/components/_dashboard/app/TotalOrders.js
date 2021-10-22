@@ -1,4 +1,4 @@
-// import { Icon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 // import bugFilled from '@iconify/icons-ant-design/bug-filled';
 // material
 import { alpha, styled } from '@mui/material/styles';
@@ -39,9 +39,9 @@ const TOTAL_ORDERS = 709;
 export default function TotalOrders() {
   return (
     <RootStyle>
-      {/* <IconWrapperStyle>
-        <Icon icon={bugFilled} width={24} height={24} />
-      </IconWrapperStyle> */}
+      <IconWrapperStyle>
+        <Icon icon="ant-design:shopping-cart-outlined" width={24} height={24} />
+      </IconWrapperStyle>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
         TOTAL ORDERS
       </Typography>
