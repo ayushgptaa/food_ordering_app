@@ -14,13 +14,12 @@ import sidebarConfig from './SidebarConfig';
 
 // ----------------------------------------------------------------------
 
-const DRAWER_WIDTH = 220;
+const DRAWER_WIDTH = 200;
 
 const RootStyle = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
     flexShrink: 0,
-    width: DRAWER_WIDTH,
-    backgroundColor: theme.palette.maingreen
+    width: DRAWER_WIDTH
   }
 }));
 
@@ -73,7 +72,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           open={isOpenSidebar}
           onClose={onCloseSidebar}
           PaperProps={{
-            sx: { width: DRAWER_WIDTH, bgcolor: 'primary.maingreen' }
+            sx: { width: DRAWER_WIDTH, bgcolor: 'white' }
           }}
         >
           {renderContent}
@@ -87,7 +86,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           PaperProps={{
             sx: {
               width: DRAWER_WIDTH,
-              bgcolor: 'primary.maingreen'
+              bgcolor: 'white'
             }
           }}
         >
