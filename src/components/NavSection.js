@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Icon } from '@iconify/react';
 import { NavLink as RouterLink, matchPath, useLocation } from 'react-router-dom';
+import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
+import arrowIosDownwardFill from '@iconify/icons-eva/arrow-ios-downward-fill';
 // material
-import { useTheme, styled } from '@mui/material/styles';
+import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Box, List, Collapse, ListItemText, ListItemIcon, ListItemButton } from '@mui/material';
 
 // ----------------------------------------------------------------------
@@ -13,19 +16,27 @@ const ListItemStyle = styled((props) => <ListItemButton disableGutters {...props
     height: 48,
     position: 'relative',
     textTransform: 'capitalize',
-    width: '80%',
-    margin: 'auto',
-    borderRadius: '4px',
     paddingLeft: theme.spacing(5),
     paddingRight: theme.spacing(2.5),
-    color: theme.palette.background.paper,
-    hover: false
+    color: theme.palette.text.secondary,
+    '&:before': {
+      top: 0,
+      right: 0,
+      width: 3,
+      bottom: 0,
+      content: "''",
+      display: 'none',
+      position: 'absolute',
+      borderTopLeftRadius: 4,
+      borderBottomLeftRadius: 4,
+      backgroundColor: theme.palette.primary.main
+    }
   })
 );
 
 const ListItemIconStyle = styled(ListItemIcon)({
-  width: 25,
-  height: 25,
+  width: 22,
+  height: 22,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center'
@@ -49,9 +60,10 @@ function NavItem({ item, active }) {
   };
 
   const activeRootStyle = {
-    color: 'primary.maingreen',
+    color: 'primary.main',
     fontWeight: 'fontWeightMedium',
-    bgcolor: theme.palette.background.paper
+    bgcolor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
+    '&:before': { display: 'block' }
   };
 
   const activeSubStyle = {
@@ -71,6 +83,11 @@ function NavItem({ item, active }) {
           <ListItemIconStyle>{icon && icon}</ListItemIconStyle>
           <ListItemText disableTypography primary={title} />
           {info && info}
+          <Box
+            component={Icon}
+            icon={open ? arrowIosDownwardFill : arrowIosForwardFill}
+            sx={{ width: 16, height: 16, ml: 1 }}
+          />
         </ListItemStyle>
 
         <Collapse in={open} timeout="auto" unmountOnExit>

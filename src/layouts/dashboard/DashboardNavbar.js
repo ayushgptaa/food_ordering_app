@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react';
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 // material
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
+import { Box, Stack, AppBar, Toolbar, IconButton, Typography } from '@mui/material';
 // components
 import { MHidden } from '../../components/@material-extend';
 //
@@ -12,7 +12,7 @@ import AccountPopover from './AccountPopover';
 
 // ----------------------------------------------------------------------
 
-const DRAWER_WIDTH = 200;
+const DRAWER_WIDTH = 250;
 const APPBAR_MOBILE = 64;
 const APPBAR_DESKTOP = 80;
 
@@ -28,7 +28,7 @@ const RootStyle = styled(AppBar)(({ theme }) => ({
 
 const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   minHeight: APPBAR_MOBILE,
-  borderBottom: '1px solid #C9CED6',
+  borderBottom: '1px solid rgba(145, 158, 171, 0.24)',
   [theme.breakpoints.up('lg')]: {
     minHeight: APPBAR_DESKTOP,
     padding: theme.spacing(0, 5)
