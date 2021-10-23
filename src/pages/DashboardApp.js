@@ -8,12 +8,18 @@ import { TodayAmount, TodayOrders, TotalOrders, TotalAmount } from '../component
 
 export default function DashboardApp() {
   return (
-    <Page title="Dashboard | Minimal-UI">
+    <Page title="Dashboard ">
       <Container maxWidth="xl">
-        {/* <Box sx={{ pb: 5 }}>
-          <Typography variant="h4">Hi, Welcome back</Typography>
-        </Box> */}
-        <Grid container spacing={3}>
+        <Box
+          sx={{
+            textAlign: { xs: 'center', md: 'left' }
+          }}
+        >
+          <Typography variant="h4" gutterBottom>
+            Hi, Welcome back
+          </Typography>
+        </Box>
+        <Grid container spacing={3} sx={{ mt: { xs: 2, md: 4 } }}>
           <Grid item xs={12} sm={6} md={3}>
             <TodayAmount />
           </Grid>
