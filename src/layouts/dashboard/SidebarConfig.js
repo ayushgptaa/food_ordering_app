@@ -29,7 +29,7 @@ const sidebarConfig = [
   },
   {
     title: 'Settings',
-    path: '/login',
+    path: '/dashboard/settings',
     icon: getIcon('feather:settings')
   }
   // {
