@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import DashboardApp from './pages/DashboardApp';
 import Promote from './pages/Promote';
 import Blog from './pages/Blog';
+import Settings from './pages/Settings';
 import User from './pages/User';
 import NotFound from './pages/Page404';
 
@@ -23,7 +24,8 @@ export default function Router() {
         { path: 'app', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
         { path: 'promote', element: <Promote /> },
-        { path: 'blog', element: <Blog /> }
+        { path: 'blog', element: <Blog /> },
+        { path: 'settings', element: <Settings /> }
       ]
     },
     {
