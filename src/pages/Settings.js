@@ -1,25 +1,58 @@
 // material
-import { Container, Grid, Typography, Card, Box, Button } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { Icon } from '@iconify/react';
+import { Typography, Card, Box, Button, Stack, Slider } from '@mui/material';
+import PropTypes from 'prop-types';
 // ----------------------------------------------------------------------
 
-const RootStyle = styled(Card)(({ theme }) => ({
-  boxShadow: 'none',
-  textAlign: 'center',
-  padding: theme.spacing(7, 0),
-  margin: theme.spacing(2, 2),
-  color: theme.palette.primary.darker,
-  backgroundColor: theme.palette.primary.lighter,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  gap: '10px'
-}));
+const marks = [
+  {
+    value: 0,
+    label: '0%'
+  },
 
-const DownloadIcon = () => <Icon icon="bx:bxs-download" color="white" />;
+  {
+    value: 25,
+    label: '25%'
+  }
+];
 
 export default function Settings() {
-  return <Card sx={{ py: 6, maxWidth: 'md', mx: 'auto', mt: { md: 5 }, mb: 0 }}>hello</Card>;
+  return (
+    <Card sx={{ py: 6, maxWidth: 'md', mx: 'auto', mt: { md: 2 }, mb: 0 }}>
+      <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
+        <SliderBox text="Custom Discount" />
+        <SliderBox text="Affiliate Discount" />
+      </Stack>
+    </Card>
+  );
+}
+
+SliderBox.propTypes = {
+  text: PropTypes.string
+};
+
+function SliderBox({ text }) {
+  return (
+    <>
+      <Box
+        sx={{
+          color: 'primary.darker',
+          py: 3,
+          px: 5,
+          width: { md: 500, xs: 300 },
+          backgroundColor: 'primary.lighter',
+          borderRadius: 2,
+          m: 2,
+          textAlign: 'center'
+        }}
+      >
+        <Typography gutterBottom variant="h4" sx={{ textAlign: 'left' }}>
+          {text}
+        </Typography>
+        <Slider aria-label="Custom marks" marks={marks} valueLabelDisplay="auto" min={0} max={25} />
+        <Button variant="contained" sx={{ py: 1, px: 4 }}>
+          SAVE
+        </Button>
+      </Box>
+    </>
+  );
 }
