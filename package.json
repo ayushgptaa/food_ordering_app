@@ -1,5 +1,5 @@
 {
-  "name": "@Food-ordering-dashboard",
+  "name": "food_ordering_app",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
