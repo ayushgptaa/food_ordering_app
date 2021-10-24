@@ -1,9 +1,6 @@
 {
-  "name": "@minimal/material-kit-react",
-  "author": "minimals.cc",
-  "licence": "MIT",
-  "version": "1.2.0",
-  "private": false,
+  "name": "@Food-ordering-dashboard",
+  "private": true,
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
