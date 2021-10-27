@@ -25,7 +25,7 @@ const sidebarConfig = [
   {
     title: 'View menu',
     path: '/dashboard/view-menu',
-    icon: getIcon('feather:grid')
+    icon: getIcon('feather:menu')
   },
   {
     title: 'Add menu',
