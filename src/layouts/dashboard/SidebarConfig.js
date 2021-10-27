@@ -23,6 +23,11 @@ const sidebarConfig = [
     icon: getIcon(shoppingBagFill)
   },
   {
+    title: 'View menu',
+    path: '/dashboard/view-menu',
+    icon: getIcon('feather:grid')
+  },
+  {
     title: 'Add menu',
     path: '/dashboard/blog',
     icon: getIcon('feather:grid')

@@ -11,6 +11,7 @@ import Blog from './pages/Blog';
 import Settings from './pages/Settings';
 import User from './pages/User';
 import NotFound from './pages/Page404';
+import GetMenu from './pages/GetMenu';
 
 // ----------------------------------------------------------------------
 
@@ -25,7 +26,8 @@ export default function Router() {
         { path: 'user', element: <User /> },
         { path: 'promote', element: <Promote /> },
         { path: 'blog', element: <Blog /> },
-        { path: 'settings', element: <Settings /> }
+        { path: 'settings', element: <Settings /> },
+        { path: 'view-menu', element: <GetMenu /> }
       ]
     },
     {
