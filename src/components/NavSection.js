@@ -18,6 +18,8 @@ const ListItemStyle = styled((props) => <ListItemButton disableGutters {...props
     textTransform: 'capitalize',
     paddingLeft: theme.spacing(5),
     paddingRight: theme.spacing(2.5),
+    fontSize: theme.typography.subtitle1.fontSize,
+    fontWeight: theme.typography.fontWeightMedium,
     color: theme.palette.text.secondary,
     '&:before': {
       top: 0,
@@ -35,8 +37,8 @@ const ListItemStyle = styled((props) => <ListItemButton disableGutters {...props
 );
 
 const ListItemIconStyle = styled(ListItemIcon)({
-  width: 22,
-  height: 22,
+  width: 25,
+  height: 25,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center'
