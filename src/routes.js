@@ -7,7 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import DashboardApp from './pages/DashboardApp';
 import Promote from './pages/Promote';
-import Blog from './pages/Blog';
+import AddMenu from './pages/AddMenu';
 import Settings from './pages/Settings';
 import User from './pages/User';
 import NotFound from './pages/Page404';
@@ -25,7 +25,7 @@ export default function Router() {
         { path: 'app', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
         { path: 'promote', element: <Promote /> },
-        { path: 'blog', element: <Blog /> },
+        { path: 'add-menu', element: <AddMenu /> },
         { path: 'settings', element: <Settings /> },
         { path: 'view-menu', element: <GetMenu /> }
       ]

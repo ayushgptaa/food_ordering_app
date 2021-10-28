@@ -29,7 +29,7 @@ const sidebarConfig = [
   },
   {
     title: 'Add menu',
-    path: '/dashboard/blog',
+    path: '/dashboard/add-menu',
     icon: getIcon('feather:grid')
   },
   {
