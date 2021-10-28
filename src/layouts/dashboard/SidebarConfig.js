@@ -19,7 +19,7 @@ const sidebarConfig = [
   },
   {
     title: 'My orders',
-    path: '/dashboard/user',
+    path: '/dashboard/my-orders',
     icon: getIcon(shoppingBagFill)
   },
   {

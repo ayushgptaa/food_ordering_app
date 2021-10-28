@@ -9,9 +9,9 @@ import DashboardApp from './pages/DashboardApp';
 import Promote from './pages/Promote';
 import AddMenu from './pages/AddMenu';
 import Settings from './pages/Settings';
-import User from './pages/User';
 import NotFound from './pages/Page404';
 import GetMenu from './pages/GetMenu';
+import MyOrders from './pages/MyOrders';
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/app" replace /> },
         { path: 'app', element: <DashboardApp /> },
-        { path: 'user', element: <User /> },
+        { path: 'my-orders', element: <MyOrders /> },
         { path: 'promote', element: <Promote /> },
         { path: 'add-menu', element: <AddMenu /> },
         { path: 'settings', element: <Settings /> },
