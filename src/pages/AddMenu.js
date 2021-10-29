@@ -1,26 +1,12 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-import {
-  Container,
-  Tab,
-  Tabs,
-  // TextField,
-  Box
-  // Button,
-  // Grid,
-  // InboxIcon,
-  // ListItemIcon,
-  // ListItem,
-  // ListItemButton,
-  // ListItemText,
-  // List,
-  // Divider
-} from '@mui/material';
+
+import { Container, Tab, Tabs, Box } from '@mui/material';
 // import { typography } from '@mui/system';
 import Page from '../components/Page';
 import AddItem from '../components/_dashboard/Addmenu/additem';
 import AddCategory from '../components/_dashboard/Addmenu/addcartegory';
+import AddOption from '../components/_dashboard/Addmenu/addoption';
 
 // // ----------------------------------------------------------------------
 
@@ -87,7 +73,7 @@ export default function BasicTabs() {
             <AddItem />
           </TabPanel>
           <TabPanel value={value} index={2}>
-            Item Three
+            <AddOption />
           </TabPanel>
         </Box>
       </Container>

@@ -5,7 +5,7 @@ const commonInputStyles = {
 };
 export default function AddItem() {
   return (
-    <Grid container autoComplete="off" direction="column" alignItems="center">
+    <Grid container direction="column" alignItems="center">
       <Box
         sx={{
           maxWidth: 400
@@ -19,6 +19,7 @@ export default function AddItem() {
           placeholder="Enter Item"
           fullWidth
           sx={{ ...commonInputStyles }}
+          autoComplete="off"
         />
         <TextField
           margin="dense"
@@ -29,6 +30,7 @@ export default function AddItem() {
           placeholder="Enter Description"
           fullWidth
           sx={{ ...commonInputStyles }}
+          autoComplete="off"
         />
         <TextField
           margin="dense"
@@ -36,6 +38,7 @@ export default function AddItem() {
           label="Amount"
           fullWidth
           placeholder="Enter Amount"
+          autoComplete="off"
           InputProps={{
             endAdornment: <InputAdornment position="end">$</InputAdornment>
           }}

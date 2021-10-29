@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { TextField, Grid, Button, Box, InputAdornment } from '@mui/material';
+import { TextField, Grid, Button, Box } from '@mui/material';
 
 const commonInputStyles = {
   mt: 1.5
