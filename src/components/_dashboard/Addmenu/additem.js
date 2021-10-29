@@ -1,5 +1,8 @@
 import { TextField, Grid, Button, Box, InputAdornment } from '@mui/material';
 
+const commonInputStyles = {
+  mt: 1.5
+};
 export default function AddItem() {
   return (
     <Grid container autoComplete="off" direction="column" alignItems="center">
@@ -15,6 +18,7 @@ export default function AddItem() {
           margin="dense"
           placeholder="Enter Item"
           fullWidth
+          sx={{ ...commonInputStyles }}
         />
         <TextField
           margin="dense"
@@ -24,6 +28,7 @@ export default function AddItem() {
           rows={4}
           placeholder="Enter Description"
           fullWidth
+          sx={{ ...commonInputStyles }}
         />
         <TextField
           margin="dense"
@@ -34,6 +39,7 @@ export default function AddItem() {
           InputProps={{
             endAdornment: <InputAdornment position="end">$</InputAdornment>
           }}
+          sx={{ ...commonInputStyles }}
         />
         <Button
           variant="contained"
