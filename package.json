@@ -39,6 +39,7 @@
     "@iconify/icons-eva": "^1.1.0",
     "@iconify/icons-ic": "^1.1.12",
     "@iconify/react": "^3.0.1",
+    "@mui/icons-material": "^5.0.5",
     "@mui/lab": "^5.0.0-alpha.51",
     "@mui/material": "^5.0.4",
     "@mui/utils": "^5.0.1",
