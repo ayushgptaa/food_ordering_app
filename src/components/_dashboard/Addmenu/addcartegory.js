@@ -27,7 +27,9 @@ function generate(element) {
 }
 
 const Demo = styled('div')(({ theme }) => ({
-  backgroundColor: theme.palette.background.paper
+  backgroundColor: theme.palette.background.paper,
+  boxShadow: theme.customShadows.z1,
+  borderRadius: theme.shape.borderRadius
 }));
 export default function AddCategory() {
   const [inputval, setInputval] = useState('');
@@ -85,32 +87,44 @@ export default function AddCategory() {
             ADD
           </Button>
         </Box>
+        <Box
+          sx={{
+            width: '100%',
+            maxWidth: 700,
+            display: 'flex',
+            justifyContent: 'center',
+            p: 2
+          }}
+        >
+          <Grid item xs={12} md={6}>
+            <Typography
+              sx={{ mt: 4, mb: 2, textAlign: 'center', color: 'primary.darker' }}
+              variant="h5"
+              component="div"
+            >
+              Available Categories
+            </Typography>
+            <Demo>
+              <List dense={false}>
+                {generate(
+                  <ListItem
+                    secondaryAction={
+                      <IconButton edge="end" aria-label="delete">
+                        <DeleteIcon />
+                      </IconButton>
+                    }
+                  >
+                    <ListItemText
+                      primary="Category"
+                      secondary={secondary ? 'Secondary text' : null}
+                    />
+                  </ListItem>
+                )}
+              </List>
+            </Demo>
+          </Grid>
+        </Box>
       </Grid>
-      <Box sx={{ flexGrow: 1, maxWidth: 752 }}>
-        <Grid item xs={12} md={6}>
-          <Typography sx={{ mt: 4, mb: 2, textAlign: 'center' }} variant="h5" component="div">
-            Available Categories
-          </Typography>
-          <Demo>
-            <List dense={false}>
-              {generate(
-                <ListItem
-                  secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
-                      <DeleteIcon />
-                    </IconButton>
-                  }
-                >
-                  <ListItemText
-                    primary="Single-line item"
-                    secondary={secondary ? 'Secondary text' : null}
-                  />
-                </ListItem>
-              )}
-            </List>
-          </Demo>
-        </Grid>
-      </Box>
     </>
   );
 }
