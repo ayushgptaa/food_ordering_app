@@ -10,7 +10,6 @@ import Promote from './pages/Promote';
 import AddMenu from './pages/AddMenu';
 import Settings from './pages/Settings';
 import NotFound from './pages/Page404';
-import GetMenu from './pages/GetMenu';
 import MyOrders from './pages/MyOrders';
 
 // ----------------------------------------------------------------------
@@ -26,8 +25,7 @@ export default function Router() {
         { path: 'my-orders', element: <MyOrders /> },
         { path: 'promote', element: <Promote /> },
         { path: 'add-menu', element: <AddMenu /> },
-        { path: 'settings', element: <Settings /> },
-        { path: 'view-menu', element: <GetMenu /> }
+        { path: 'settings', element: <Settings /> }
       ]
     },
     {
