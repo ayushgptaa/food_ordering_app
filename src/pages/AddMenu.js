@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { Container, Tab, Tabs, Box } from '@mui/material';
@@ -7,6 +7,7 @@ import Page from '../components/Page';
 import AddItem from '../components/_dashboard/Addmenu/additem';
 import AddCategory from '../components/_dashboard/Addmenu/addcartegory';
 import AddOption from '../components/_dashboard/Addmenu/addoption';
+import Fetch from '../components/_dashboard/Addmenu/Fetch';
 
 // // ----------------------------------------------------------------------
 
@@ -44,10 +45,22 @@ function a11yProps(index) {
 
 export default function BasicTabs() {
   const [value, setValue] = useState(0);
+  const [categories, setcategories] = useState([]);
+  useEffect(() => getCategory(), []);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  // ************** GET CATEGORY FUNCTION ***************** //
 
+  const getCategory = async () => {
+    Fetch({}, 'get_draft_menu')
+      .then((res) => {
+        setcategories(res.categories);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   return (
     <Page title="Dashboard: Add Menu ">
       <Container>
@@ -66,7 +79,7 @@ export default function BasicTabs() {
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            <AddCategory />
+            <AddCategory categories={categories} getCategory={getCategory} />
           </TabPanel>
           <TabPanel value={value} index={1}>
             <AddItem />
