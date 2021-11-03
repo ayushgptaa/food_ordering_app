@@ -25,7 +25,7 @@
     "max-len": 0,
     "no-alert": 0,
     "no-shadow": 0,
-    "no-console": 0,
+    "no-console": 1,
     "comma-dangle": 0,
     "import/no-cycle": 0,
     "react/prop-types": 1,
@@ -52,6 +52,7 @@
     "react/jsx-key": 1,
     "react-hooks/rules-of-hooks": 2,
     "arrow-body-style": 0,
+
     "no-unused-vars": [
       1,
       {
