@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   TextField,
   Grid,
@@ -10,38 +10,42 @@ import {
   ListItemText,
   Typography
 } from '@mui/material';
+import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SnackBar from '../../Snackbar';
 import Fetch from './Fetch';
+// import Modal from './Modal';
 
 const commonInputStyles = {
   mt: 1.5
 };
-
-// function generate(element) {
-//   return [0, 1, 2].map((value) =>
-//     cloneElement(element, {
-//       key: value
-//     })
-//   );
-// }
 
 const Demo = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   boxShadow: theme.customShadows.z1,
   borderRadius: theme.shape.borderRadius
 }));
-
-export default function AddCategory() {
-  useEffect(() => getCategory(), []);
+AddCategory.propTypes = {
+  categories: PropTypes.array,
+  getCategory: PropTypes.func
+};
+export default function AddCategory({ categories, getCategory }) {
   const [disabled, setdisabled] = useState(true);
   const [inputval, setInputval] = useState('');
   const [varient, setVarient] = useState('success');
   const [open, setOpen] = useState(false);
-  const [categories, setcategories] = useState([]);
+  // const [openmodal, setOpenmodal] = useState(false);
+
+  // const handleClickOpen = () => {
+  //   setOpenmodal(true);
+  // };
+
+  // const handleClose = () => {
+  //   setOpenmodal(false);
+  // };
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -54,21 +58,6 @@ export default function AddCategory() {
   const inputhandler = (e) => {
     setdisabled(false);
     setInputval(e.target.value);
-  };
-
-  // ************** GET CATEGORY FUNCTION ***************** //
-
-  const getCategory = async () => {
-    const data = {
-      category_name: inputval
-    };
-    Fetch(data, 'get_draft_menu')
-      .then((res) => {
-        setcategories(res.categories);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
   };
 
   // ************** ADD CATEGORY FUNCTION ***************** //
@@ -153,11 +142,7 @@ export default function AddCategory() {
                       key={category_id}
                       secondaryAction={
                         <>
-                          <IconButton
-                            edge="end"
-                            aria-label="delete"
-                            onClick={() => deleteCategory(category_id)}
-                          >
+                          <IconButton edge="end" aria-label="delete">
                             <EditIcon />
                           </IconButton>
                           <IconButton
