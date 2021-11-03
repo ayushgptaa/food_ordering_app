@@ -1,15 +1,6 @@
 /* eslint-disable camelcase */
 import { useState } from 'react';
-import {
-  TextField,
-  Grid,
-  Button,
-  Box,
-  List,
-  ListItem,
-  ListItemText,
-  Typography
-} from '@mui/material';
+import { Grid, Button, Box, List, ListItem, ListItemText, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
@@ -17,11 +8,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SnackBar from '../../Snackbar';
 import Fetch from './Fetch';
+import CustomTextFeild from '../../TextField';
 // import Modal from './Modal';
-
-const commonInputStyles = {
-  mt: 1.5
-};
 
 const Demo = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -98,15 +86,10 @@ export default function AddCategory({ categories, getCategory }) {
             maxWidth: 400
           }}
         >
-          <TextField
-            id="outlined-basic"
-            label="Category Title"
+          <CustomTextFeild
+            label="Category"
             placeholder="Enter Category"
-            variant="outlined"
-            fullWidth
-            onChange={inputhandler}
-            autoComplete="off"
-            sx={{ ...commonInputStyles }}
+            inputhandler={inputhandler}
           />
           <Button
             disabled={disabled}
