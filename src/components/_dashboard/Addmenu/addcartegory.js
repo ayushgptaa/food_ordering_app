@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { useState, cloneElement, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   TextField,
   Grid,
@@ -13,13 +13,12 @@ import {
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import SnackBar from '../../Snackbar';
+import Fetch from './Fetch';
 
 const commonInputStyles = {
   mt: 1.5
-};
-const deleteCategory = (id) => {
-  console.log(id);
 };
 
 // function generate(element) {
@@ -37,27 +36,7 @@ const Demo = styled('div')(({ theme }) => ({
 }));
 
 export default function AddCategory() {
-  useEffect(() => {
-    console.log('useEffect running');
-    fetch('https://us-central1-links-app-d5366.cloudfunctions.net/development/get_draft_menu', {
-      method: 'PUT',
-      body: JSON.stringify({
-        menu_id:
-          'menu_draft_Tb2ZEqko8lXxl934BK7f6W5Przdl5WfEctKRDXRE0r2g14HiTyU8urvBjFtNfOehlzi5H4o5ONKjiVELikK2stlOwI0R6wQ02KBA1635-608158-1921'
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setcategories(data.categories);
-      })
-      .catch((error) => {
-        setVarient('error');
-        setOpen(true);
-      });
-  }, []);
+  useEffect(() => getCategory(), []);
   const [disabled, setdisabled] = useState(true);
   const [inputval, setInputval] = useState('');
   const [varient, setVarient] = useState('success');
@@ -76,29 +55,51 @@ export default function AddCategory() {
     setdisabled(false);
     setInputval(e.target.value);
   };
-  const onSubmit = () => {
+
+  // ************** GET CATEGORY FUNCTION ***************** //
+
+  const getCategory = async () => {
     const data = {
-      menu_id:
-        'menu_draft_Tb2ZEqko8lXxl934BK7f6W5Przdl5WfEctKRDXRE0r2g14HiTyU8urvBjFtNfOehlzi5H4o5ONKjiVELikK2stlOwI0R6wQ02KBA1635-608158-1921',
       category_name: inputval
     };
+    Fetch(data, 'get_draft_menu')
+      .then((res) => {
+        setcategories(res.categories);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
-    fetch('https://us-central1-links-app-d5366.cloudfunctions.net/development/add_category', {
-      method: 'PUT',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then((response) => response.json())
-      .then((data) => {
+  // ************** ADD CATEGORY FUNCTION ***************** //
+
+  const addCategory = async () => {
+    const data = {
+      category_name: inputval
+    };
+    Fetch(data, 'add_category')
+      .then(() => {
+        getCategory();
+        setVarient('success');
         setOpen(true);
       })
-      .catch((error) => {
+      .catch(() => {
         setVarient('error');
         setOpen(true);
-        console.log(error);
       });
+  };
+
+  // ************** DELETE CATEGORY FUNCTION ***************** //
+
+  const deleteCategory = async (id) => {
+    const data = {
+      category_id: id
+    };
+    Fetch(data, 'remove_category')
+      .then(() => {
+        getCategory();
+      })
+      .catch(() => {});
   };
   return (
     <>
@@ -122,7 +123,7 @@ export default function AddCategory() {
             disabled={disabled}
             variant="contained"
             sx={{ py: 1.5, mt: 2, fontSize: 'subtitle1.fontSize', width: '100%' }}
-            onClick={onSubmit}
+            onClick={addCategory}
           >
             ADD
           </Button>
@@ -139,7 +140,7 @@ export default function AddCategory() {
           <Grid item xs={12} md={6}>
             <Typography
               sx={{ mt: 4, mb: 2, textAlign: 'center', color: 'primary.darker' }}
-              variant="h5"
+              variant="h4"
               component="div"
             >
               Available Categories
@@ -151,13 +152,22 @@ export default function AddCategory() {
                     <ListItem
                       key={category_id}
                       secondaryAction={
-                        <IconButton
-                          edge="end"
-                          aria-label="delete"
-                          onClick={() => deleteCategory(category_id)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
+                        <>
+                          <IconButton
+                            edge="end"
+                            aria-label="delete"
+                            onClick={() => deleteCategory(category_id)}
+                          >
+                            <EditIcon />
+                          </IconButton>
+                          <IconButton
+                            edge="end"
+                            aria-label="delete"
+                            onClick={() => deleteCategory(category_id)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </>
                       }
                     >
                       <ListItemText primary={category} />
