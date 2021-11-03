@@ -1,5 +1,5 @@
-import { useState, cloneElement } from 'react';
-import axios from 'axios';
+/* eslint-disable camelcase */
+import { useState, cloneElement, useEffect } from 'react';
 import {
   TextField,
   Grid,
@@ -13,51 +13,90 @@ import {
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SnackBar from '../../Snackbar';
 
 const commonInputStyles = {
   mt: 1.5
 };
+const deleteCategory = (id) => {
+  console.log(id);
+};
 
-function generate(element) {
-  return [0, 1, 2].map((value) =>
-    cloneElement(element, {
-      key: value
-    })
-  );
-}
+// function generate(element) {
+//   return [0, 1, 2].map((value) =>
+//     cloneElement(element, {
+//       key: value
+//     })
+//   );
+// }
 
 const Demo = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   boxShadow: theme.customShadows.z1,
   borderRadius: theme.shape.borderRadius
 }));
-export default function AddCategory() {
-  const [inputval, setInputval] = useState('');
-  const [secondary, setSecondary] = useState(false);
 
-  const inputhandler = (e) => {
-    setInputval(e.target.value);
-  };
-  const onSubmit = () => {
-    console.log('working');
-    const data = {
-      menu_id:
-        'menu_jnHObvXIVqhXPxGdPSj1h6Btz1Et5fYZE49ZtLRjw0bLO9Mi5ITfGSejfFb7nEuvwNjDyMfT1gfLwWfmXApDIxTgaH9WrvR3ctPJ',
-      category_name: inputval
-    };
-    console.log(data);
-    axios('https://us-central1-links-app-d5366.cloudfunctions.net/development/add_category', {
-      method: 'POST',
-      body: JSON.stringify(data),
+export default function AddCategory() {
+  useEffect(() => {
+    console.log('useEffect running');
+    fetch('https://us-central1-links-app-d5366.cloudfunctions.net/development/get_draft_menu', {
+      method: 'PUT',
+      body: JSON.stringify({
+        menu_id:
+          'menu_draft_Tb2ZEqko8lXxl934BK7f6W5Przdl5WfEctKRDXRE0r2g14HiTyU8urvBjFtNfOehlzi5H4o5ONKjiVELikK2stlOwI0R6wQ02KBA1635-608158-1921'
+      }),
       headers: {
-        'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'
       }
     })
-      .then((response) => {
-        console.log(response);
+      .then((response) => response.json())
+      .then((data) => {
+        setcategories(data.categories);
       })
       .catch((error) => {
+        setVarient('error');
+        setOpen(true);
+      });
+  }, []);
+  const [disabled, setdisabled] = useState(true);
+  const [inputval, setInputval] = useState('');
+  const [varient, setVarient] = useState('success');
+  const [open, setOpen] = useState(false);
+  const [categories, setcategories] = useState([]);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const inputhandler = (e) => {
+    setdisabled(false);
+    setInputval(e.target.value);
+  };
+  const onSubmit = () => {
+    const data = {
+      menu_id:
+        'menu_draft_Tb2ZEqko8lXxl934BK7f6W5Przdl5WfEctKRDXRE0r2g14HiTyU8urvBjFtNfOehlzi5H4o5ONKjiVELikK2stlOwI0R6wQ02KBA1635-608158-1921',
+      category_name: inputval
+    };
+
+    fetch('https://us-central1-links-app-d5366.cloudfunctions.net/development/add_category', {
+      method: 'PUT',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setOpen(true);
+      })
+      .catch((error) => {
+        setVarient('error');
+        setOpen(true);
         console.log(error);
       });
   };
@@ -80,6 +119,7 @@ export default function AddCategory() {
             sx={{ ...commonInputStyles }}
           />
           <Button
+            disabled={disabled}
             variant="contained"
             sx={{ py: 1.5, mt: 2, fontSize: 'subtitle1.fontSize', width: '100%' }}
             onClick={onSubmit}
@@ -106,80 +146,30 @@ export default function AddCategory() {
             </Typography>
             <Demo>
               <List dense={false}>
-                {generate(
-                  <ListItem
-                    secondaryAction={
-                      <IconButton edge="end" aria-label="delete">
-                        <DeleteIcon />
-                      </IconButton>
-                    }
-                  >
-                    <ListItemText
-                      primary="Category"
-                      secondary={secondary ? 'Secondary text' : null}
-                    />
-                  </ListItem>
-                )}
+                {categories.map(({ category, category_id }) => {
+                  return (
+                    <ListItem
+                      key={category_id}
+                      secondaryAction={
+                        <IconButton
+                          edge="end"
+                          aria-label="delete"
+                          onClick={() => deleteCategory(category_id)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      }
+                    >
+                      <ListItemText primary={category} />
+                    </ListItem>
+                  );
+                })}
               </List>
             </Demo>
           </Grid>
         </Box>
       </Grid>
+      <SnackBar open={open} varient={varient} inputval={inputval} handleClose={handleClose} />
     </>
   );
 }
-
-// import * as React from 'react';
-// import { styled } from '@mui/material/styles';
-// import Box from '@mui/material/Box';
-// import List from '@mui/material/List';
-// import ListItem from '@mui/material/ListItem';
-// import ListItemText from '@mui/material/ListItemText';
-// import IconButton from '@mui/material/IconButton';
-// import Grid from '@mui/material/Grid';
-// import Typography from '@mui/material/Typography';
-// import DeleteIcon from '@mui/icons-material/Delete';
-
-// function generate(element) {
-//   return [0, 1, 2].map((value) =>
-//     React.cloneElement(element, {
-//       key: value
-//     })
-//   );
-// }
-
-// const Demo = styled('div')(({ theme }) => ({
-//   backgroundColor: theme.palette.background.paper
-// }));
-
-// export default function InteractiveList() {
-//   const [secondary, setSecondary] = React.useState(false);
-
-//   return (
-//     <Box sx={{ flexGrow: 1, maxWidth: 752 }}>
-//       <Grid item xs={12} md={6}>
-//         <Typography sx={{ mt: 4, mb: 2, textAlign: 'center' }} variant="h5" component="div">
-//           Available Categories
-//         </Typography>
-//         <Demo>
-//           <List dense={false}>
-//             {generate(
-//               <ListItem
-//                 secondaryAction={
-//                   <IconButton edge="end" aria-label="delete">
-//                     <DeleteIcon />
-//                   </IconButton>
-//                 }
-//               >
-//                 <ListItemText
-//                   primary="Single-line item"
-//                   secondary={secondary ? 'Secondary text' : null}
-//                 />
-//               </ListItem>
-//             )}
-//           </List>
-//         </Demo>
-//       </Grid>
-//     </Box>
-//   );
-// }
