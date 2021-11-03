@@ -1,14 +1,24 @@
 import MuiTextField from '@mui/material/TextField';
+import PropTypes from 'prop-types';
+
+CustomTextFeild.propTypes = {
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  name: PropTypes.string,
+  inputhandler: PropTypes.func
+};
 
 export default function CustomTextFeild(props) {
+  const { label, placeholder, name, inputhandler } = props;
   return (
     <MuiTextField
+      name={name}
       id="outlined-basic"
-      label={props.label}
-      placeholder={props.placeholder}
+      label={label}
+      placeholder={placeholder}
       variant="outlined"
       fullWidth
-      //   onChange={inputhandler}
+      onChange={inputhandler}
       {...props}
       autoComplete="off"
       sx={{ mt: 1.5 }}
