@@ -10,12 +10,10 @@ const Alert = forwardRef((props, ref) => {
 export default function SnackBar({ open, varient, inputval, handleClose }) {
   return (
     <MuiSnackbar open={open} autoHideDuration={4000} onClose={handleClose}>
-      <Alert
-        onClose={handleClose}
-        severity={varient}
-        sx={{ width: '100%', backgroundColor: 'success.main' }}
-      >
-        {inputval} Added to the Categories
+      <Alert onClose={handleClose} sx={{ width: '100%' }} severity={varient}>
+        {varient === 'success'
+          ? `${inputval} added to the Categories :)`
+          : `Unable to add  ${inputval} to Categories. Try again :(`}
       </Alert>
     </MuiSnackbar>
   );
