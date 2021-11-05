@@ -7,13 +7,11 @@ const Alert = forwardRef((props, ref) => {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function SnackBar({ open, varient, inputval, handleClose }) {
+export default function SnackBar({ open, severity, handleClose, message }) {
   return (
-    <MuiSnackbar open={open} autoHideDuration={4000} onClose={handleClose}>
-      <Alert onClose={handleClose} sx={{ width: '100%' }} severity={varient}>
-        {varient === 'success'
-          ? `${inputval} added to the Categories :)`
-          : `Unable to add  ${inputval} to Categories. Try again :(`}
+    <MuiSnackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Alert onClose={handleClose} sx={{ width: '100%' }} severity={severity}>
+        {message}
       </Alert>
     </MuiSnackbar>
   );
