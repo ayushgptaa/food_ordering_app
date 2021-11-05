@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Tab, Tabs, Box } from '@mui/material';
+import AddItem from 'src/components/_dashboard/Menu/Tabs/AddItem';
+import ViewMenu from 'src/components/_dashboard/Menu/Tabs/ViewMenu';
+import AddOption from 'src/components/_dashboard/Menu/Tabs/AddOption';
+import AddCategory from 'src/components/_dashboard/Menu/Tabs/AddCategory';
 import Page from '../components/Page';
-import AddItem from '../components/_dashboard/Addmenu/additem';
-import AddCategory from '../components/_dashboard/Addmenu/addcartegory';
-import AddOption from '../components/_dashboard/Addmenu/addoption';
-import Fetch from '../components/_dashboard/Addmenu/Fetch';
-import ViewMenu from '../components/_dashboard/Addmenu/viewmenu';
+import Fetch from '../components/_dashboard/Menu/Fetch';
 
 // // ----------------------------------------------------------------------
 

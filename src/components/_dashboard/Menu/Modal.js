@@ -5,6 +5,7 @@ import Modal from '@mui/material/Modal';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import PropTypes from 'prop-types';
 import CustomTextFeild from '../../TextField';
 
 const style = {
@@ -17,6 +18,14 @@ const style = {
   borderRadius: '10px',
   p: 3
 };
+
+BasicModal.propTypes = {
+  open: PropTypes.bool,
+  handleClose: PropTypes.func,
+  category: PropTypes.string,
+  editCategory: PropTypes.func
+};
+// -------------------------------------------------------------
 
 export default function BasicModal({ open, handleClose, category, editCategory }) {
   const [inputval, setinputval] = useState('');

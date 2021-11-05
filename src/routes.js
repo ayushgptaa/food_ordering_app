@@ -7,7 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import DashboardApp from './pages/DashboardApp';
 import Promote from './pages/Promote';
-import AddMenu from './pages/AddMenu';
+import Menu from './pages/Menu';
 import Settings from './pages/Settings';
 import NotFound from './pages/Page404';
 import MyOrders from './pages/MyOrders';
@@ -24,7 +24,7 @@ export default function Router() {
         { path: 'app', element: <DashboardApp /> },
         { path: 'my-orders', element: <MyOrders /> },
         { path: 'promote', element: <Promote /> },
-        { path: 'add-menu', element: <AddMenu /> },
+        { path: 'menu', element: <Menu /> },
         { path: 'settings', element: <Settings /> }
       ]
     },

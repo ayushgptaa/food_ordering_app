@@ -52,7 +52,7 @@
     "react/jsx-key": 1,
     "react-hooks/rules-of-hooks": 2,
     "arrow-body-style": 0,
-
+    "import/no-unresolved": 0,
     "no-unused-vars": [
       1,
       {

@@ -10,10 +10,10 @@ import {
   FormControl
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import CustomTextFeild from '../../TextField';
-import Fetch from './Fetch';
-import LoadingButton from '../../LoadingButton';
-import SnackBar from '../../Snackbar';
+import CustomTextFeild from 'src/components/TextField';
+import LoadingButton from 'src/components/LoadingButton';
+import SnackBar from 'src/components/Snackbar';
+import Fetch from '../Fetch';
 
 AddItem.propTypes = {
   categories: PropTypes.arrayOf(

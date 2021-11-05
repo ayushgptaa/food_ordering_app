@@ -6,11 +6,11 @@ import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import SnackBar from '../../Snackbar';
-import Fetch from './Fetch';
-import CustomTextFeild from '../../TextField';
-import Modal from './Modal';
-import LoadingButton from '../../LoadingButton';
+import SnackBar from '../../../Snackbar';
+import Fetch from '../Fetch';
+import CustomTextFeild from '../../../TextField';
+import Modal from '../Modal';
+import LoadingButton from '../../../LoadingButton';
 
 AddCategory.propTypes = {
   categories: PropTypes.array,

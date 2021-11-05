@@ -24,7 +24,7 @@ const sidebarConfig = [
   },
   {
     title: 'Menu',
-    path: '/dashboard/add-menu',
+    path: '/dashboard/menu',
     icon: getIcon('feather:grid')
   },
   {
