@@ -10,7 +10,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import SnackBar from '../../Snackbar';
 import Fetch from './Fetch';
 import CustomTextFeild from '../../TextField';
-// import Modal from './Modal';
+import Modal from './Modal';
 
 const Demo = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -26,15 +26,17 @@ export default function AddCategory({ categories, getCategory }) {
   const [btnloading, setBtnloading] = useState(false);
   const [inputval, setInputval] = useState('');
   const [snackbar, setSnackbar] = useState({ severity: 'success', open: false, message: '' });
-  // const [openmodal, setOpenmodal] = useState(false);
+  const [openmodal, setOpenmodal] = useState(false);
+  const [id, setid] = useState('');
 
-  // const handleClickOpen = () => {
-  //   setOpenmodal(true);
-  // };
+  const handleClickOpen = (id) => {
+    setOpenmodal(true);
+    setid(id);
+  };
 
-  // const handleClose = () => {
-  //   setOpenmodal(false);
-  // };
+  const handleClosemodal = () => {
+    setOpenmodal(false);
+  };
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -94,6 +96,24 @@ export default function AddCategory({ categories, getCategory }) {
       })
       .catch(() => {});
   };
+
+  // ************** EDIT CATEGORY FUNCTION ***************** //
+
+  const editCategory = async (id, input) => {
+    console.log(id);
+    const data = {
+      category_id: id,
+      category_name: input
+    };
+    console.log(data);
+    Fetch(data, 'edit_category_name')
+      .then(() => {
+        getCategory();
+        handleClosemodal();
+      })
+      .catch(() => {});
+  };
+
   return (
     <>
       <Grid container direction="column" alignItems="center">
@@ -102,7 +122,12 @@ export default function AddCategory({ categories, getCategory }) {
             maxWidth: 400
           }}
         >
-          <CustomTextFeild label="Category" placeholder="Enter Category" onChange={inputhandler} />
+          <CustomTextFeild
+            inputhandler={inputhandler}
+            label="Category"
+            placeholder="Enter Category"
+            name="Category"
+          />
           <LoadingButton
             disabled={disabled}
             variant="contained"
@@ -139,15 +164,14 @@ export default function AddCategory({ categories, getCategory }) {
                       key={category_id}
                       secondaryAction={
                         <>
-                          <IconButton edge="end" aria-label="delete">
-                            <EditIcon />
+                          <IconButton edge="end" onClick={() => handleClickOpen(category_id)}>
+                            <EditIcon aria-label="edit" />
                           </IconButton>
                           <IconButton
                             edge="end"
-                            aria-label="delete"
                             onClick={() => deleteCategory(category, category_id)}
                           >
-                            <DeleteIcon />
+                            <DeleteIcon aria-label="delete" />
                           </IconButton>
                         </>
                       }
@@ -157,6 +181,12 @@ export default function AddCategory({ categories, getCategory }) {
                   );
                 })}
               </List>
+              <Modal
+                open={openmodal}
+                handleClose={handleClosemodal}
+                category={id}
+                editCategory={editCategory}
+              />
             </Demo>
           </Grid>
         </Box>
