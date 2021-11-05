@@ -86,11 +86,7 @@ export default function AddCategory({ categories, getCategory }) {
             maxWidth: 400
           }}
         >
-          <CustomTextFeild
-            label="Category"
-            placeholder="Enter Category"
-            inputhandler={inputhandler}
-          />
+          <CustomTextFeild label="Category" placeholder="Enter Category" onChange={inputhandler} />
           <Button
             disabled={disabled}
             variant="contained"
