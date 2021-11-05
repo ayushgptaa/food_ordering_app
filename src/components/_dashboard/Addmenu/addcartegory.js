@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import { useState } from 'react';
 import { Grid, Box, List, ListItem, ListItemText, Typography } from '@mui/material';
-import LoadingButton from '@mui/lab/LoadingButton';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
@@ -11,16 +10,19 @@ import SnackBar from '../../Snackbar';
 import Fetch from './Fetch';
 import CustomTextFeild from '../../TextField';
 import Modal from './Modal';
+import LoadingButton from '../../LoadingButton';
 
-const Demo = styled('div')(({ theme }) => ({
-  backgroundColor: theme.palette.background.paper,
-  boxShadow: theme.customShadows.z1,
-  borderRadius: theme.shape.borderRadius
-}));
 AddCategory.propTypes = {
   categories: PropTypes.array,
   getCategory: PropTypes.func
 };
+
+const ListContainer = styled('div')(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
+  boxShadow: theme.customShadows.z1,
+  borderRadius: theme.shape.borderRadius
+}));
+
 export default function AddCategory({ categories, getCategory }) {
   const [disabled, setDisabled] = useState(true);
   const [btnloading, setBtnloading] = useState(false);
@@ -29,7 +31,7 @@ export default function AddCategory({ categories, getCategory }) {
   const [openmodal, setOpenmodal] = useState(false);
   const [id, setid] = useState('');
 
-  const handleClickOpen = (id) => {
+  const handleOpenmodal = (id) => {
     setOpenmodal(true);
     setid(id);
   };
@@ -47,7 +49,10 @@ export default function AddCategory({ categories, getCategory }) {
   };
 
   const inputhandler = (e) => {
-    if (e.target.value === '') return setDisabled(true);
+    if (e.target.value === '') {
+      setDisabled(true);
+      return setInputval(e.target.value);
+    }
     setDisabled(false);
     setInputval(e.target.value);
   };
@@ -63,6 +68,7 @@ export default function AddCategory({ categories, getCategory }) {
       .then(() => {
         getCategory();
         setBtnloading(false);
+        setInputval('');
         setSnackbar({
           severity: 'success',
           open: true,
@@ -70,6 +76,7 @@ export default function AddCategory({ categories, getCategory }) {
         });
       })
       .catch(() => {
+        setInputval('');
         setBtnloading(false);
         setSnackbar({
           severity: 'success',
@@ -94,24 +101,39 @@ export default function AddCategory({ categories, getCategory }) {
           message: `${category} deleted from the Categories :)`
         });
       })
-      .catch(() => {});
+      .catch(() => {
+        setSnackbar({
+          severity: 'error',
+          open: true,
+          message: `$Unable to delete ${category} from the Categories. Try again :(`
+        });
+      });
   };
 
   // ************** EDIT CATEGORY FUNCTION ***************** //
 
   const editCategory = async (id, input) => {
-    console.log(id);
     const data = {
       category_id: id,
       category_name: input
     };
-    console.log(data);
     Fetch(data, 'edit_category_name')
       .then(() => {
         getCategory();
         handleClosemodal();
+        setSnackbar({
+          severity: 'success',
+          open: true,
+          message: `Changed Category to ${input} :)`
+        });
       })
-      .catch(() => {});
+      .catch(() => {
+        setSnackbar({
+          severity: 'error',
+          open: true,
+          message: `Unable to change category. Try again :(`
+        });
+      });
   };
 
   return (
@@ -127,13 +149,12 @@ export default function AddCategory({ categories, getCategory }) {
             label="Category"
             placeholder="Enter Category"
             name="Category"
+            value={inputval}
           />
           <LoadingButton
             disabled={disabled}
-            variant="contained"
-            sx={{ py: 1.5, mt: 2, fontSize: 'subtitle1.fontSize', width: '100%' }}
-            onClick={addCategory}
-            loading={btnloading}
+            addCategory={addCategory}
+            btnloading={btnloading}
             loadingIndicator="Adding..."
           >
             ADD
@@ -156,7 +177,7 @@ export default function AddCategory({ categories, getCategory }) {
             >
               Available Categories
             </Typography>
-            <Demo>
+            <ListContainer>
               <List dense={false}>
                 {categories.map(({ category, category_id }) => {
                   return (
@@ -164,7 +185,7 @@ export default function AddCategory({ categories, getCategory }) {
                       key={category_id}
                       secondaryAction={
                         <>
-                          <IconButton edge="end" onClick={() => handleClickOpen(category_id)}>
+                          <IconButton edge="end" onClick={() => handleOpenmodal(category_id)}>
                             <EditIcon aria-label="edit" />
                           </IconButton>
                           <IconButton
@@ -187,7 +208,7 @@ export default function AddCategory({ categories, getCategory }) {
                 category={id}
                 editCategory={editCategory}
               />
-            </Demo>
+            </ListContainer>
           </Grid>
         </Box>
       </Grid>
