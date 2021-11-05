@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
 import { Container, Tab, Tabs, Box } from '@mui/material';
-// import { typography } from '@mui/system';
 import Page from '../components/Page';
 import AddItem from '../components/_dashboard/Addmenu/additem';
 import AddCategory from '../components/_dashboard/Addmenu/addcartegory';
 import AddOption from '../components/_dashboard/Addmenu/addoption';
 import Fetch from '../components/_dashboard/Addmenu/Fetch';
+import ViewMenu from '../components/_dashboard/Addmenu/viewmenu';
 
 // // ----------------------------------------------------------------------
 
@@ -42,7 +41,20 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`
   };
 }
-
+const MenuTabs = [
+  {
+    label: 'View Menu'
+  },
+  {
+    label: 'Add Category'
+  },
+  {
+    label: 'Add Item'
+  },
+  {
+    label: 'Add Options'
+  }
+];
 export default function BasicTabs() {
   const [value, setValue] = useState(0);
   const [categories, setcategories] = useState([]);
@@ -50,7 +62,8 @@ export default function BasicTabs() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  // ************** GET CATEGORY FUNCTION ***************** //
+
+  // ************** GET CATEGORIES FUNCTION ***************** //
 
   const getCategory = async () => {
     Fetch({}, 'get_draft_menu')
@@ -59,6 +72,7 @@ export default function BasicTabs() {
       })
       .catch((e) => {
         console.log(e);
+        setcategories([]);
       });
   };
   return (
@@ -67,24 +81,29 @@ export default function BasicTabs() {
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs
+              centered
               value={value}
               onChange={handleChange}
               aria-label="Menu tabs"
               sx={{ '> Tab': { fontSize: 'h5.fontSize' } }}
-              centered
+              // variant="scrollable"
+              scrollButtons="auto"
             >
-              <Tab label="Add Category" sx={{ ...commonTabstyle }} {...a11yProps(0)} />
-              <Tab label="Add Items" sx={{ ...commonTabstyle }} {...a11yProps(1)} />
-              <Tab label="Add Options" sx={{ ...commonTabstyle }} {...a11yProps(2)} />
+              {MenuTabs.map(({ label }, index) => (
+                <Tab key={index} label={label} sx={{ ...commonTabstyle }} {...a11yProps(index)} />
+              ))}
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            <AddCategory categories={categories} getCategory={getCategory} />
+            <ViewMenu categories={categories} />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <AddItem />
+            <AddCategory categories={categories} getCategory={getCategory} />
           </TabPanel>
           <TabPanel value={value} index={2}>
+            <AddItem categories={categories} />
+          </TabPanel>
+          <TabPanel value={value} index={3}>
             <AddOption />
           </TabPanel>
         </Box>
