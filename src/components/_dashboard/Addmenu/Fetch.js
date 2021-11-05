@@ -13,9 +13,7 @@ const Fetch = async (data, request) => {
     })
   });
 
-  if (response.status === 200 && response.ok) {
-    return response.json();
-  }
+  return response.json();
 };
 
 export default Fetch;

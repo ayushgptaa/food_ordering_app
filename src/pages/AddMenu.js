@@ -70,8 +70,7 @@ export default function BasicTabs() {
       .then((res) => {
         setcategories(res.categories);
       })
-      .catch((e) => {
-        console.log(e);
+      .catch(() => {
         setcategories([]);
       });
   };
@@ -95,13 +94,13 @@ export default function BasicTabs() {
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            <ViewMenu categories={categories} />
+            <ViewMenu categories={categories} getCategory={getCategory} />
           </TabPanel>
           <TabPanel value={value} index={1}>
             <AddCategory categories={categories} getCategory={getCategory} />
           </TabPanel>
           <TabPanel value={value} index={2}>
-            <AddItem categories={categories} />
+            <AddItem categories={categories} getCategory={getCategory} />
           </TabPanel>
           <TabPanel value={value} index={3}>
             <AddOption />

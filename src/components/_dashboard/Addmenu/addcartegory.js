@@ -6,7 +6,6 @@ import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import MuiLoadingButton from '@mui/lab/LoadingButton';
 import SnackBar from '../../Snackbar';
 import Fetch from './Fetch';
 import CustomTextFeild from '../../TextField';
@@ -24,6 +23,8 @@ const ListContainer = styled('div')(({ theme }) => ({
   borderRadius: theme.shape.borderRadius
 }));
 
+//--------------------------------------------------------------
+
 export default function AddCategory({ categories, getCategory }) {
   const [disabled, setDisabled] = useState(true);
   const [btnloading, setBtnloading] = useState(false);
@@ -31,7 +32,6 @@ export default function AddCategory({ categories, getCategory }) {
   const [snackbar, setSnackbar] = useState({ severity: 'success', open: false, message: '' });
   const [openmodal, setOpenmodal] = useState(false);
   const [id, setid] = useState('');
-  // const [sexy, setsexy] = useState(false);
 
   const handleOpenmodal = (id) => {
     setOpenmodal(true);
@@ -81,7 +81,7 @@ export default function AddCategory({ categories, getCategory }) {
         setInputval('');
         setBtnloading(false);
         setSnackbar({
-          severity: 'success',
+          severity: 'error',
           open: true,
           message: `Unable to add  ${inputval} to Categories. Try again :(`
         });
