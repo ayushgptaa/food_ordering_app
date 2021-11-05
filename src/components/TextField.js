@@ -5,11 +5,11 @@ CustomTextFeild.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   name: PropTypes.string,
-  inputhandler: PropTypes.func
+  onChange: PropTypes.func
 };
 
 export default function CustomTextFeild(props) {
-  const { label, placeholder, name, inputhandler } = props;
+  const { label, placeholder, name, onChange } = props;
   return (
     <MuiTextField
       name={name}
@@ -18,7 +18,7 @@ export default function CustomTextFeild(props) {
       placeholder={placeholder}
       variant="outlined"
       fullWidth
-      onChange={inputhandler}
+      onChange={onChange}
       {...props}
       autoComplete="off"
       sx={{ mt: 1.5 }}
