@@ -51,7 +51,7 @@ export default function BasicModal({ open, handleClose, category, editCategory }
           />
           <Button
             variant="contained"
-            sx={{ mt: 2, px: 3, mx: 'auto', fontSize: 'h6.fontSize' }}
+            sx={{ mt: 2, px: 3, fontSize: 'h6.fontSize', width: 100, mx: 'auto' }}
             onClick={() => {
               setinputval('');
               editCategory(category, inputval);
