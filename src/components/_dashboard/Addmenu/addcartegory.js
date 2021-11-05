@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import MuiLoadingButton from '@mui/lab/LoadingButton';
 import SnackBar from '../../Snackbar';
 import Fetch from './Fetch';
 import CustomTextFeild from '../../TextField';
@@ -30,6 +31,7 @@ export default function AddCategory({ categories, getCategory }) {
   const [snackbar, setSnackbar] = useState({ severity: 'success', open: false, message: '' });
   const [openmodal, setOpenmodal] = useState(false);
   const [id, setid] = useState('');
+  // const [sexy, setsexy] = useState(false);
 
   const handleOpenmodal = (id) => {
     setOpenmodal(true);
@@ -192,6 +194,9 @@ export default function AddCategory({ categories, getCategory }) {
                             edge="end"
                             onClick={() => deleteCategory(category, category_id)}
                           >
+                            {/* <MuiLoadingButton loading sx={{ p: 0 }}>
+                              Submit
+                            </MuiLoadingButton> */}
                             <DeleteIcon aria-label="delete" />
                           </IconButton>
                         </>
