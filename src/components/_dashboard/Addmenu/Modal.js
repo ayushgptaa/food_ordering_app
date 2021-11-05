@@ -12,7 +12,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: { md: 'auto', xs: 250 },
+  width: { md: 350, xs: 250 },
   bgcolor: 'background.paper',
   borderRadius: '10px',
   p: 3
@@ -51,7 +51,14 @@ export default function BasicModal({ open, handleClose, category, editCategory }
           />
           <Button
             variant="contained"
-            sx={{ mt: 2, px: 3, fontSize: 'h6.fontSize', width: 100, mx: 'auto' }}
+            sx={{
+              mt: 2,
+              px: 3,
+              fontSize: 'h6.fontSize',
+              width: 100,
+              mx: 'auto',
+              display: 'block'
+            }}
             onClick={() => {
               setinputval('');
               editCategory(category, inputval);
