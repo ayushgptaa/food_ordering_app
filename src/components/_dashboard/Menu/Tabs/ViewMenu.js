@@ -27,14 +27,14 @@ export default function ViewMenu({ categories }) {
         alignItems="center"
         sx={{ maxWidth: 'md', mx: 'auto' }}
       >
-        <Typography variant="h3" sx={{ opacity: 0.72, textAlign: 'center' }} gutterBottom>
+        <Typography variant="h4" sx={{ opacity: 0.72, textAlign: 'center' }} gutterBottom>
           Draft Categories
         </Typography>
       </Grid>
       {categories.length === 0
         ? [0, 1, 2, 4].map((index) => {
             return (
-              <Card sx={{ p: 4, maxWidth: 'md', mx: 'auto', mt: 2 }} key={index}>
+              <Card sx={{ p: 4, maxWidth: 'sm', mx: 'auto', mt: 2 }} key={index}>
                 <Skeleton variant="text" width={200} height={75} />
                 <Skeleton variant="string" height={40} />
                 <Skeleton variant="string" height={40} />
@@ -43,7 +43,7 @@ export default function ViewMenu({ categories }) {
           })
         : categories.map(({ category, items }, index) => {
             return (
-              <Card sx={{ p: 4, maxWidth: 'md', mx: 'auto', mt: 2 }} key={index}>
+              <Card sx={{ p: 4, maxWidth: 'sm', mx: 'auto', mt: 2 }} key={index}>
                 <Typography variant="h4" sx={{ opacity: 0.72, color: 'primary.main' }} gutterBottom>
                   Category : {category}
                 </Typography>

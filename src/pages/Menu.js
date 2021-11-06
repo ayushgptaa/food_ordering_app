@@ -103,7 +103,7 @@ export default function BasicTabs() {
             <AddItem categories={categories} getCategory={getCategory} />
           </TabPanel>
           <TabPanel value={value} index={3}>
-            <AddOption />
+            <AddOption categories={categories} />
           </TabPanel>
         </Box>
       </Container>

@@ -10,7 +10,8 @@ const ListContainer = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   boxShadow: theme.customShadows.z8,
   borderRadius: theme.shape.borderRadius,
-  marginTop: '1rem'
+  marginTop: '1.5rem',
+  width: '100%'
 }));
 
 AvailableList.propTypes = {
@@ -22,48 +23,46 @@ AvailableList.propTypes = {
 // ------------------------------------------------------
 export default function AvailableList({ categories, handleOpenmodal, deleteCategory }) {
   return (
-    <Grid item xs={12} md={6}>
-      <ListContainer>
-        <List
-          dense={false}
-          subheader={
-            <ListSubheader component="div" id="nested-list-subheader" sx={{ borderRadius: 1 }}>
-              <Typography
-                sx={{
-                  mb: 2,
-                  pt: 2,
-                  color: 'grey[500]'
-                }}
-                variant="h6"
-                component="div"
+    <ListContainer>
+      <List
+        dense={false}
+        subheader={
+          <ListSubheader component="div" id="nested-list-subheader" sx={{ borderRadius: 1 }}>
+            <Typography
+              sx={{
+                mb: 2,
+                pt: 2,
+                color: 'grey[500]'
+              }}
+              variant="h6"
+              component="div"
+            >
+              Available Categories
+            </Typography>
+          </ListSubheader>
+        }
+      >
+        {categories &&
+          categories.map(({ category, category_id }) => {
+            return (
+              <ListItem
+                key={category_id}
+                secondaryAction={
+                  <>
+                    <IconButton edge="end" onClick={() => handleOpenmodal(category_id)}>
+                      <EditIcon aria-label="edit" />
+                    </IconButton>
+                    <IconButton edge="end" onClick={() => deleteCategory(category, category_id)}>
+                      <DeleteIcon aria-label="delete" />
+                    </IconButton>
+                  </>
+                }
               >
-                Available Categories
-              </Typography>
-            </ListSubheader>
-          }
-        >
-          {categories &&
-            categories.map(({ category, category_id }, index) => {
-              return (
-                <ListItem
-                  key={category_id}
-                  secondaryAction={
-                    <>
-                      <IconButton edge="end" onClick={() => handleOpenmodal(category_id)}>
-                        <EditIcon aria-label="edit" />
-                      </IconButton>
-                      <IconButton edge="end" onClick={() => deleteCategory(category, category_id)}>
-                        <DeleteIcon aria-label="delete" />
-                      </IconButton>
-                    </>
-                  }
-                >
-                  <ListItemText primary={category} key={category_id} />
-                </ListItem>
-              );
-            })}
-        </List>
-      </ListContainer>
-    </Grid>
+                <ListItemText primary={category} key={category_id} />
+              </ListItem>
+            );
+          })}
+      </List>
+    </ListContainer>
   );
 }

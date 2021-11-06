@@ -132,10 +132,18 @@ export default function AddCategory({ categories, getCategory }) {
 
   return (
     <>
-      <Grid container direction="column" alignItems="center">
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        sx={{
+          maxWidth: 350,
+          mx: 'auto'
+        }}
+      >
         <Box
           sx={{
-            maxWidth: 400
+            width: '100%'
           }}
         >
           <CustomTextFeild
@@ -157,10 +165,8 @@ export default function AddCategory({ categories, getCategory }) {
         <Box
           sx={{
             width: '100%',
-            maxWidth: 700,
             display: 'flex',
-            justifyContent: 'center',
-            p: 2
+            justifyContent: 'center'
           }}
         >
           <AvailableList

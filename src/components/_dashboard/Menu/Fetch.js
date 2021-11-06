@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const URL = 'https://us-central1-links-app-d5366.cloudfunctions.net/development';
 
 const Fetch = async (data, request) => {

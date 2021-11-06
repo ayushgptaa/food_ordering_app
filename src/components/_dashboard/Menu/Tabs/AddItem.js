@@ -14,6 +14,7 @@ import CustomTextFeild from 'src/components/TextField';
 import LoadingButton from 'src/components/LoadingButton';
 import SnackBar from 'src/components/Snackbar';
 import Fetch from '../Fetch';
+import ItemList from '../ItemList';
 
 AddItem.propTypes = {
   categories: PropTypes.arrayOf(
@@ -80,16 +81,50 @@ export default function AddItem({ categories, getCategory }) {
         });
       });
   };
+
+  // ************** DELETE ITEM FROM CATEGORY FUNCTION ***************** //
+
+  const deleteItemFromCategory = async (category_id, item_id, item) => {
+    const data = {
+      category_id,
+      item_id
+    };
+
+    Fetch(data, 'remove_item_from_category')
+      .then(() => {
+        getCategory();
+        setSnackbar({
+          severity: 'warning',
+          open: true,
+          message: ` Deleted ${item} from the Categories :)`
+        });
+      })
+      .catch(() => {
+        setSnackbar({
+          severity: 'error',
+          open: true,
+          message: `Unable to delete ${item} from the Categories. Try again :(`
+        });
+      });
+  };
   return (
     <>
-      <Grid container direction="column" alignItems="center">
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        sx={{
+          maxWidth: 350,
+          mx: 'auto'
+        }}
+      >
         <Box
           sx={{
-            maxWidth: 400
+            width: '100%'
           }}
         >
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Category</InputLabel>
+            <InputLabel id="demo-simple-select-label">Select Category</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -141,6 +176,15 @@ export default function AddItem({ categories, getCategory }) {
           >
             ADD
           </LoadingButton>
+        </Box>
+        <Box
+          sx={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center'
+          }}
+        >
+          <ItemList categories={categories} deleteItemFromCategory={deleteItemFromCategory} />
         </Box>
       </Grid>
       <SnackBar
