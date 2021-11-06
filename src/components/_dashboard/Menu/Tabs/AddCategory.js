@@ -1,27 +1,18 @@
 /* eslint-disable camelcase */
 import { useState } from 'react';
-import { Grid, Box, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { Grid, Box } from '@mui/material';
 import PropTypes from 'prop-types';
-import { styled } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import SnackBar from '../../../Snackbar';
 import Fetch from '../Fetch';
 import CustomTextFeild from '../../../TextField';
 import Modal from '../Modal';
 import LoadingButton from '../../../LoadingButton';
+import AvailableList from '../AvailableList';
 
 AddCategory.propTypes = {
   categories: PropTypes.array,
   getCategory: PropTypes.func
 };
-
-const ListContainer = styled('div')(({ theme }) => ({
-  backgroundColor: theme.palette.background.paper,
-  boxShadow: theme.customShadows.z1,
-  borderRadius: theme.shape.borderRadius
-}));
 
 //--------------------------------------------------------------
 
@@ -94,6 +85,7 @@ export default function AddCategory({ categories, getCategory }) {
     const data = {
       category_id: id
     };
+
     Fetch(data, 'remove_category')
       .then(() => {
         getCategory();
@@ -107,7 +99,7 @@ export default function AddCategory({ categories, getCategory }) {
         setSnackbar({
           severity: 'error',
           open: true,
-          message: `$Unable to delete ${category} from the Categories. Try again :(`
+          message: `Unable to delete ${category} from the Categories. Try again :(`
         });
       });
   };
@@ -171,50 +163,11 @@ export default function AddCategory({ categories, getCategory }) {
             p: 2
           }}
         >
-          <Grid item xs={12} md={6}>
-            <Typography
-              sx={{ mt: 4, mb: 2, textAlign: 'center', color: 'primary.darker' }}
-              variant="h4"
-              component="div"
-            >
-              Available Categories
-            </Typography>
-            <ListContainer>
-              <List dense={false}>
-                {categories.map(({ category, category_id }) => {
-                  return (
-                    <ListItem
-                      key={category_id}
-                      secondaryAction={
-                        <>
-                          <IconButton edge="end" onClick={() => handleOpenmodal(category_id)}>
-                            <EditIcon aria-label="edit" />
-                          </IconButton>
-                          <IconButton
-                            edge="end"
-                            onClick={() => deleteCategory(category, category_id)}
-                          >
-                            {/* <MuiLoadingButton loading sx={{ p: 0 }}>
-                              Submit
-                            </MuiLoadingButton> */}
-                            <DeleteIcon aria-label="delete" />
-                          </IconButton>
-                        </>
-                      }
-                    >
-                      <ListItemText primary={category} />
-                    </ListItem>
-                  );
-                })}
-              </List>
-              <Modal
-                open={openmodal}
-                handleClose={handleClosemodal}
-                category={id}
-                editCategory={editCategory}
-              />
-            </ListContainer>
-          </Grid>
+          <AvailableList
+            categories={categories}
+            handleOpenmodal={handleOpenmodal}
+            deleteCategory={deleteCategory}
+          />
         </Box>
       </Grid>
       <SnackBar
@@ -222,6 +175,12 @@ export default function AddCategory({ categories, getCategory }) {
         severity={snackbar.severity}
         handleClose={handleClose}
         message={snackbar.message}
+      />
+      <Modal
+        open={openmodal}
+        handleClose={handleClosemodal}
+        category={id}
+        editCategory={editCategory}
       />
     </>
   );
