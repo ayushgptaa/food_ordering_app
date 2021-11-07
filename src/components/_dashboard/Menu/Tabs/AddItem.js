@@ -15,6 +15,7 @@ import LoadingButton from 'src/components/LoadingButton';
 import SnackBar from 'src/components/Snackbar';
 import Fetch from '../Fetch';
 import ItemList from '../ItemList';
+import TabsHeading from './TabsHeading';
 
 AddItem.propTypes = {
   categories: PropTypes.arrayOf(
@@ -118,9 +119,11 @@ export default function AddItem({ categories, getCategory }) {
           mx: 'auto'
         }}
       >
+        <TabsHeading Heading=" Add Item to Catrgory" />
         <Box
           sx={{
-            width: '100%'
+            width: '100%',
+            mt: 1.5
           }}
         >
           <FormControl fullWidth>

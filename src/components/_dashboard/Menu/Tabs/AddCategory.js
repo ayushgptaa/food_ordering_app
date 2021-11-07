@@ -8,6 +8,7 @@ import CustomTextFeild from '../../../TextField';
 import Modal from '../Modal';
 import LoadingButton from '../../../LoadingButton';
 import AvailableList from '../AvailableList';
+import TabsHeading from './TabsHeading';
 
 AddCategory.propTypes = {
   categories: PropTypes.array,
@@ -141,6 +142,7 @@ export default function AddCategory({ categories, getCategory }) {
           mx: 'auto'
         }}
       >
+        <TabsHeading Heading=" Add Categoory " />
         <Box
           sx={{
             width: '100%'
