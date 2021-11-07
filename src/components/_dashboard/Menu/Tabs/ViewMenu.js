@@ -7,6 +7,7 @@ import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import PropTypes from 'prop-types';
+import TabsHeading from './TabsHeading';
 
 ViewMenu.propTypes = {
   categories: PropTypes.arrayOf(
@@ -20,17 +21,7 @@ ViewMenu.propTypes = {
 export default function ViewMenu({ categories }) {
   return (
     <Container>
-      <Grid
-        container
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ maxWidth: 'md', mx: 'auto' }}
-      >
-        <Typography variant="h4" sx={{ opacity: 0.72, textAlign: 'center' }} gutterBottom>
-          Draft Categories
-        </Typography>
-      </Grid>
+      <TabsHeading Heading="Draft Categories" />
       {categories.length === 0
         ? [0, 1, 2, 4].map((index) => {
             return (

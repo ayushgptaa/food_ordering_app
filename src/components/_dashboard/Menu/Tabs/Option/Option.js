@@ -2,9 +2,9 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import OptionGroup from './SubTabs/OptionGroup';
+import Options from './SubTabs/AddOption';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -17,11 +17,7 @@ function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -58,7 +54,7 @@ export default function BasicTabs({ categories }) {
         <OptionGroup categories={categories} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <Options />
       </TabPanel>
     </Box>
   );
