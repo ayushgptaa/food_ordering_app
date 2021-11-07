@@ -1,29 +1,19 @@
 /* eslint-disable camelcase */
 import { useState } from 'react';
-import { Select, Grid, Box, MenuItem, InputLabel, FormControl, Typography } from '@mui/material';
+import { Select, Grid, Box, MenuItem, InputLabel, FormControl } from '@mui/material';
 import LoadingButton from 'src/components/LoadingButton';
 // import FormGroup from '@mui/material/FormGroup';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Checkbox from '@mui/material/Checkbox';
-
 import CustomTextFeild from 'src/components/TextField';
+import TabsHeading from '../../TabsHeading';
 
 export default function AddOption({ categories }) {
   const [disabled, setDisabled] = useState(true);
   const [btnloading, setBtnloading] = useState(false);
   return (
     <Grid container direction="column" alignItems="center">
-      <Grid
-        container
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ maxWidth: 'md', mx: 'auto' }}
-      >
-        <Typography variant="h4" sx={{ opacity: 0.72, textAlign: 'center' }} gutterBottom>
-          Add Option Group to Item
-        </Typography>
-      </Grid>
+      <TabsHeading Heading="Add Option Group to Item" />
       <Box
         sx={{
           maxWidth: 350,
@@ -52,25 +42,9 @@ export default function AddOption({ categories }) {
             })}
           </Select>
         </FormControl>
-        {/* <FormGroup
-          sx={{
-            diplay: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-          }}
-        >
-          <FormControlLabel
-            control={<Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }} />}
-            label="Required"
-          />
-          <FormControlLabel
-            control={<Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }} />}
-            label="Optional"
-          />
-        </FormGroup> */}
 
         <CustomTextFeild label="Option group name" placeholder="Enter Option group " />
+        <CustomTextFeild label="Select Upto" placeholder="Select Upto" type="number" />
 
         <FormControl fullWidth sx={{ mt: 1.5 }}>
           <InputLabel id="simple-select-label">Required or Optional</InputLabel>
