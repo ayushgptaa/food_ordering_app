@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Container, Tab, Tabs, Box } from '@mui/material';
 import AddItem from 'src/components/_dashboard/Menu/Tabs/AddItem';
 import ViewMenu from 'src/components/_dashboard/Menu/Tabs/ViewMenu';
-import AddOption from 'src/components/_dashboard/Menu/Tabs/AddOption';
+import AddOption from 'src/components/_dashboard/Menu/Tabs//Option/Option';
 import AddCategory from 'src/components/_dashboard/Menu/Tabs/AddCategory';
 import Page from '../components/Page';
 import Fetch from '../components/_dashboard/Menu/Fetch';
@@ -52,7 +52,7 @@ const MenuTabs = [
     label: 'Add Item'
   },
   {
-    label: 'Add Options'
+    label: 'Options'
   }
 ];
 export default function BasicTabs() {
@@ -84,8 +84,7 @@ export default function BasicTabs() {
               value={value}
               onChange={handleChange}
               aria-label="Menu tabs"
-              sx={{ '> Tab': { fontSize: 'h5.fontSize' } }}
-              // variant="scrollable"
+              // sx={{ '> Tab': { fontSize: 'h5.fontSize' } }}
               scrollButtons="auto"
             >
               {MenuTabs.map(({ label }, index) => (
