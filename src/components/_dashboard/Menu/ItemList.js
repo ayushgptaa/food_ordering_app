@@ -1,14 +1,6 @@
 /* eslint-disable camelcase */
 import { useState } from 'react';
-import {
-  Grid,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-  IconButton,
-  ListSubheader
-} from '@mui/material';
+import { List, ListItem, ListItemText, Typography, IconButton, ListSubheader } from '@mui/material';
 import ListItemButton from '@mui/material/ListItemButton';
 import Collapse from '@mui/material/Collapse';
 import PropTypes from 'prop-types';

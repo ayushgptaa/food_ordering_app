@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { Grid, List, ListItem, ListItemText, Typography, IconButton } from '@mui/material';
+import { List, ListItem, ListItemText, Typography, IconButton } from '@mui/material';
 import ListSubheader from '@mui/material/ListSubheader';
 import PropTypes from 'prop-types';
 import DeleteIcon from '@mui/icons-material/Delete';
