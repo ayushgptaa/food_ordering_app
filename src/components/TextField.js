@@ -21,6 +21,7 @@ export default function CustomTextFeild(props) {
       onChange={inputhandler}
       autoComplete="off"
       sx={{ mt: 1.5 }}
+      required
       {...rest}
     />
   );
