@@ -7,7 +7,9 @@ import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import PropTypes from 'prop-types';
+import LoadingButton from 'src/components/LoadingButton';
 import TabsHeading from './TabsHeading';
+import Options from './Option/SubTabs/AddOption';
 
 ViewMenu.propTypes = {
   categories: PropTypes.arrayOf(
@@ -39,15 +41,15 @@ export default function ViewMenu({ categories }) {
                   Category : {category}
                 </Typography>
                 <CustomizedAccordions items={items} />
-                {/* <Button
-                  variant="contained"
-                  sx={{ mt: 3, fontSize: 'h6.fontSize', display: 'block', mx: 'auto' }}
-                >
-                  Publish
-                </Button> */}
               </Card>
             );
           })}
+
+      <LoadingButton
+        sx={{ width: 150, py: 1, mx: 'auto', display: 'block', mt: 1.5, fontSize: 'h5.fontSize' }}
+      >
+        Publish
+      </LoadingButton>
     </Container>
   );
 }
@@ -94,15 +96,18 @@ CustomizedAccordions.propTypes = {
 
 function CustomizedAccordions({ items }) {
   const [expanded, setExpanded] = useState('');
+  const [expanded2, setExpanded2] = useState('');
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
-
+  const handleChange2 = (panel) => (event, newExpanded) => {
+    setExpanded2(newExpanded ? panel : false);
+  };
   return (
     <div>
       {items &&
-        items.map(({ item_name, item_description }, index) => {
+        items.map(({ item_name, option_groups }, index) => {
           return (
             <Accordion
               expanded={expanded === `pannel${index}`}
@@ -110,10 +115,28 @@ function CustomizedAccordions({ items }) {
               key={index}
             >
               <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-                <Typography>{item_name}</Typography>
+                <Typography>Item : {item_name}</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Typography>{item_description}</Typography>
+                {option_groups &&
+                  option_groups.map(({ group_name, options }, index) => {
+                    return (
+                      <Accordion
+                        key={index}
+                        expanded={expanded2 === `pannel2-${index}`}
+                        onChange={handleChange2(`pannel2-${index}`)}
+                      >
+                        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+                          <Typography>Option group : {group_name}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          {options.map(({ option_name }, index) => {
+                            return <Typography key={index}>{option_name}</Typography>;
+                          })}
+                        </AccordionDetails>
+                      </Accordion>
+                    );
+                  })}
               </AccordionDetails>
             </Accordion>
           );
