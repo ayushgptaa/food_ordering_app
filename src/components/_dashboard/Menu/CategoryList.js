@@ -14,14 +14,14 @@ const ListContainer = styled('div')(({ theme }) => ({
   width: '100%'
 }));
 
-AvailableList.propTypes = {
+CategoryList.propTypes = {
   categories: PropTypes.array,
   handleOpenmodal: PropTypes.func,
   deleteCategory: PropTypes.func
 };
 
 // ------------------------------------------------------
-export default function AvailableList({ categories, handleOpenmodal, deleteCategory }) {
+export default function CategoryList({ categories, handleOpenmodal, deleteCategory }) {
   return (
     <ListContainer>
       <List
