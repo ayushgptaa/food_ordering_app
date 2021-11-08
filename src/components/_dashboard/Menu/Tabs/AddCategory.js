@@ -9,6 +9,7 @@ import Modal from '../Modal';
 import LoadingButton from '../../../LoadingButton';
 import AvailableList from '../AvailableList';
 import TabsHeading from './TabsHeading';
+import TabsContainer from '../TabsContainer';
 
 AddCategory.propTypes = {
   categories: PropTypes.array,
@@ -132,52 +133,36 @@ export default function AddCategory({ categories, getCategory }) {
   };
 
   return (
-    <>
-      <Grid
-        container
-        direction="column"
-        alignItems="center"
+    <TabsContainer Heading="Add Category">
+      <CustomTextFeild
+        inputhandler={inputhandler}
+        label="Category"
+        placeholder="Enter Category"
+        name="Category"
+        value={inputval}
+      />
+      <LoadingButton
+        disabled={disabled}
+        addCategory={addCategory}
+        btnloading={btnloading}
+        loadingIndicator="Adding..."
+      >
+        ADD
+      </LoadingButton>
+
+      <Box
         sx={{
-          maxWidth: 350,
-          mx: 'auto'
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center'
         }}
       >
-        <TabsHeading Heading=" Add Categoory " />
-        <Box
-          sx={{
-            width: '100%'
-          }}
-        >
-          <CustomTextFeild
-            inputhandler={inputhandler}
-            label="Category"
-            placeholder="Enter Category"
-            name="Category"
-            value={inputval}
-          />
-          <LoadingButton
-            disabled={disabled}
-            addCategory={addCategory}
-            btnloading={btnloading}
-            loadingIndicator="Adding..."
-          >
-            ADD
-          </LoadingButton>
-        </Box>
-        <Box
-          sx={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center'
-          }}
-        >
-          <AvailableList
-            categories={categories}
-            handleOpenmodal={handleOpenmodal}
-            deleteCategory={deleteCategory}
-          />
-        </Box>
-      </Grid>
+        <AvailableList
+          categories={categories}
+          handleOpenmodal={handleOpenmodal}
+          deleteCategory={deleteCategory}
+        />
+      </Box>
       <SnackBar
         open={snackbar.open}
         severity={snackbar.severity}
@@ -190,6 +175,6 @@ export default function AddCategory({ categories, getCategory }) {
         category={id}
         editCategory={editCategory}
       />
-    </>
+    </TabsContainer>
   );
 }
