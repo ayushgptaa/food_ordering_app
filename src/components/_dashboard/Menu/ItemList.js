@@ -25,7 +25,7 @@ AvailableList.propTypes = {
 };
 
 // ------------------------------------------------------
-export default function AvailableList({ categories, deleteItemFromCategory }) {
+export default function AvailableList({ categories, deleteItemFromCategory, handleOpenmodal }) {
   const [selectedIndex, setSelectedIndex] = useState('');
   const handleClick = (index) => {
     if (selectedIndex === index) {
@@ -78,10 +78,7 @@ export default function AvailableList({ categories, deleteItemFromCategory }) {
                             sx={{ pl: 4 }}
                             secondaryAction={
                               <>
-                                <IconButton
-                                  edge="end"
-                                  // onClick={() => handleOpenmodal(category_id)}
-                                >
+                                <IconButton edge="end" onClick={() => handleOpenmodal(item_id)}>
                                   <EditIcon aria-label="edit" />
                                 </IconButton>
                                 <IconButton
