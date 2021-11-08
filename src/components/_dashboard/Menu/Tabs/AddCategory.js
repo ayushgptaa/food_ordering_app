@@ -1,14 +1,13 @@
 /* eslint-disable camelcase */
 import { useState } from 'react';
-import { Grid, Box } from '@mui/material';
+import { Box } from '@mui/material';
 import PropTypes from 'prop-types';
 import SnackBar from '../../../Snackbar';
 import Fetch from '../Fetch';
 import CustomTextFeild from '../../../TextField';
 import Modal from '../Modal';
 import LoadingButton from '../../../LoadingButton';
-import AvailableList from '../AvailableList';
-import TabsHeading from './TabsHeading';
+import CategoryList from '../CategoryList';
 import TabsContainer from '../TabsContainer';
 
 AddCategory.propTypes = {
@@ -157,7 +156,7 @@ export default function AddCategory({ categories, getCategory }) {
           justifyContent: 'center'
         }}
       >
-        <AvailableList
+        <CategoryList
           categories={categories}
           handleOpenmodal={handleOpenmodal}
           deleteCategory={deleteCategory}
