@@ -6,7 +6,8 @@ export default function LoadingButton({
   addCategory,
   btnloading,
   loadingIndicator,
-  children
+  children,
+  ...rest
 }) {
   return (
     <MuiLoadingButton
@@ -16,6 +17,7 @@ export default function LoadingButton({
       onClick={addCategory}
       loading={btnloading}
       loadingIndicator={loadingIndicator}
+      {...rest}
     >
       {children}
     </MuiLoadingButton>
