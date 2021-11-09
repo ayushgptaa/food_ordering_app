@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import OptionGroup from './SubTabs/OptionGroup';
 import Options from './SubTabs/AddOption';
+import AddOptionGroup from './SubTabs/AddOptionGroup';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -35,7 +36,7 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs({ categories }) {
+export default function BasicTabs({ categories, getCategory }) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -46,15 +47,19 @@ export default function BasicTabs({ categories }) {
     <Box sx={{ width: '100%' }}>
       <Box>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
-          <Tab label="Add Option Group" {...a11yProps(0)} sx={{ fontSize: 'h6.fontSize' }} />
-          <Tab label="Add Options" {...a11yProps(1)} sx={{ fontSize: 'h6.fontSize' }} />
+          <Tab label="Create Option Group" {...a11yProps(0)} sx={{ fontSize: 'h6.fontSize' }} />
+          <Tab label="Add Option Group" {...a11yProps(1)} sx={{ fontSize: 'h6.fontSize' }} />
+          <Tab label="Add Options" {...a11yProps(2)} sx={{ fontSize: 'h6.fontSize' }} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <OptionGroup categories={categories} />
+        <OptionGroup categories={categories} getCategory={getCategory} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Options />
+        <AddOptionGroup categories={categories} />
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <Options categories={categories} />
       </TabPanel>
     </Box>
   );

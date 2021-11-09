@@ -1,4 +1,14 @@
-import { Select, Grid, Box, InputLabel, FormControl, InputAdornment } from '@mui/material';
+/* eslint-disable camelcase */
+import { useState } from 'react';
+import {
+  Select,
+  Grid,
+  Box,
+  InputLabel,
+  FormControl,
+  InputAdornment,
+  MenuItem
+} from '@mui/material';
 import LoadingButton from 'src/components/LoadingButton';
 import CustomTextFeild from 'src/components/TextField';
 import TabsHeading from '../../TabsHeading';
@@ -6,13 +16,33 @@ import TabsHeading from '../../TabsHeading';
 // ------------------------------------------------
 
 export default function Options({ categories }) {
+  const defaultStates = {
+    group_id: '',
+    option_name: '',
+    option_price: null
+  };
+  const [disabled, setDisabled] = useState(true);
+  const [btnloading, setBtnloading] = useState(false);
+  const [input, setInput] = useState(defaultStates);
+  const btnhandler = () => {
+    console.log(input);
+  };
+  const inputhandler = (e) => {
+    const { value } = e.target;
+    setDisabled(false);
+    console.log({ ...input });
+    setInput({
+      ...input,
+      [e.target.name]: value
+    });
+  };
   return (
     <Grid container direction="column" alignItems="center">
       <TabsHeading Heading="Add Options to Option Group" />
       <Box
         sx={{
           maxWidth: 350,
-          mt: 2
+          mt: 1.5
         }}
       >
         <FormControl fullWidth>
@@ -20,25 +50,32 @@ export default function Options({ categories }) {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            // value={input.category_id}
-            value=""
-            name="item_id"
+            value={input.group_id}
+            name="group_id"
             label="Select Option Group"
-            // onChange={inputhandler}
+            onChange={inputhandler}
           >
-            {/* {categories.map(({ items }) => {
-            return items.map(({ item_name, item_id }) => {
-              return (
-                <MenuItem value={item_id} key={item_id}>
-                  {item_name}
-                </MenuItem>
-              );
-            });
-          })} */}
+            {categories &&
+              categories.map(({ items }) => {
+                return items.map(({ option_groups }) => {
+                  return option_groups.map(({ group_name, group_id }) => {
+                    return (
+                      <MenuItem value={group_id} key={group_id}>
+                        {group_name}
+                      </MenuItem>
+                    );
+                  });
+                });
+              })}
           </Select>
         </FormControl>
 
-        <CustomTextFeild label="Option name" placeholder="Enter Option name " />
+        <CustomTextFeild
+          label="Option name"
+          placeholder="Enter Option name "
+          name="option_name"
+          onChange={inputhandler}
+        />
 
         <CustomTextFeild
           margin="dense"
@@ -47,14 +84,14 @@ export default function Options({ categories }) {
           InputProps={{
             endAdornment: <InputAdornment position="end">$</InputAdornment>
           }}
-          // onChange={inputhandler}
-          name="item_price"
+          onChange={inputhandler}
+          name="option_price"
           type="number"
         />
         <LoadingButton
-          // disabled={disabled}
-          // addCategory={addItemtoCategory}
-          // btnloading={btnloading}
+          disabled={disabled}
+          addCategory={btnhandler}
+          btnloading={btnloading}
           loadingIndicator="Adding..."
         >
           ADD
