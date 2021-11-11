@@ -92,7 +92,14 @@ export const ContextProvider = ({ children }) => {
           message: success
         });
       })
-      .catch(() => {
+      .catch((e) => {
+        if (e) {
+          return setSnackbar({
+            severity: 'error',
+            open: true,
+            message: 'Cannot delete Category because it has Items, delete each item manually'
+          });
+        }
         setSnackbar({
           severity: 'error',
           open: true,
