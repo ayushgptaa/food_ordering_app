@@ -9,7 +9,7 @@ const Alert = forwardRef((props, ref) => {
 
 export default function SnackBar({ open, severity, handleClose, message }) {
   return (
-    <MuiSnackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+    <MuiSnackbar open={open} autoHideDuration={4000} onClose={handleClose}>
       <Alert onClose={handleClose} sx={{ width: '100%' }} severity={severity}>
         {message}
       </Alert>
