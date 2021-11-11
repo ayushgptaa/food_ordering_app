@@ -23,12 +23,12 @@ const style = {
 BasicModal.propTypes = {
   open: PropTypes.bool,
   handleClose: PropTypes.func,
-  category: PropTypes.string,
-  editCategory: PropTypes.func
+  itemid: PropTypes.string,
+  editItem: PropTypes.func
 };
 // -------------------------------------------------------------
 
-export default function BasicModal({ open, handleClose, editCategory, itemid }) {
+export default function BasicModal({ open, handleClose, editItem, itemid }) {
   const defaultStates = {
     item_name: '',
     item_description: '',
@@ -98,7 +98,7 @@ export default function BasicModal({ open, handleClose, editCategory, itemid }) 
               display: 'block'
             }}
             onClick={() => {
-              editCategory(input, itemid);
+              editItem(input, itemid);
             }}
           >
             ADD

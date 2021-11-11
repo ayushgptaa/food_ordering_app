@@ -28,9 +28,9 @@ BasicModal.propTypes = {
 // -------------------------------------------------------------
 
 export default function BasicModal({ open, handleClose, category, editCategory }) {
-  const [inputval, setinputval] = useState('');
+  const [input, setInput] = useState('');
   const inputhandler = (e) => {
-    setinputval(e.target.value);
+    setInput(e.target.value);
   };
   return (
     <div>
@@ -55,7 +55,7 @@ export default function BasicModal({ open, handleClose, category, editCategory }
             label="Change Category"
             placeholder="Enter Category"
             autoFocus
-            value={inputval}
+            value={input}
             inputhandler={inputhandler}
           />
           <Button
@@ -69,8 +69,8 @@ export default function BasicModal({ open, handleClose, category, editCategory }
               display: 'block'
             }}
             onClick={() => {
-              setinputval('');
-              editCategory(category, inputval);
+              setInput('');
+              editCategory(category, input);
             }}
           >
             ADD

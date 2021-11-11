@@ -20,7 +20,7 @@ const ListContainer = styled('div')(({ theme }) => ({
 
 AvailableList.propTypes = {
   categories: PropTypes.array,
-  // handleOpenmodal: PropTypes.func,
+  handleOpenmodal: PropTypes.func,
   deleteItemFromCategory: PropTypes.func
 };
 

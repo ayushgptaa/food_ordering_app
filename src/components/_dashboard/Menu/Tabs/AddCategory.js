@@ -1,46 +1,34 @@
 /* eslint-disable camelcase */
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Box } from '@mui/material';
-import PropTypes from 'prop-types';
 import SnackBar from '../../../Snackbar';
-import Fetch from '../Fetch';
 import CustomTextFeild from '../../../TextField';
 import Modal from '../Modal';
 import LoadingButton from '../../../LoadingButton';
 import CategoryList from '../CategoryList';
 import TabsContainer from '../TabsContainer';
-
-AddCategory.propTypes = {
-  categories: PropTypes.array,
-  getCategory: PropTypes.func
-};
+import { MenuContext } from '../MenuStore/Context-Provider';
 
 //--------------------------------------------------------------
 
-export default function AddCategory({ categories, getCategory }) {
-  const [disabled, setDisabled] = useState(true);
-  const [btnloading, setBtnloading] = useState(false);
+export default function AddCategory() {
+  const {
+    categories,
+    snackbar,
+    openmodal,
+    modalid,
+    btnloading,
+    handleOpenmodal,
+    handleClosemodal,
+    closeSnackbar,
+    addfn,
+    deletefn,
+    editfn
+  } = useContext(MenuContext);
+
   const [inputval, setInputval] = useState('');
-  const [snackbar, setSnackbar] = useState({ severity: 'success', open: false, message: '' });
-  const [openmodal, setOpenmodal] = useState(false);
-  const [id, setid] = useState('');
-
-  const handleOpenmodal = (id) => {
-    setOpenmodal(true);
-    setid(id);
-  };
-
-  const handleClosemodal = () => {
-    setOpenmodal(false);
-  };
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setSnackbar({ open: false });
-  };
+  const [disabled, setDisabled] = useState(true);
+  // const [btnloading, setBtnloading] = useState(false);
 
   const inputhandler = (e) => {
     if (e.target.value === '') {
@@ -54,30 +42,13 @@ export default function AddCategory({ categories, getCategory }) {
   // ************** ADD CATEGORY FUNCTION ***************** //
 
   const addCategory = async () => {
-    setBtnloading(true);
     const data = {
       category_name: inputval
     };
-    Fetch(data, 'add_category')
-      .then(() => {
-        getCategory();
-        setBtnloading(false);
-        setInputval('');
-        setSnackbar({
-          severity: 'success',
-          open: true,
-          message: `${inputval} added to the Categories :)`
-        });
-      })
-      .catch(() => {
-        setInputval('');
-        setBtnloading(false);
-        setSnackbar({
-          severity: 'error',
-          open: true,
-          message: `Unable to add  ${inputval} to Categories. Try again :(`
-        });
-      });
+    setInputval('');
+    const SucessMsg = `${inputval} added to the Categories :)`;
+    const ErrorMsg = `Unable to add  ${inputval} to Categories. Try again :(`;
+    addfn('add_category', data, SucessMsg, ErrorMsg);
   };
 
   // ************** DELETE CATEGORY FUNCTION ***************** //
@@ -86,49 +57,20 @@ export default function AddCategory({ categories, getCategory }) {
     const data = {
       category_id: id
     };
-
-    Fetch(data, 'remove_category')
-      .then(() => {
-        getCategory();
-        setSnackbar({
-          severity: 'warning',
-          open: true,
-          message: `${category} deleted from the Categories :)`
-        });
-      })
-      .catch(() => {
-        setSnackbar({
-          severity: 'error',
-          open: true,
-          message: `Unable to delete ${category} from the Categories. Try again :(`
-        });
-      });
+    const name = category;
+    deletefn('remove_category', data, name);
   };
 
-  // ************** EDIT CATEGORY FUNCTION ***************** //
+  // // ************** EDIT CATEGORY FUNCTION ***************** //
 
-  const editCategory = async (id, input) => {
+  const editCategory = async (category_id, category_name) => {
+    const SucessMsg = `Changed Category to ${category_name} :)`;
+    const ErrorMsg = `Unable to change category. Try again :(`;
     const data = {
-      category_id: id,
-      category_name: input
+      category_id,
+      category_name
     };
-    Fetch(data, 'edit_category_name')
-      .then(() => {
-        getCategory();
-        handleClosemodal();
-        setSnackbar({
-          severity: 'success',
-          open: true,
-          message: `Changed Category to ${input} :)`
-        });
-      })
-      .catch(() => {
-        setSnackbar({
-          severity: 'error',
-          open: true,
-          message: `Unable to change category. Try again :(`
-        });
-      });
+    editfn('edit_category', data, SucessMsg, ErrorMsg);
   };
 
   return (
@@ -165,13 +107,13 @@ export default function AddCategory({ categories, getCategory }) {
       <SnackBar
         open={snackbar.open}
         severity={snackbar.severity}
-        handleClose={handleClose}
+        handleClose={closeSnackbar}
         message={snackbar.message}
       />
       <Modal
         open={openmodal}
         handleClose={handleClosemodal}
-        category={id}
+        category={modalid}
         editCategory={editCategory}
       />
     </TabsContainer>

@@ -1,25 +1,29 @@
 /* eslint-disable camelcase */
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Select, Box, InputAdornment, MenuItem, InputLabel, FormControl } from '@mui/material';
-import PropTypes from 'prop-types';
 import CustomTextFeild from 'src/components/TextField';
 import LoadingButton from 'src/components/LoadingButton';
 import SnackBar from 'src/components/Snackbar';
-import Fetch from '../Fetch';
 import ItemList from '../ItemList';
 import Modal from '../ItemModal';
 import TabsContainer from '../TabsContainer';
+import { MenuContext } from '../MenuStore/Context-Provider';
 
-AddItem.propTypes = {
-  categories: PropTypes.arrayOf(
-    PropTypes.shape({
-      category: PropTypes.string,
-      category_id: PropTypes.string
-    })
-  )
-};
 // eslint-disable-next-line react/prop-types
-export default function AddItem({ categories, getCategory }) {
+export default function AddItem() {
+  const {
+    categories,
+    snackbar,
+    openmodal,
+    modalid,
+    btnloading,
+    handleOpenmodal,
+    handleClosemodal,
+    closeSnackbar,
+    addfn,
+    deletefn,
+    editfn
+  } = useContext(MenuContext);
   const defaultStates = {
     item_name: '',
     item_description: '',
@@ -28,19 +32,6 @@ export default function AddItem({ categories, getCategory }) {
   };
   const [input, setInput] = useState(defaultStates);
   const [disabled, setDisabled] = useState(true);
-  const [btnloading, setBtnloading] = useState(false);
-  const [snackbar, setSnackbar] = useState({ severity: 'success', open: false, message: '' });
-  const [openmodal, setOpenmodal] = useState(false);
-  const [id, setid] = useState('');
-
-  const handleOpenmodal = (id) => {
-    setOpenmodal(true);
-    setid(id);
-  };
-
-  const handleClosemodal = () => {
-    setOpenmodal(false);
-  };
 
   const inputhandler = (e) => {
     const { value } = e.target;
@@ -52,97 +43,45 @@ export default function AddItem({ categories, getCategory }) {
     });
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setSnackbar({ open: false });
-  };
   // ************** ADD ITEM TO CATEGORY FUNCTION ***************** //
 
   const addItemtoCategory = async () => {
-    setBtnloading(true);
     const data = {
       ...input
     };
-    Fetch(data, 'add_item')
-      .then(() => {
-        getCategory();
-        setBtnloading(false);
-        setInput(defaultStates);
-        setSnackbar({
-          severity: 'success',
-          open: true,
-          message: `${input.item_name} added to the Categories :)`
-        });
-      })
-      .catch(() => {
-        setBtnloading(false);
-        setSnackbar({
-          severity: 'error',
-          open: true,
-          message: `Unable to add  ${input.item_name} to Categories. Try again :(`
-        });
-      });
+    const SuccessMsg = `${input.item_name} added to the Categories :)`;
+    const ErrorMsg = `Unable to add  ${input.item_name} to Categories. Try again :(`;
+    addfn('add_item', data, SuccessMsg, ErrorMsg);
   };
 
-  // ************** DELETE ITEM FROM CATEGORY FUNCTION ***************** //
+  // // ************** DELETE ITEM FROM CATEGORY FUNCTION ***************** //
 
   const deleteItemFromCategory = async (category_id, item_id, item) => {
     const data = {
       category_id,
       item_id
     };
-
-    Fetch(data, 'remove_item_from_category')
-      .then(() => {
-        getCategory();
-        setSnackbar({
-          severity: 'warning',
-          open: true,
-          message: ` Deleted ${item} from the Categories :)`
-        });
-      })
-      .catch(() => {
-        setSnackbar({
-          severity: 'error',
-          open: true,
-          message: `Unable to delete ${item} from the Categories. Try again :(`
-        });
-      });
+    const SuccessMsg = ` Deleted ${item} from the Categories :)`;
+    const ErrorMsg = ` Unable to delete ${item} from the Categories. Try again :)`;
+    deletefn('remove_item_from_category', data, SuccessMsg, ErrorMsg);
   };
 
-  // ************** EDIT ITEM FROM CATEGORY FUNCTION ***************** //
+  // // ************** EDIT ITEM FROM CATEGORY FUNCTION ***************** //
 
   const editItem = async ({ item_name, item_description, item_price }, item_id) => {
     const data = {
-      item_id: id,
+      item_id,
       item_name,
       item_description,
       item_price
     };
-    Fetch(data, 'edit_item')
-      .then(() => {
-        getCategory();
-        handleClosemodal();
-        setSnackbar({
-          severity: 'success',
-          open: true,
-          message: `Changed Category to ${input} :)`
-        });
-      })
-      .catch(() => {
-        setSnackbar({
-          severity: 'error',
-          open: true,
-          message: `Unable to change category. Try again :(`
-        });
-      });
+    const SuccessMsg = `Changed Category to ${item_name} :)`;
+    const ErrorMsg = ` Unable to change item . Try again :)`;
+    editfn('edit_item', data, SuccessMsg, ErrorMsg);
   };
   return (
-    <TabsContainer Heading="Add Item to Catrgory">
-      <FormControl fullWidth>
+    <TabsContainer Heading="Add Item to Category">
+      <FormControl fullWidth sx={{ mt: 1.5 }}>
         <InputLabel id="demo-simple-select-label">Select Category</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -172,7 +111,7 @@ export default function AddItem({ categories, getCategory }) {
         label="Item Description"
         placeholder="Item Description"
         multiline
-        rows={4}
+        rows={3}
         onChange={inputhandler}
         name="item_description"
       />
@@ -212,10 +151,10 @@ export default function AddItem({ categories, getCategory }) {
       <SnackBar
         open={snackbar.open}
         severity={snackbar.severity}
-        handleClose={handleClose}
+        handleClose={closeSnackbar}
         message={snackbar.message}
       />
-      <Modal open={openmodal} handleClose={handleClosemodal} editCategory={editItem} itemid={id} />
+      <Modal open={openmodal} handleClose={handleClosemodal} itemid={modalid} editItem={editItem} />
     </TabsContainer>
   );
 }

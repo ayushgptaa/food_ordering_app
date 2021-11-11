@@ -1,11 +1,11 @@
 import { createContext, useState } from 'react';
-import { bool } from 'yup';
 import Fetch from '../Fetch';
 
 const defaultvalues = {
   categories: [],
   snackbar: {},
   openmodal: false,
+  btnloading: false,
   modalid: '',
   closeSnackbar: () => {},
   handleOpenmodal: () => {},
@@ -22,9 +22,7 @@ export const MenuContext = createContext(defaultvalues);
 
 export const ContextProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
-  const [disabled, setDisabled] = useState(true);
   const [btnloading, setBtnloading] = useState(false);
-  const [inputval, setInputval] = useState('');
   const [snackbar, setSnackbar] = useState({ severity: 'success', open: false, message: '' });
   const [openmodal, setOpenmodal] = useState(false);
   const [modalid, setModalid] = useState('');
@@ -60,76 +58,67 @@ export const ContextProvider = ({ children }) => {
 
   // ************** ADD FUNCTION ***************** //
 
-  const addfn = async (endpoint) => {
-    const data = {
-      category_name: 'ayush'
-    };
+  const addfn = async (endpoint, data, success, error) => {
+    setBtnloading(true);
     Fetch(data, endpoint)
       .then(() => {
         getMenu();
         setBtnloading(false);
-        setInputval('');
         setSnackbar({
           severity: 'success',
           open: true,
-          message: `${inputval} added to the Categories :)`
+          message: success
         });
       })
       .catch(() => {
-        setInputval('');
         setBtnloading(false);
         setSnackbar({
           severity: 'error',
           open: true,
-          message: `Unable to add  ${inputval} to Categories. Try again :(`
+          message: error
         });
       });
   };
 
   // ************** DELETE CATEGORY FUNCTION ***************** //
 
-  const deletefn = async (endpoint, data, category) => {
-    Fetch(data, 'remove_category')
+  const deletefn = async (endpoint, data, success, error) => {
+    Fetch(data, endpoint)
       .then(() => {
         getMenu();
         setSnackbar({
           severity: 'warning',
           open: true,
-          message: `${category} deleted from the Categories :)`
-        });
-      })
-      .catch((e) => {
-        console.log(e);
-        setSnackbar({
-          severity: 'error',
-          open: true,
-          message: `Unable to delete ${category} from the Categories. Try again :(`
-        });
-      });
-  };
-
-  // ************** EDIT CATEGORY FUNCTION ***************** //
-
-  const editfn = async (endpoint, id, input) => {
-    const data = {
-      category_id: id,
-      category_name: input
-    };
-    Fetch(data, 'edit_category_name')
-      .then(() => {
-        getMenu();
-        handleClosemodal();
-        setSnackbar({
-          severity: 'success',
-          open: true,
-          message: `Changed Category to ${input} :)`
+          message: success
         });
       })
       .catch(() => {
         setSnackbar({
           severity: 'error',
           open: true,
-          message: `Unable to change category. Try again :(`
+          message: error
+        });
+      });
+  };
+
+  // ************** EDIT FUNCTION ***************** //
+
+  const editfn = async (endpoint, data, success, error) => {
+    Fetch(data, endpoint)
+      .then(() => {
+        getMenu();
+        handleClosemodal();
+        setSnackbar({
+          severity: 'success',
+          open: true,
+          message: success
+        });
+      })
+      .catch(() => {
+        setSnackbar({
+          severity: 'error',
+          open: true,
+          message: error
         });
       });
   };
@@ -139,6 +128,7 @@ export const ContextProvider = ({ children }) => {
     snackbar,
     modalid,
     openmodal,
+    btnloading,
     closeSnackbar,
     handleOpenmodal,
     handleClosemodal,
