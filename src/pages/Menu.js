@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Tab, Tabs, Box } from '@mui/material';
 import AddItem from 'src/components/_dashboard/Menu/Tabs/AddItem';
 import ViewMenu from 'src/components/_dashboard/Menu/Tabs/ViewMenu';
 import AddOption from 'src/components/_dashboard/Menu/Tabs//Option/Option';
 import AddCategory from 'src/components/_dashboard/Menu/Tabs/AddCategory';
+import { ContextProvider } from 'src/components/_dashboard/Menu/MenuStore/Context-Provider';
 import Page from '../components/Page';
-import Fetch from '../components/_dashboard/Menu/Fetch';
 
-// // ----------------------------------------------------------------------
+// ----------------------------------------------------------------------
 
 const commonTabstyle = {
   fontSize: 'subtitle1.fontSize'
@@ -57,23 +57,11 @@ const MenuTabs = [
 ];
 export default function BasicTabs() {
   const [value, setValue] = useState(0);
-  const [categories, setcategories] = useState([]);
-  useEffect(() => getCategory(), []);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  // ************** GET CATEGORIES FUNCTION ***************** //
-
-  const getCategory = async () => {
-    Fetch({}, 'get_draft_menu')
-      .then((res) => {
-        setcategories(res.categories);
-      })
-      .catch(() => {
-        setcategories([]);
-      });
-  };
   return (
     <Page title="Dashboard: Add Menu ">
       <Container>
@@ -84,7 +72,6 @@ export default function BasicTabs() {
               value={value}
               onChange={handleChange}
               aria-label="Menu tabs"
-              // sx={{ '> Tab': { fontSize: 'h5.fontSize' } }}
               scrollButtons="auto"
             >
               {MenuTabs.map(({ label }, index) => (
@@ -92,18 +79,20 @@ export default function BasicTabs() {
               ))}
             </Tabs>
           </Box>
-          <TabPanel value={value} index={0}>
-            <ViewMenu categories={categories} getCategory={getCategory} />
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <AddCategory categories={categories} getCategory={getCategory} />
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            <AddItem categories={categories} getCategory={getCategory} />
-          </TabPanel>
-          <TabPanel value={value} index={3}>
-            <AddOption categories={categories} getCategory={getCategory} />
-          </TabPanel>
+          <ContextProvider>
+            <TabPanel value={value} index={0}>
+              <ViewMenu />
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <AddCategory />
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+              <AddItem />
+            </TabPanel>
+            <TabPanel value={value} index={3}>
+              <AddOption />
+            </TabPanel>
+          </ContextProvider>
         </Box>
       </Container>
     </Page>
