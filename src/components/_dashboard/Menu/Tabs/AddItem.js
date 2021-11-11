@@ -4,7 +4,7 @@ import { Select, Box, InputAdornment, MenuItem, InputLabel, FormControl } from '
 import CustomTextFeild from 'src/components/TextField';
 import LoadingButton from 'src/components/LoadingButton';
 import SnackBar from 'src/components/Snackbar';
-import ItemList from '../ItemList';
+import ItemList from '../Lists/ItemList';
 import Modal from '../ItemModal';
 import TabsContainer from '../TabsContainer';
 import { MenuContext } from '../MenuStore/Context-Provider';
@@ -27,7 +27,7 @@ export default function AddItem() {
   const defaultStates = {
     item_name: '',
     item_description: '',
-    item_price: null,
+    item_price: '',
     category_id: ''
   };
   const [input, setInput] = useState(defaultStates);
@@ -38,17 +38,19 @@ export default function AddItem() {
     setDisabled(false);
     setInput({
       ...input,
-      [e.target.name]: value,
-      item_price: Number(value)
+      [e.target.name]: value
     });
   };
 
   // ************** ADD ITEM TO CATEGORY FUNCTION ***************** //
 
   const addItemtoCategory = async () => {
+    setInput(defaultStates);
     const data = {
-      ...input
+      ...input,
+      item_price: Number(input.item_price)
     };
+
     const SuccessMsg = `${input.item_name} added to the Categories :)`;
     const ErrorMsg = `Unable to add  ${input.item_name} to Categories. Try again :(`;
     addfn('add_item', data, SuccessMsg, ErrorMsg);
@@ -61,8 +63,8 @@ export default function AddItem() {
       category_id,
       item_id
     };
-    const SuccessMsg = ` Deleted ${item} from the Categories :)`;
-    const ErrorMsg = ` Unable to delete ${item} from the Categories. Try again :)`;
+    const SuccessMsg = ` Deleted ${item} from the Items :)`;
+    const ErrorMsg = ` Unable to delete ${item} from the Items. Try again :)`;
     deletefn('remove_item_from_category', data, SuccessMsg, ErrorMsg);
   };
 
@@ -106,6 +108,7 @@ export default function AddItem() {
         placeholder="Enter Item"
         onChange={inputhandler}
         name="item_name"
+        value={input.item_name}
       />
       <CustomTextFeild
         label="Item Description"
@@ -114,6 +117,7 @@ export default function AddItem() {
         rows={3}
         onChange={inputhandler}
         name="item_description"
+        value={input.item_description}
       />
       <CustomTextFeild
         margin="dense"
@@ -125,6 +129,7 @@ export default function AddItem() {
         onChange={inputhandler}
         name="item_price"
         type="number"
+        value={input.item_price}
       />
       <LoadingButton
         disabled={disabled}

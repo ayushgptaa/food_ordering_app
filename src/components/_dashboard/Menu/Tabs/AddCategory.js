@@ -5,7 +5,7 @@ import SnackBar from '../../../Snackbar';
 import CustomTextFeild from '../../../TextField';
 import Modal from '../Modal';
 import LoadingButton from '../../../LoadingButton';
-import CategoryList from '../CategoryList';
+import CategoryList from '../Lists/CategoryList';
 import TabsContainer from '../TabsContainer';
 import { MenuContext } from '../MenuStore/Context-Provider';
 
@@ -57,8 +57,9 @@ export default function AddCategory() {
     const data = {
       category_id: id
     };
-    const name = category;
-    deletefn('remove_category', data, name);
+    const SuccessMsg = ` Deleted ${category} from the Categories :)`;
+    const ErrorMsg = ` Unable to delete ${category} from the Categories. Try again :)`;
+    deletefn('remove_category', data, SuccessMsg, ErrorMsg);
   };
 
   // // ************** EDIT CATEGORY FUNCTION ***************** //
