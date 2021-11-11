@@ -14,6 +14,11 @@ const Fetch = async (data, request) => {
     })
   });
 
+  if (response.status === 400) {
+    return response.text().then((text) => {
+      throw new Error(text);
+    });
+  }
   return response.json();
 };
 
