@@ -57,7 +57,7 @@
     "prettier/prettier": [
       2,
       {
-        "printWidth": 130,
+        "printWidth": 100,
         "singleQuote": true,
         "trailingComma": "none",
         "tabWidth": 2,
