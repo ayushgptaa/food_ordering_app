@@ -60,7 +60,7 @@ export default function BasicModal({ open, handleClose, editItem, itemid }) {
             <HighlightOffIcon aria-label="edit" />
           </IconButton>
           <Typography id="modal-modal-title" variant="h6" component="h2" gutterBottom>
-            Rename Category
+            Rename Items
           </Typography>
           <CustomTextFeild
             label="Item Title"
