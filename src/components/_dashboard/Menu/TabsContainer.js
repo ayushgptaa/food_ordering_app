@@ -9,7 +9,7 @@ export default function TabsContainer({ Heading, children }) {
       direction="column"
       alignItems="center"
       sx={{
-        maxWidth: 350,
+        maxWidth: 400,
         mx: 'auto'
       }}
     >
