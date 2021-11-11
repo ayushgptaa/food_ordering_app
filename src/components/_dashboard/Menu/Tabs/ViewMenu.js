@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
-import { Container, Card, Typography, Grid, Skeleton } from '@mui/material';
-import { useState } from 'react';
+import { Container, Card, Typography, Skeleton } from '@mui/material';
+import { useState, useContext, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion from '@mui/material/Accordion';
@@ -9,25 +9,20 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import PropTypes from 'prop-types';
 import LoadingButton from 'src/components/LoadingButton';
 import TabsHeading from './TabsHeading';
-import Options from './Option/SubTabs/AddOption';
+import { MenuContext } from '../MenuStore/Context-Provider';
 
-ViewMenu.propTypes = {
-  categories: PropTypes.arrayOf(
-    PropTypes.shape({
-      category: PropTypes.string,
-      category_id: PropTypes.string
-    })
-  )
-};
 // ----------------------------------------------------------------------
-export default function ViewMenu({ categories }) {
+export default function ViewMenu() {
+  const { categories, getMenu } = useContext(MenuContext);
+  useEffect(() => getMenu(), [getMenu]);
+
   return (
     <Container>
       <TabsHeading Heading="Draft Categories" />
       {categories.length === 0
         ? [0, 1, 2, 4].map((index) => {
             return (
-              <Card sx={{ p: 4, maxWidth: 'sm', mx: 'auto', mt: 2 }} key={index}>
+              <Card sx={{ p: 4, maxWidth: 'sm', mx: 'auto', mt: 2.5 }} key={index}>
                 <Skeleton variant="text" width={200} height={75} />
                 <Skeleton variant="string" height={40} />
                 <Skeleton variant="string" height={40} />
@@ -36,8 +31,8 @@ export default function ViewMenu({ categories }) {
           })
         : categories.map(({ category, items }, index) => {
             return (
-              <Card sx={{ p: 4, maxWidth: 'sm', mx: 'auto', mt: 2 }} key={index}>
-                <Typography variant="h4" sx={{ opacity: 0.72, color: 'primary.main' }} gutterBottom>
+              <Card sx={{ p: 4, maxWidth: 'sm', mx: 'auto', mt: 2.5 }} key={index}>
+                <Typography variant="h4" sx={{ opacity: 0.8, color: 'primary.main' }} gutterBottom>
                   Category : {category}
                 </Typography>
                 <CustomizedAccordions items={items} />
@@ -72,8 +67,7 @@ const AccordionSummary = styled((props) => (
     {...props}
   />
 ))(({ theme }) => ({
-  backgroundColor:
-    theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, .05)' : 'rgba(0, 0, 0, .03)',
+  backgroundColor: theme.palette.grey[100],
   flexDirection: 'row-reverse',
   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
     transform: 'rotate(90deg)'
@@ -105,7 +99,7 @@ function CustomizedAccordions({ items }) {
     setExpanded2(newExpanded ? panel : false);
   };
   return (
-    <div>
+    <>
       {items &&
         items.map(({ item_name, option_groups }, index) => {
           return (
@@ -126,7 +120,7 @@ function CustomizedAccordions({ items }) {
                         expanded={expanded2 === `pannel2-${index}`}
                         onChange={handleChange2(`pannel2-${index}`)}
                       >
-                        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+                        <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
                           <Typography>Option group : {group_name}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
@@ -141,6 +135,6 @@ function CustomizedAccordions({ items }) {
             </Accordion>
           );
         })}
-    </div>
+    </>
   );
 }
