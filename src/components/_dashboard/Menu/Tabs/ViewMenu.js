@@ -13,15 +13,14 @@ import { MenuContext } from '../MenuStore/Context-Provider';
 
 // ----------------------------------------------------------------------
 export default function ViewMenu() {
-  const { categories, getDraftMenu, getMenu } = useContext(MenuContext);
+  const { categories, getDraftMenu } = useContext(MenuContext);
   useEffect(() => {
     getDraftMenu();
-    getMenu();
   }, []);
 
   return (
     <Container>
-      <TabsHeading Heading="Draft Categories" />
+      <TabsHeading Heading="Draft Menu" />
       {categories.length === 0
         ? [0, 1, 2, 4].map((index) => {
             return (
