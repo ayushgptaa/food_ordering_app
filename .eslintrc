@@ -4,7 +4,12 @@
     "browser": true,
     "node": true
   },
-  "extends": ["airbnb", "prettier", "plugin:jsx-a11y/recommended", "plugin:react-hooks/recommended"],
+  "extends": [
+    "airbnb",
+    "prettier",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react-hooks/recommended"
+  ],
   "plugins": ["prettier", "react", "react-hooks"],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
@@ -48,6 +53,7 @@
     "react-hooks/rules-of-hooks": 2,
     "arrow-body-style": 0,
     "import/no-unresolved": 0,
+    "react-hooks/exhaustive-deps": 0,
     "no-unused-vars": [
       1,
       {
