@@ -1,17 +1,18 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Tab, Tabs, Box } from '@mui/material';
 import AddItem from 'src/components/_dashboard/Menu/Tabs/AddItem';
+import PublishedMenu from 'src/components/_dashboard/Menu/Tabs/PublishedMenu';
 import ViewMenu from 'src/components/_dashboard/Menu/Tabs/ViewMenu';
 import AddOption from 'src/components/_dashboard/Menu/Tabs//Option/Option';
 import AddCategory from 'src/components/_dashboard/Menu/Tabs/AddCategory';
-import { ContextProvider } from 'src/components/_dashboard/Menu/MenuStore/Context-Provider';
+import { MenuContext } from 'src/components/_dashboard/Menu/MenuStore/Context-Provider';
 import Page from '../components/Page';
 
 // ----------------------------------------------------------------------
 
 const commonTabstyle = {
-  fontSize: 'subtitle1.fontSize'
+  fontSize: 'h5.fontSize'
 };
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,8 +43,9 @@ function a11yProps(index) {
   };
 }
 const MenuTabs = [
+  { label: 'Published Menu' },
   {
-    label: 'View Menu'
+    label: 'Draft Menu'
   },
   {
     label: 'Add Category'
@@ -57,6 +59,11 @@ const MenuTabs = [
 ];
 export default function BasicTabs() {
   const [value, setValue] = useState(0);
+  const { getMenu, getDraftMenu } = useContext(MenuContext);
+  useEffect(() => {
+    getMenu();
+    getDraftMenu();
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -79,20 +86,23 @@ export default function BasicTabs() {
               ))}
             </Tabs>
           </Box>
-          <ContextProvider>
-            <TabPanel value={value} index={0}>
-              <ViewMenu />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-              <AddCategory />
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-              <AddItem />
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-              <AddOption />
-            </TabPanel>
-          </ContextProvider>
+
+          <TabPanel value={value} index={0}>
+            {/* <PublishedMenu /> */}
+            hello
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <ViewMenu />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <AddCategory />
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            <AddItem />
+          </TabPanel>
+          <TabPanel value={value} index={4}>
+            <AddOption />
+          </TabPanel>
         </Box>
       </Container>
     </Page>

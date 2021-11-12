@@ -1,5 +1,6 @@
 import { Navigate, useRoutes } from 'react-router-dom';
 // layouts
+import { ContextProvider } from 'src/components/_dashboard/Menu/MenuStore/Context-Provider';
 import DashboardLayout from './layouts/dashboard';
 import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
@@ -24,7 +25,14 @@ export default function Router() {
         { path: 'app', element: <DashboardApp /> },
         { path: 'my-orders', element: <MyOrders /> },
         { path: 'promote', element: <Promote /> },
-        { path: 'menu', element: <Menu /> },
+        {
+          path: 'menu',
+          element: (
+            <ContextProvider>
+              <Menu />
+            </ContextProvider>
+          )
+        },
         { path: 'settings', element: <Settings /> }
       ]
     },
