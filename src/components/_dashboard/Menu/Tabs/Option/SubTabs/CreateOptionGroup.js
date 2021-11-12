@@ -1,69 +1,53 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Select, Box, MenuItem, InputLabel, FormControl } from '@mui/material';
 import LoadingButton from 'src/components/LoadingButton';
-
 import CustomTextFeild from 'src/components/TextField';
-// import TabsHeading from '../../TabsHeading';
 import SnackBar from 'src/components/Snackbar';
 import GroupList from '../../../GroupList';
 import TabsContainer from '../../../TabsContainer';
-import Fetch from '../../../Fetch';
+import { MenuContext } from '../../../MenuStore/Context-Provider';
 
-export default function AddOption({ categories, getCategory }) {
+// ----------------------------------------------------------
+
+export default function AddOptionGroup() {
+  const { btnloading, snackbar, closeSnackbar, getMenu, addfn, deletefn } = useContext(MenuContext);
+  useEffect(() => {
+    getMenu();
+  }, [getMenu]);
+
   const defaultStates = {
     group_name: '',
     required_or_optional: '',
     select_upto: ''
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setSnackbar({ open: false });
-  };
   const [disabled, setDisabled] = useState(true);
   const [input, setInput] = useState(defaultStates);
-  const [btnloading, setBtnloading] = useState(false);
-  const [snackbar, setSnackbar] = useState({ severity: 'success', open: false, message: '' });
-  // const [openmodal, setOpenmodal] = useState(false);
   // const [id, setid] = useState('');
 
-  // ************** ADD CATEGORY FUNCTION ***************** /
-  const getOptionGroups = () => {
-    // setBtnloading(true);
+  // ************** ADD OPTION GROUP FUNCTION ***************** /
+  const getOptionGroup = () => {
     const data = {
       option_group: {
         ...input,
         select_upto: Number(input.select_upto)
       }
     };
-    console.log(data);
+    const SuccessMsg = `${input.group_name} added to  :)`;
+    const ErrorMsg = `Unable to add  ${input.group_name} to Categories. Try again :(`;
+    addfn('add_option_group', data, SuccessMsg, ErrorMsg);
+  };
 
-    Fetch(data, 'add_option')
-      .then(() => {
-        getCategory();
-        setBtnloading(false);
-        setInput(defaultStates);
-        setSnackbar({
-          severity: 'success',
-          open: true,
-          message: `${input.group_name} added to  :)`
-        });
-      })
-      .catch((e) => {
-        console.log(e);
-        setInput(defaultStates);
-        setBtnloading(false);
-        setSnackbar({
-          severity: 'error',
-          open: true,
-          message: `Unable to add  ${input.group_name} to Categories. Try again :(`
-        });
-      });
+  // // ************** DELETE ITEM FROM CATEGORY FUNCTION ***************** //
+
+  const deleteOptionGroup = async (groupname, group_id) => {
+    const data = {
+      group_id
+    };
+    const SuccessMsg = ` Deleted ${groupname} from the Group Options :)`;
+    const ErrorMsg = ` Unable to delete ${groupname} from the Option Groups. Try again :)`;
+    deletefn('remove_option_group_completely', data, SuccessMsg, ErrorMsg);
   };
   const inputhandler = (e) => {
     const { value } = e.target;
@@ -105,11 +89,11 @@ export default function AddOption({ categories, getCategory }) {
         type="number"
         name="select_upto"
         onChange={inputhandler}
-        // value={input.select_upto}
+        value={input.select_upto}
       />
       <LoadingButton
         disabled={disabled}
-        addCategory={getOptionGroups}
+        addCategory={getOptionGroup}
         btnloading={btnloading}
         loadingIndicator="Adding..."
       >
@@ -122,12 +106,12 @@ export default function AddOption({ categories, getCategory }) {
           justifyContent: 'center'
         }}
       >
-        <GroupList categories={categories} />
+        <GroupList deleteOptionGroup={deleteOptionGroup} />
       </Box>
       <SnackBar
         open={snackbar.open}
         severity={snackbar.severity}
-        handleClose={handleClose}
+        handleClose={closeSnackbar}
         message={snackbar.message}
       />
     </TabsContainer>
