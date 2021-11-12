@@ -40,6 +40,7 @@ export default function AddOptionGroup() {
         select_upto: Number(input.select_upto)
       }
     };
+    // openOptions();
     const SuccessMsg = `${input.group_name} added to  :)`;
     const ErrorMsg = `Unable to add  ${input.group_name} to Categories. Try again :(`;
     addfn('add_option_group', data, SuccessMsg, ErrorMsg);
@@ -55,6 +56,8 @@ export default function AddOptionGroup() {
     const ErrorMsg = ` Unable to delete ${groupname} from the Option Groups. Try again :)`;
     deletefn('remove_option_group_completely', data, SuccessMsg, ErrorMsg);
   };
+
+  // ************** EDIT OPTION GROUP FUNCTION ***************** //
 
   const editOptionGroup = async ({ group_name, required_or_optional, select_upto }, group_id) => {
     const data = {
