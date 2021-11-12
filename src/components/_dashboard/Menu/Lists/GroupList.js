@@ -1,9 +1,10 @@
 /* eslint-disable camelcase */
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { List, ListItem, ListItemText, Typography, IconButton, ListSubheader } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { styled } from '@mui/material/styles';
+import { MenuContext } from '../MenuStore/Context-Provider';
 
 const ListContainer = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -20,8 +21,9 @@ const ListContainer = styled('div')(({ theme }) => ({
 // };
 
 // ------------------------------------------------------
-export default function GroupList({ categories }) {
+export default function GroupList({ deleteOptionGroup }) {
   const [selectedIndex, setSelectedIndex] = useState('');
+  const { optiongroups } = useContext(MenuContext);
   const handleClick = (index) => {
     if (selectedIndex === index) {
       setSelectedIndex('');
@@ -50,37 +52,28 @@ export default function GroupList({ categories }) {
           </ListSubheader>
         }
       >
-        {categories &&
-          categories.map(({ items }) => {
-            return items.map(
-              ({ option_groups }) =>
-                option_groups &&
-                option_groups.map(({ group_name, group_id }) => {
-                  return (
-                    <ListItem
-                      key={group_id}
-                      secondaryAction={
-                        <>
-                          <IconButton
-                            edge="end"
+        {optiongroups &&
+          optiongroups.map(({ group_name, group_id }) => {
+            return (
+              <ListItem
+                key={group_id}
+                secondaryAction={
+                  <>
+                    <IconButton
+                      edge="end"
 
-                            // onClick={() => handleOpenmodal(category_id)}
-                          >
-                            <EditIcon aria-label="edit" />
-                          </IconButton>
-                          <IconButton
-                            edge="end"
-                            // onClick={() => deleteCategory(category, category_id)}
-                          >
-                            <DeleteIcon aria-label="delete" />
-                          </IconButton>
-                        </>
-                      }
+                      // onClick={() => handleOpenmodal(category_id)}
                     >
-                      <ListItemText primary={group_name} key={group_id} />
-                    </ListItem>
-                  );
-                })
+                      <EditIcon aria-label="edit" />
+                    </IconButton>
+                    <IconButton edge="end" onClick={() => deleteOptionGroup(group_name, group_id)}>
+                      <DeleteIcon aria-label="delete" />
+                    </IconButton>
+                  </>
+                }
+              >
+                <ListItemText primary={group_name} key={group_id} />
+              </ListItem>
             );
           })}
       </List>
