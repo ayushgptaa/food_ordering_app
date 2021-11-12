@@ -56,7 +56,7 @@ export default function AddItem() {
     addfn('add_item', data, SuccessMsg, ErrorMsg);
   };
 
-  // // ************** DELETE ITEM FROM CATEGORY FUNCTION ***************** //
+  // ************** DELETE ITEM FROM CATEGORY FUNCTION ***************** //
 
   const deleteItemFromCategory = async (category_id, item_id, item) => {
     const data = {
