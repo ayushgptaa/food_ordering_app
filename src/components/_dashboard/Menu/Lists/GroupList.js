@@ -4,6 +4,7 @@ import { List, ListItem, ListItemText, Typography, IconButton, ListSubheader } f
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { styled } from '@mui/material/styles';
+import PropType from 'prop-types';
 import { MenuContext } from '../MenuStore/Context-Provider';
 
 const ListContainer = styled('div')(({ theme }) => ({
@@ -14,23 +15,13 @@ const ListContainer = styled('div')(({ theme }) => ({
   width: '100%'
 }));
 
-// AvailableList.propTypes = {
-//   categories: PropTypes.array,
-//   // handleOpenmodal: PropTypes.func,
-//   deleteItemFromCategory: PropTypes.func
-// };
+GroupList.propTypes = {
+  deleteOptionGroup: PropType.func
+};
 
 // ------------------------------------------------------
 export default function GroupList({ deleteOptionGroup }) {
-  const [selectedIndex, setSelectedIndex] = useState('');
-  const { optiongroups } = useContext(MenuContext);
-  const handleClick = (index) => {
-    if (selectedIndex === index) {
-      setSelectedIndex('');
-    } else {
-      setSelectedIndex(index);
-    }
-  };
+  const { optiongroups, handleOpenmodal } = useContext(MenuContext);
 
   return (
     <ListContainer>
@@ -59,11 +50,7 @@ export default function GroupList({ deleteOptionGroup }) {
                 key={group_id}
                 secondaryAction={
                   <>
-                    <IconButton
-                      edge="end"
-
-                      // onClick={() => handleOpenmodal(category_id)}
-                    >
+                    <IconButton edge="end" onClick={() => handleOpenmodal(group_id)}>
                       <EditIcon aria-label="edit" />
                     </IconButton>
                     <IconButton edge="end" onClick={() => deleteOptionGroup(group_name, group_id)}>
