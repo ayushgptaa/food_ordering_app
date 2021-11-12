@@ -13,8 +13,11 @@ import { MenuContext } from '../MenuStore/Context-Provider';
 
 // ----------------------------------------------------------------------
 export default function ViewMenu() {
-  const { categories, getMenu } = useContext(MenuContext);
-  useEffect(() => getMenu(), [getMenu]);
+  const { categories, getDraftMenu, getMenu } = useContext(MenuContext);
+  useEffect(() => {
+    getDraftMenu();
+    getMenu();
+  }, []);
 
   return (
     <Container>

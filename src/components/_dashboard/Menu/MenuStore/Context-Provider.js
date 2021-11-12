@@ -1,8 +1,10 @@
+/* eslint-disable camelcase */
 import { createContext, useState } from 'react';
 import Fetch from '../Fetch';
 
 const defaultvalues = {
   categories: [],
+  optiongroups: [],
   snackbar: {},
   openmodal: false,
   btnloading: false,
@@ -11,6 +13,7 @@ const defaultvalues = {
   handleOpenmodal: () => {},
   handleClosemodal: () => {},
   getMenu: () => {},
+  getDraftMenu: () => {},
   addfn: () => {},
   deletefn: () => {},
   editfn: () => {}
@@ -20,8 +23,10 @@ export const MenuContext = createContext(defaultvalues);
 
 // ----------------------------------------------------------
 
+// eslint-disable-next-line react/prop-types
 export const ContextProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
+  const [optiongroups, setOptionGroups] = useState([]);
   const [btnloading, setBtnloading] = useState(false);
   const [snackbar, setSnackbar] = useState({ severity: 'success', open: false, message: '' });
   const [openmodal, setOpenmodal] = useState(false);
@@ -46,6 +51,18 @@ export const ContextProvider = ({ children }) => {
 
   // ************** GET DRAFT MENU FUNCTION ***************** //
   const getMenu = async () => {
+    Fetch({}, 'get_menu')
+      .then((res) => {
+        const { option_groups } = res;
+        setOptionGroups(option_groups);
+      })
+      .catch(() => {
+        setCategories([]);
+      });
+  };
+
+  // ************** GET DRAFT MENU FUNCTION ***************** //
+  const getDraftMenu = async () => {
     Fetch({}, 'get_draft_menu')
       .then((res) => {
         const { categories } = res;
@@ -63,6 +80,7 @@ export const ContextProvider = ({ children }) => {
     Fetch(data, endpoint)
       .then(() => {
         getMenu();
+        getDraftMenu();
         setBtnloading(false);
         setSnackbar({
           severity: 'success',
@@ -86,6 +104,7 @@ export const ContextProvider = ({ children }) => {
     Fetch(data, endpoint)
       .then(() => {
         getMenu();
+        getDraftMenu();
         setSnackbar({
           severity: 'warning',
           open: true,
@@ -114,6 +133,7 @@ export const ContextProvider = ({ children }) => {
     Fetch(data, endpoint)
       .then(() => {
         getMenu();
+        getDraftMenu();
         handleClosemodal();
         setSnackbar({
           severity: 'success',
@@ -121,7 +141,8 @@ export const ContextProvider = ({ children }) => {
           message: success
         });
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log(e);
         setSnackbar({
           severity: 'error',
           open: true,
@@ -132,6 +153,7 @@ export const ContextProvider = ({ children }) => {
 
   const createContext = {
     categories,
+    optiongroups,
     snackbar,
     modalid,
     openmodal,
@@ -140,6 +162,7 @@ export const ContextProvider = ({ children }) => {
     handleOpenmodal,
     handleClosemodal,
     getMenu,
+    getDraftMenu,
     addfn,
     deletefn,
     editfn

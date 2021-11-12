@@ -5,7 +5,7 @@ import CustomTextFeild from 'src/components/TextField';
 import LoadingButton from 'src/components/LoadingButton';
 import SnackBar from 'src/components/Snackbar';
 import ItemList from '../Lists/ItemList';
-import Modal from '../ItemModal';
+import Modal from '../Modals/ItemModal';
 import TabsContainer from '../TabsContainer';
 import { MenuContext } from '../MenuStore/Context-Provider';
 

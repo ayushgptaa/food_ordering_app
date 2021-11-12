@@ -3,7 +3,7 @@ import { useState, useContext } from 'react';
 import { Box } from '@mui/material';
 import SnackBar from '../../../Snackbar';
 import CustomTextFeild from '../../../TextField';
-import Modal from '../Modal';
+import Modal from '../Modals/CategoryModal';
 import LoadingButton from '../../../LoadingButton';
 import CategoryList from '../Lists/CategoryList';
 import TabsContainer from '../TabsContainer';
