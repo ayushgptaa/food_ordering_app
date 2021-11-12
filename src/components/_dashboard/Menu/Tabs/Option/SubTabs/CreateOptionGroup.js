@@ -1,20 +1,27 @@
 /* eslint-disable camelcase */
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { Select, Box, MenuItem, InputLabel, FormControl } from '@mui/material';
 import LoadingButton from 'src/components/LoadingButton';
 import CustomTextFeild from 'src/components/TextField';
 import SnackBar from 'src/components/Snackbar';
-import GroupList from '../../../GroupList';
+import GroupList from '../../../Lists/GroupList';
 import TabsContainer from '../../../TabsContainer';
 import { MenuContext } from '../../../MenuStore/Context-Provider';
-
+import Modal from '../../../Modals/OptionGroupModal';
 // ----------------------------------------------------------
 
 export default function AddOptionGroup() {
-  const { btnloading, snackbar, closeSnackbar, getMenu, addfn, deletefn } = useContext(MenuContext);
-  useEffect(() => {
-    getMenu();
-  }, [getMenu]);
+  const {
+    btnloading,
+    snackbar,
+    openmodal,
+    modalid,
+    handleClosemodal,
+    closeSnackbar,
+    addfn,
+    deletefn,
+    editfn
+  } = useContext(MenuContext);
 
   const defaultStates = {
     group_name: '',
@@ -24,7 +31,6 @@ export default function AddOptionGroup() {
 
   const [disabled, setDisabled] = useState(true);
   const [input, setInput] = useState(defaultStates);
-  // const [id, setid] = useState('');
 
   // ************** ADD OPTION GROUP FUNCTION ***************** /
   const getOptionGroup = () => {
@@ -39,7 +45,7 @@ export default function AddOptionGroup() {
     addfn('add_option_group', data, SuccessMsg, ErrorMsg);
   };
 
-  // // ************** DELETE ITEM FROM CATEGORY FUNCTION ***************** //
+  // ************** DELETE OPTION GROUP FUNCTION ***************** //
 
   const deleteOptionGroup = async (groupname, group_id) => {
     const data = {
@@ -48,6 +54,18 @@ export default function AddOptionGroup() {
     const SuccessMsg = ` Deleted ${groupname} from the Group Options :)`;
     const ErrorMsg = ` Unable to delete ${groupname} from the Option Groups. Try again :)`;
     deletefn('remove_option_group_completely', data, SuccessMsg, ErrorMsg);
+  };
+
+  const editOptionGroup = async ({ group_name, required_or_optional, select_upto }, group_id) => {
+    const data = {
+      group_name,
+      required_or_optional,
+      select_upto: Number(select_upto),
+      group_id
+    };
+    const SuccessMsg = `Changed Category to ${group_name} :)`;
+    const ErrorMsg = ` Unable to change Option Group. Try again :)`;
+    editfn('edit_option_group', data, SuccessMsg, ErrorMsg);
   };
   const inputhandler = (e) => {
     const { value } = e.target;
@@ -58,22 +76,21 @@ export default function AddOptionGroup() {
       [e.target.name]: value
     });
   };
+
   return (
     <TabsContainer Heading="Create Option Group">
       <CustomTextFeild
         label="Option group name"
-        placeholder="Enter Option group   "
+        placeholder="Enter Option group"
         onChange={inputhandler}
         name="group_name"
         value={input.group_name}
       />
-
       <FormControl fullWidth sx={{ mt: 1.5 }}>
         <InputLabel id="simple-select-label">Required or Optional</InputLabel>
         <Select
           labelId="simple-select-label"
           id="simple-select"
-          // value={input.required_or_optional}
           name="required_or_optional"
           label="Required or Optional"
           onChange={inputhandler}
@@ -106,13 +123,19 @@ export default function AddOptionGroup() {
           justifyContent: 'center'
         }}
       >
-        <GroupList deleteOptionGroup={deleteOptionGroup} />
+        <GroupList deleteOptionGroup={deleteOptionGroup} editOptionGroup={editOptionGroup} />
       </Box>
       <SnackBar
         open={snackbar.open}
         severity={snackbar.severity}
         handleClose={closeSnackbar}
         message={snackbar.message}
+      />
+      <Modal
+        open={openmodal}
+        handleClose={handleClosemodal}
+        groupid={modalid}
+        editOptionGroup={editOptionGroup}
       />
     </TabsContainer>
   );
