@@ -11,7 +11,7 @@ export default function TabsHeading({ Heading }) {
       direction="row"
       justifyContent="center"
       alignItems="center"
-      sx={{ maxWidth: 'md', mx: 'auto' }}
+      sx={{ maxWidth: 'md', mx: 'auto', mt: 1.5 }}
     >
       <Typography
         variant="h4"
