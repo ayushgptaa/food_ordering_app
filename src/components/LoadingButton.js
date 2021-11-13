@@ -13,7 +13,7 @@ export default function LoadingButton({
     <MuiLoadingButton
       disabled={disabled}
       variant="contained"
-      sx={{ py: 1.5, mt: 2, fontSize: 'subtitle1.fontSize', width: '100%' }}
+      sx={{ py: 1.5, mt: 1.5, fontSize: 'subtitle1.fontSize', width: '100%' }}
       onClick={addCategory}
       loading={btnloading}
       loadingIndicator={loadingIndicator}
