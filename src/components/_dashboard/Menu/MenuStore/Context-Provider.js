@@ -4,6 +4,7 @@ import Fetch from '../Fetch';
 
 const defaultvalues = {
   categories: [],
+  publishedcategories: [],
   optiongroups: [],
   snackbar: {},
   openmodal: false,
@@ -12,6 +13,7 @@ const defaultvalues = {
   closeSnackbar: () => {},
   handleOpenmodal: () => {},
   handleClosemodal: () => {},
+  getPublishedMenu: () => {},
   getMenu: () => {},
   getDraftMenu: () => {},
   addfn: () => {},
@@ -25,6 +27,7 @@ export const MenuContext = createContext(defaultvalues);
 
 // eslint-disable-next-line react/prop-types
 export const ContextProvider = ({ children }) => {
+  const [publishedcategories, setPublishedCategories] = useState([]);
   const [categories, setCategories] = useState([]);
   const [optiongroups, setOptionGroups] = useState([]);
   const [btnloading, setBtnloading] = useState(false);
@@ -49,12 +52,24 @@ export const ContextProvider = ({ children }) => {
     setOpenmodal(false);
   };
 
-  // ************** GET DRAFT MENU FUNCTION ***************** //
+  // ************** GET MENU FUNCTION ***************** //
   const getMenu = async () => {
     Fetch({}, 'get_menu')
       .then((res) => {
         const { option_groups } = res;
         setOptionGroups(option_groups);
+      })
+      .catch(() => {
+        setCategories([]);
+      });
+  };
+
+  // ************** GET PUBLISHED MENU FUNCTION ***************** //
+  const getPublishedMenu = async () => {
+    Fetch({}, 'get_published_menu')
+      .then((res) => {
+        const { categories } = res;
+        setPublishedCategories(categories);
       })
       .catch(() => {
         setCategories([]);
@@ -113,11 +128,12 @@ export const ContextProvider = ({ children }) => {
       })
       .catch((e) => {
         if (e) {
-          return setSnackbar({
+          setSnackbar({
             severity: 'error',
             open: true,
-            message: 'Cannot delete Category because it has Items, delete each item manually'
+            message: e.toString()
           });
+          return;
         }
         setSnackbar({
           severity: 'error',
@@ -152,6 +168,7 @@ export const ContextProvider = ({ children }) => {
   };
 
   const createContext = {
+    publishedcategories,
     categories,
     optiongroups,
     snackbar,
@@ -161,6 +178,7 @@ export const ContextProvider = ({ children }) => {
     closeSnackbar,
     handleOpenmodal,
     handleClosemodal,
+    getPublishedMenu,
     getMenu,
     getDraftMenu,
     addfn,
