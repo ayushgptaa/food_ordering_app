@@ -6,10 +6,15 @@ const defaultvalues = {
   categories: [],
   publishedcategories: [],
   optiongroups: [],
+  optionsarr: [],
   snackbar: {},
   openmodal: false,
+  deletemodal: false,
   btnloading: false,
   modalid: '',
+  // combinedOpgroup: [],
+  OpenDeletemodal: () => {},
+  closeDeletemodal: () => {},
   closeSnackbar: () => {},
   handleOpenmodal: () => {},
   handleClosemodal: () => {},
@@ -30,9 +35,11 @@ export const ContextProvider = ({ children }) => {
   const [publishedcategories, setPublishedCategories] = useState([]);
   const [categories, setCategories] = useState([]);
   const [optiongroups, setOptionGroups] = useState([]);
+  const [optionsarr, setOptions] = useState([]);
   const [btnloading, setBtnloading] = useState(false);
   const [snackbar, setSnackbar] = useState({ severity: 'success', open: false, message: '' });
   const [openmodal, setOpenmodal] = useState(false);
+  const [deletemodal, setDeletemodal] = useState(false);
   const [modalid, setModalid] = useState('');
 
   const closeSnackbar = (event, reason) => {
@@ -52,12 +59,22 @@ export const ContextProvider = ({ children }) => {
     setOpenmodal(false);
   };
 
+  const OpenDeletemodal = (id) => {
+    setDeletemodal(true);
+  };
+
+  const closeDeletemodal = () => {
+    setDeletemodal(false);
+  };
+
   // ************** GET MENU FUNCTION ***************** //
   const getMenu = async () => {
     Fetch({}, 'get_menu')
       .then((res) => {
-        const { option_groups } = res;
+        const { option_groups, options } = res;
+        setOptions(options);
         setOptionGroups(option_groups);
+        // combinedOptionGroupfn();
       })
       .catch(() => {
         setCategories([]);
@@ -66,7 +83,8 @@ export const ContextProvider = ({ children }) => {
 
   // ************** GET PUBLISHED MENU FUNCTION ***************** //
   const getPublishedMenu = async () => {
-    Fetch({}, 'get_published_menu')
+    const pubid = true;
+    Fetch({}, 'get_published_menu', pubid)
       .then((res) => {
         const { categories } = res;
         setPublishedCategories(categories);
@@ -96,6 +114,7 @@ export const ContextProvider = ({ children }) => {
       .then(() => {
         getMenu();
         getDraftMenu();
+
         setBtnloading(false);
         setSnackbar({
           severity: 'success',
@@ -118,6 +137,7 @@ export const ContextProvider = ({ children }) => {
   const deletefn = async (endpoint, data, success, error) => {
     Fetch(data, endpoint)
       .then(() => {
+        closeDeletemodal();
         getMenu();
         getDraftMenu();
         setSnackbar({
@@ -127,6 +147,8 @@ export const ContextProvider = ({ children }) => {
         });
       })
       .catch((e) => {
+        getMenu();
+        console.log(e);
         if (e) {
           setSnackbar({
             severity: 'error',
@@ -150,6 +172,7 @@ export const ContextProvider = ({ children }) => {
       .then(() => {
         getMenu();
         getDraftMenu();
+        // combinedOptionGroupfn();
         handleClosemodal();
         setSnackbar({
           severity: 'success',
@@ -171,10 +194,14 @@ export const ContextProvider = ({ children }) => {
     publishedcategories,
     categories,
     optiongroups,
+    optionsarr,
     snackbar,
     modalid,
     openmodal,
+    deletemodal,
     btnloading,
+    OpenDeletemodal,
+    closeDeletemodal,
     closeSnackbar,
     handleOpenmodal,
     handleClosemodal,

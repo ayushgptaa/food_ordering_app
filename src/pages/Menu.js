@@ -59,10 +59,12 @@ const MenuTabs = [
 ];
 export default function BasicTabs() {
   const [value, setValue] = useState(0);
-  const { getMenu, getDraftMenu } = useContext(MenuContext);
+  const { getMenu, getDraftMenu, getPublishedMenu } = useContext(MenuContext);
   useEffect(() => {
     getMenu();
     getDraftMenu();
+    getPublishedMenu();
+    // combinedOptionGroupfn();
   }, []);
 
   const handleChange = (event, newValue) => {
@@ -88,8 +90,8 @@ export default function BasicTabs() {
           </Box>
 
           <TabPanel value={value} index={0}>
-            {/* <PublishedMenu /> */}
-            hello
+            <PublishedMenu />
+            {/* Published Menu */}
           </TabPanel>
           <TabPanel value={value} index={1}>
             <ViewMenu />

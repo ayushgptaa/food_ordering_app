@@ -7,7 +7,6 @@ import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import PropTypes from 'prop-types';
-import LoadingButton from 'src/components/LoadingButton';
 import TabsHeading from './TabsHeading';
 import { MenuContext } from '../MenuStore/Context-Provider';
 
@@ -42,12 +41,6 @@ export default function PublishedMenu() {
               </Card>
             );
           })}
-
-      <LoadingButton
-        sx={{ width: 150, py: 1, mx: 'auto', display: 'block', mt: 1.5, fontSize: 'h5.fontSize' }}
-      >
-        Publish
-      </LoadingButton>
     </Container>
   );
 }

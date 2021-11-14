@@ -4,10 +4,10 @@ import { Select, Box, MenuItem, InputLabel, FormControl } from '@mui/material';
 import LoadingButton from 'src/components/LoadingButton';
 import CustomTextFeild from 'src/components/TextField';
 import SnackBar from 'src/components/Snackbar';
-import GroupList from '../../../Lists/GroupList';
 import TabsContainer from '../../../TabsContainer';
 import { MenuContext } from '../../../MenuStore/Context-Provider';
 import Modal from '../../../Modals/OptionGroupModal';
+import AddOption from './AddOption';
 // ----------------------------------------------------------
 
 export default function AddOptionGroup() {
@@ -40,8 +40,9 @@ export default function AddOptionGroup() {
         select_upto: Number(input.select_upto)
       }
     };
-    // openOptions();
-    const SuccessMsg = `${input.group_name} added to  :)`;
+    setInput(defaultStates);
+    setDisabled(true);
+    const SuccessMsg = `${input.group_name} added to Option Group :)`;
     const ErrorMsg = `Unable to add  ${input.group_name} to Categories. Try again :(`;
     addfn('add_option_group', data, SuccessMsg, ErrorMsg);
   };
@@ -103,31 +104,17 @@ export default function AddOptionGroup() {
           <MenuItem value="optional">Optional</MenuItem>
         </Select>
       </FormControl>
-      <CustomTextFeild
-        label="Select Upto"
-        placeholder="Select Upto"
-        type="number"
-        name="select_upto"
-        onChange={inputhandler}
-        value={input.select_upto}
-      />
       <LoadingButton
         disabled={disabled}
         addCategory={getOptionGroup}
         btnloading={btnloading}
         loadingIndicator="Adding..."
       >
-        ADD
+        CREATE OPTION GROUP
       </LoadingButton>
-      <Box
-        sx={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'center'
-        }}
-      >
-        <GroupList deleteOptionGroup={deleteOptionGroup} editOptionGroup={editOptionGroup} />
-      </Box>
+
+      <AddOption deleteOptionGroup={deleteOptionGroup} editOptionGroup={editOptionGroup} />
+
       <SnackBar
         open={snackbar.open}
         severity={snackbar.severity}

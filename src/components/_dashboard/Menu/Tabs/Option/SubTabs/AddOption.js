@@ -19,18 +19,9 @@ import { MenuContext } from '../../../MenuStore/Context-Provider';
 import GroupList from '../../../Lists/GroupList';
 
 // ------------------------------------------------
-// let AddedOptions = [];
-// function getStyles(name, options, theme) {
-//   return {
-//     fontWeight:
-//       options.indexOf(name) === -1
-//         ? theme.typography.fontWeightRegular
-//         : theme.typography.fontWeightMedium
-//   };
-// }
+
 export default function Options({ deleteOptionGroup, editOptionGroup }) {
-  // const theme = useTheme();
-  const { optiongroups, btnloading, addfn } = useContext(MenuContext);
+  const { optiongroups, btnloading, addfn, deletefn } = useContext(MenuContext);
   const defaultStates = {
     option_name: '',
     option_price: ''
@@ -41,57 +32,51 @@ export default function Options({ deleteOptionGroup, editOptionGroup }) {
   const [selectupto, setSelectupto] = useState('');
   const [groupinfo, setGroupinfo] = useState({ group_id: '', group_name: '' });
 
-  // ************** ADD OPTIONs TO OPTION GROUP FUNCTION ***************** /
+  // ************** ADD OPTION TO OPTION GROUP FUNCTION ***************** /
   const addOptions = () => {
-    // const obj = {};
-    // const select_upto = AddedOptions.length;
-    // AddedOptions.forEach((element, index) => {
-    //   obj[index] = element;
-    // });
-    // setOptions([]);
-    // AddedOptions = [];
-    // console.log(groupinfo.group_id);
     const data = {
       group_id: groupinfo.group_id,
       option: {
         ...input
       }
     };
-    console.log(data);
-    setInput(defaultStates);
 
-    // const SuccessMsg = `${input.group_name} added to Option Group :)`;
-    // const ErrorMsg = `Unable to add  ${input.group_name} to Categories. Try again :(`;
-    // addfn('add_option', data, SuccessMsg, ErrorMsg);
+    setInput(defaultStates);
+    const SuccessMsg = `${input.option_name} added to Option Group :)`;
+    const ErrorMsg = `Unable to add  ${input.option_name} to Option. Try again :(`;
+    addfn('add_option', data, SuccessMsg, ErrorMsg);
   };
+
+  // ************** DELETE OPTION FUNCTION ***************** /
+  const deleteOption = (option_id, group_id, option_name) => {
+    const data = {
+      option_id
+    };
+    console.log(data);
+    const SuccessMsg = `${option_name} deleted from Option Group :)`;
+    const ErrorMsg = `Unable to delete  ${option_name}. Try again :(`;
+    deletefn('remove_option', data, SuccessMsg, ErrorMsg);
+  };
+
   const groupHandler = (group_id, group_name) => {
     setGroupinfo({
       group_id,
       group_name
     });
   };
-  // const handleChange = (event) => {
-  //   const {
-  //     target: { value }
-  //   } = event;
-  //   setOptions(typeof value === 'string' ? value.split(',') : value);
-  // };
-  const selectHandler = (e) => {
+
+  const selecthandler = (e) => {
     setSelectupto(e.target.value);
-  };
-  const plusbtnhandler = () => {
-    // const obj = { ...input };
-    // AddedOptions.push(obj);
-    setInput(defaultStates);
+    setDisabled(false);
   };
 
   const inputhandler = (e) => {
     const { value } = e.target;
-    setDisabled(false);
     setInput({
       ...input,
       [e.target.name]: value
     });
+    setDisabled(false);
   };
   return (
     <TabsContainer Heading="Add Options" margintop="true">
@@ -165,32 +150,9 @@ export default function Options({ deleteOptionGroup, editOptionGroup }) {
         placeholder="Select Upto"
         type="number"
         name="select_upto"
-        onChange={selectHandler}
+        onChange={selecthandler}
         value={selectupto}
       />
-      {/* <FormControl fullWidth sx={{ mt: 1.5 }}>
-        <InputLabel id="demo-multiple-name-label">Select Upto</InputLabel>
-        <Select
-          labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          multiple
-          value={options}
-          label="Select Upto"
-          onChange={handleChange}
-          // input={<OutlinedInput label="Name" />}
-          // MenuProps={MenuProps}
-        >
-          {AddedOptions.map(({ option_name }, index) => (
-            <MenuItem
-              key={index}
-              value={option_name}
-              style={getStyles(option_name, options, theme)}
-            >
-              {option_name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl> */}
 
       <LoadingButton disabled={disabled} onClick={addOptions}>
         ADD
@@ -202,7 +164,11 @@ export default function Options({ deleteOptionGroup, editOptionGroup }) {
           justifyContent: 'center'
         }}
       >
-        <GroupList deleteOptionGroup={deleteOptionGroup} editOptionGroup={editOptionGroup} />
+        <GroupList
+          deleteOptionGroup={deleteOptionGroup}
+          editOptionGroup={editOptionGroup}
+          deleteOption={deleteOption}
+        />
       </Box>
     </TabsContainer>
   );
