@@ -33,7 +33,7 @@ GroupList.propTypes = {
 
 // ------------------------------------------------------
 
-export default function GroupList({ deleteOptionGroup, deleteOption }) {
+export default function GroupList({ deleteOptionGroup, deleteOption, handleOptionmodal }) {
   const { optiongroups, optionsarr, handleOpenmodal } = useContext(MenuContext);
   const [combinedOpgroup, setcombinedOpgroup] = useState([]);
   useEffect(() => {
@@ -123,7 +123,7 @@ export default function GroupList({ deleteOptionGroup, deleteOption }) {
                             sx={{ pl: 4 }}
                             secondaryAction={
                               <>
-                                <IconButton edge="end" onClick={() => handleOpenmodal(option_id)}>
+                                <IconButton edge="end" onClick={() => handleOptionmodal(option_id)}>
                                   <EditIcon aria-label="edit" />
                                 </IconButton>
                                 <IconButton

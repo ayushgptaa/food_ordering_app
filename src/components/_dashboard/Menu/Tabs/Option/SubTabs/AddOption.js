@@ -15,8 +15,9 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import LoadingButton from 'src/components/LoadingButton';
 import CustomTextFeild from 'src/components/TextField';
 import TabsContainer from '../../../TabsContainer';
-import { MenuContext } from '../../../MenuStore/Context-Provider';
 import GroupList from '../../../Lists/GroupList';
+import { MenuContext } from '../../../MenuStore/Context-Provider';
+import OptionsModal from '../../../Modals/OptionsModal';
 
 // ------------------------------------------------
 
@@ -28,8 +29,9 @@ export default function Options({ deleteOptionGroup, editOptionGroup }) {
   };
   const [disabled, setDisabled] = useState(true);
   const [input, setInput] = useState(defaultStates);
-  // const [options, setOptions] = useState([]);
+  const [optionmodal, setoptionmodal] = useState(false);
   const [selectupto, setSelectupto] = useState('');
+  const [optionid, setOptionid] = useState('');
   const [groupinfo, setGroupinfo] = useState({ group_id: '', group_name: '' });
 
   // ************** ADD OPTION TO OPTION GROUP FUNCTION ***************** /
@@ -52,10 +54,31 @@ export default function Options({ deleteOptionGroup, editOptionGroup }) {
     const data = {
       option_id
     };
-    console.log(data);
     const SuccessMsg = `${option_name} deleted from Option Group :)`;
     const ErrorMsg = `Unable to delete  ${option_name}. Try again :(`;
     deletefn('remove_option', data, SuccessMsg, ErrorMsg);
+  };
+
+  // ************** EDIT OPTION FUNCTION ***************** /
+  const editOption = ({ option_price, option_name }, option_id) => {
+    const data = {
+      option_id,
+      option_name,
+      option_price
+    };
+
+    const SuccessMsg = `Changed Option to ${option_name}  :)`;
+    const ErrorMsg = `Unable to change  ${option_name}. Try again :(`;
+    deletefn('edit_option', data, SuccessMsg, ErrorMsg);
+  };
+
+  const handleOptionmodal = (id) => {
+    setoptionmodal(true);
+    setOptionid(id);
+  };
+
+  const closeOptionmodal = () => {
+    setoptionmodal(false);
   };
 
   const groupHandler = (group_id, group_name) => {
@@ -166,10 +189,17 @@ export default function Options({ deleteOptionGroup, editOptionGroup }) {
       >
         <GroupList
           deleteOptionGroup={deleteOptionGroup}
-          editOptionGroup={editOptionGroup}
           deleteOption={deleteOption}
+          handleOptionmodal={handleOptionmodal}
         />
       </Box>
+
+      <OptionsModal
+        open={optionmodal}
+        handleClose={closeOptionmodal}
+        optionid={optionid}
+        editOption={editOption}
+      />
     </TabsContainer>
   );
 }
