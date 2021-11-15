@@ -28,7 +28,6 @@ export default function AddCategory() {
 
   const [inputval, setInputval] = useState('');
   const [disabled, setDisabled] = useState(true);
-  // const [btnloading, setBtnloading] = useState(false);
 
   const inputhandler = (e) => {
     if (e.target.value === '') {
@@ -92,19 +91,12 @@ export default function AddCategory() {
         ADD
       </LoadingButton>
 
-      <Box
-        sx={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'center'
-        }}
-      >
-        <CategoryList
-          categories={categories}
-          handleOpenmodal={handleOpenmodal}
-          deleteCategory={deleteCategory}
-        />
-      </Box>
+      <CategoryList
+        categories={categories}
+        handleOpenmodal={handleOpenmodal}
+        deleteCategory={deleteCategory}
+      />
+
       <SnackBar
         open={snackbar.open}
         severity={snackbar.severity}
