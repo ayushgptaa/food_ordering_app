@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { Container, Card, Typography, Skeleton } from '@mui/material';
+import { Container, Card, Typography, Skeleton, Grid } from '@mui/material';
 import { useState, useContext, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
@@ -8,19 +8,37 @@ import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import PropTypes from 'prop-types';
 import LoadingButton from 'src/components/LoadingButton';
+import SnackBar from 'src/components/Snackbar';
 import TabsHeading from './TabsHeading';
 import { MenuContext } from '../MenuStore/Context-Provider';
 
 // ----------------------------------------------------------------------
 export default function ViewMenu() {
-  const { categories, getDraftMenu } = useContext(MenuContext);
+  const { categories, getDraftMenu, btnloading, publishMenu, snackbar, closeSnackbar } =
+    useContext(MenuContext);
   useEffect(() => {
     getDraftMenu();
   }, []);
 
+  const PublishMenufn = () => {
+    const Success = 'Menu published successfully :)';
+    const Error = 'Unable to publish menu. Try again :(';
+    publishMenu(Success, Error);
+  };
+
   return (
     <Container>
-      <TabsHeading Heading="Draft Menu" />
+      <Grid container justifyContent="center" alignItems="center" direction="row">
+        <TabsHeading Heading="Draft Menu" />
+        <LoadingButton
+          addCategory={PublishMenufn}
+          btnloading={btnloading}
+          loadingIndicator="Publishing..."
+          width="150"
+        >
+          Publish
+        </LoadingButton>
+      </Grid>
       {categories.length === 0
         ? [0, 1, 2, 4].map((index) => {
             return (
@@ -41,12 +59,12 @@ export default function ViewMenu() {
               </Card>
             );
           })}
-
-      <LoadingButton
-        sx={{ width: 150, py: 1, mx: 'auto', display: 'block', mt: 1.5, fontSize: 'h5.fontSize' }}
-      >
-        Publish
-      </LoadingButton>
+      <SnackBar
+        open={snackbar.open}
+        severity={snackbar.severity}
+        handleClose={closeSnackbar}
+        message={snackbar.message}
+      />
     </Container>
   );
 }

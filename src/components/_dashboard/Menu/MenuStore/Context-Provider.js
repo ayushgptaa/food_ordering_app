@@ -12,7 +12,6 @@ const defaultvalues = {
   deletemodal: false,
   btnloading: false,
   modalid: '',
-  // combinedOpgroup: [],
   OpenDeletemodal: () => {},
   closeDeletemodal: () => {},
   closeSnackbar: () => {},
@@ -23,7 +22,8 @@ const defaultvalues = {
   getDraftMenu: () => {},
   addfn: () => {},
   deletefn: () => {},
-  editfn: () => {}
+  editfn: () => {},
+  publishMenu: () => {}
 };
 
 export const MenuContext = createContext(defaultvalues);
@@ -59,7 +59,7 @@ export const ContextProvider = ({ children }) => {
     setOpenmodal(false);
   };
 
-  const OpenDeletemodal = (id) => {
+  const OpenDeletemodal = () => {
     setDeletemodal(true);
   };
 
@@ -74,10 +74,31 @@ export const ContextProvider = ({ children }) => {
         const { option_groups, options } = res;
         setOptions(options);
         setOptionGroups(option_groups);
-        // combinedOptionGroupfn();
       })
       .catch(() => {
         setCategories([]);
+      });
+  };
+
+  // ************** PUBLISH MENU FUNCTION ***************** //
+  const publishMenu = async (success, error) => {
+    Fetch({}, 'publish_menu')
+      .then(() => {
+        setBtnloading(false);
+        setSnackbar({
+          severity: 'success',
+          open: true,
+          message: success
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+        setBtnloading(false);
+        setSnackbar({
+          severity: 'error',
+          open: true,
+          message: error
+        });
       });
   };
 
@@ -114,7 +135,6 @@ export const ContextProvider = ({ children }) => {
       .then(() => {
         getMenu();
         getDraftMenu();
-
         setBtnloading(false);
         setSnackbar({
           severity: 'success',
@@ -181,7 +201,6 @@ export const ContextProvider = ({ children }) => {
         });
       })
       .catch((e) => {
-        console.log(e);
         setSnackbar({
           severity: 'error',
           open: true,
@@ -210,7 +229,8 @@ export const ContextProvider = ({ children }) => {
     getDraftMenu,
     addfn,
     deletefn,
-    editfn
+    editfn,
+    publishMenu
   };
   return <MenuContext.Provider value={createContext}>{children}</MenuContext.Provider>;
 };

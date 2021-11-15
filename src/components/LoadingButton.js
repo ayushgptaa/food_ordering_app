@@ -7,13 +7,19 @@ export default function LoadingButton({
   btnloading,
   loadingIndicator,
   children,
+  width,
   ...rest
 }) {
   return (
     <MuiLoadingButton
       disabled={disabled}
       variant="contained"
-      sx={{ py: 1.5, mt: 1.5, fontSize: 'subtitle1.fontSize', width: '100%' }}
+      sx={{
+        py: 1.5,
+        mt: 1.5,
+        fontSize: 'subtitle1.fontSize',
+        width: width ? Number(width) : '100%'
+      }}
       onClick={addCategory}
       loading={btnloading}
       loadingIndicator={loadingIndicator}
