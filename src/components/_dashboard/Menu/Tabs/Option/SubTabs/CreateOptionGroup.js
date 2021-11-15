@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { useState, useContext } from 'react';
-import { Select, Box, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import LoadingButton from 'src/components/LoadingButton';
 import CustomTextFeild from 'src/components/TextField';
 import SnackBar from 'src/components/Snackbar';

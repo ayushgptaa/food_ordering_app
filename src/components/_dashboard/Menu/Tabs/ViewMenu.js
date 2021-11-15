@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { Container, Card, Typography, Skeleton, Grid } from '@mui/material';
+import { Container, Card, Typography, Skeleton } from '@mui/material';
 import { useState, useContext, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
@@ -9,7 +9,6 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import PropTypes from 'prop-types';
 import LoadingButton from 'src/components/LoadingButton';
 import SnackBar from 'src/components/Snackbar';
-import TabsHeading from './TabsHeading';
 import { MenuContext } from '../MenuStore/Context-Provider';
 import TabsContainer from '../TabsContainer';
 

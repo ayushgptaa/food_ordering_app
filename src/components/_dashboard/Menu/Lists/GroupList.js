@@ -1,14 +1,6 @@
 /* eslint-disable camelcase */
 import { useState, useContext, useEffect } from 'react';
-import {
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-  IconButton,
-  ListSubheader,
-  ListItemButton
-} from '@mui/material';
+import { List, ListItem, ListItemText, Typography, IconButton, ListSubheader } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Collapse from '@mui/material/Collapse';
@@ -28,7 +20,8 @@ const ListContainer = styled('div')(({ theme }) => ({
 
 GroupList.propTypes = {
   deleteOptionGroup: PropType.func,
-  deleteOption: PropType.func
+  deleteOption: PropType.func,
+  handleOptionmodal: PropType.func
 };
 
 // ------------------------------------------------------

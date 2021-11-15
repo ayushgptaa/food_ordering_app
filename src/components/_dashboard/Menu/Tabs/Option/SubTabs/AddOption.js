@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
 import { useState, useContext } from 'react';
-import { useTheme } from '@mui/material/styles';
 import {
   Select,
   Grid,
@@ -21,7 +20,7 @@ import OptionsModal from '../../../Modals/OptionsModal';
 
 // ------------------------------------------------
 
-export default function Options({ deleteOptionGroup, editOptionGroup }) {
+export default function Options({ deleteOptionGroup }) {
   const { optiongroups, btnloading, addfn, deletefn } = useContext(MenuContext);
   const defaultStates = {
     option_name: '',

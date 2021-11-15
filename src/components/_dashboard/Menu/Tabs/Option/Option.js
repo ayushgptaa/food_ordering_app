@@ -4,7 +4,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import CreateOptionGroup from './SubTabs/CreateOptionGroup';
-import Options from './SubTabs/AddOption';
 import AddOptionGroup from './SubTabs/AddOptionGroup';
 
 function TabPanel(props) {
@@ -58,9 +57,6 @@ export default function Option() {
       <TabPanel value={value} index={1}>
         <AddOptionGroup />
       </TabPanel>
-      {/* <TabPanel value={value} index={2}>
-        <Options />
-      </TabPanel> */}
     </Box>
   );
 }

@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import { useState, useContext } from 'react';
-import { Box } from '@mui/material';
 import SnackBar from '../../../Snackbar';
 import CustomTextFeild from '../../../TextField';
 import Modal from '../Modals/CategoryModal';

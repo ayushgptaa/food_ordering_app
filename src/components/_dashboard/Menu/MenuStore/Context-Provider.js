@@ -91,8 +91,7 @@ export const ContextProvider = ({ children }) => {
           message: success
         });
       })
-      .catch((e) => {
-        console.log(e);
+      .catch(() => {
         setBtnloading(false);
         setSnackbar({
           severity: 'error',
@@ -168,7 +167,6 @@ export const ContextProvider = ({ children }) => {
       })
       .catch((e) => {
         getMenu();
-        console.log(e);
         if (e) {
           setSnackbar({
             severity: 'error',
@@ -200,7 +198,7 @@ export const ContextProvider = ({ children }) => {
           message: success
         });
       })
-      .catch((e) => {
+      .catch(() => {
         setSnackbar({
           severity: 'error',
           open: true,
