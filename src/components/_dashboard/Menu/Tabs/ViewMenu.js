@@ -11,6 +11,7 @@ import LoadingButton from 'src/components/LoadingButton';
 import SnackBar from 'src/components/Snackbar';
 import TabsHeading from './TabsHeading';
 import { MenuContext } from '../MenuStore/Context-Provider';
+import TabsContainer from '../TabsContainer';
 
 // ----------------------------------------------------------------------
 export default function ViewMenu() {
@@ -27,18 +28,8 @@ export default function ViewMenu() {
   };
 
   return (
-    <Container>
-      <Grid container justifyContent="center" alignItems="center" direction="row">
-        <TabsHeading Heading="Draft Menu" />
-        <LoadingButton
-          addCategory={PublishMenufn}
-          btnloading={btnloading}
-          loadingIndicator="Publishing..."
-          width="150"
-        >
-          Publish
-        </LoadingButton>
-      </Grid>
+    <Container sx={{ p: 0 }}>
+      <TabsContainer Heading="Draft Menu" />
       {categories.length === 0
         ? [0, 1, 2, 4].map((index) => {
             return (
@@ -59,6 +50,14 @@ export default function ViewMenu() {
               </Card>
             );
           })}
+      <LoadingButton
+        addCategory={PublishMenufn}
+        btnloading={btnloading}
+        loadingIndicator="Publishing..."
+        sx={{ mt: 3, px: 3, py: 1, fontSize: 'h3.fontSize', mx: 'auto', display: 'block' }}
+      >
+        Publish
+      </LoadingButton>
       <SnackBar
         open={snackbar.open}
         severity={snackbar.severity}

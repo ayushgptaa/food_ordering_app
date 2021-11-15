@@ -19,12 +19,15 @@ export default function PublishedMenu() {
   }, []);
 
   return (
-    <Container>
+    <Container sx={{ p: 0 }}>
       <TabsHeading Heading="Published Menu" />
       {publishedcategories.length === 0
         ? [0, 1, 2, 4].map((index) => {
             return (
-              <Card sx={{ p: 4, maxWidth: 'sm', mx: 'auto', mt: 2 }} key={index}>
+              <Card
+                sx={{ p: 4, maxWidth: { md: 'sm', xs: '100%' }, mx: 'auto', mt: 2 }}
+                key={index}
+              >
                 <Skeleton variant="text" width={200} height={75} />
                 <Skeleton variant="string" height={40} />
                 <Skeleton variant="string" height={40} />
