@@ -1,5 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { Container, Tab, Tabs, Box } from '@mui/material';
 import AddItem from 'src/components/_dashboard/Menu/Tabs/AddItem';
 import PublishedMenu from 'src/components/_dashboard/Menu/Tabs/PublishedMenu';
@@ -25,7 +27,7 @@ function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: { md: 5, xs: 2 } }}>{children}</Box>}
+      {value === index && <Box sx={{ p: { md: 3, xs: 2 } }}>{children}</Box>}
     </div>
   );
 }
@@ -58,14 +60,25 @@ const MenuTabs = [
   }
 ];
 export default function BasicTabs() {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('sm'));
   const [value, setValue] = useState(0);
+  const [varient, setvarient] = useState('scrollable');
+  const [centered, setcentered] = useState(false);
   const { getMenu, getDraftMenu, getPublishedMenu } = useContext(MenuContext);
+
   useEffect(() => {
+    if (matches) {
+      setvarient('standard');
+      setcentered(true);
+    } else {
+      setvarient('scrollable');
+      setcentered(false);
+    }
     getMenu();
     getDraftMenu();
     getPublishedMenu();
-    // combinedOptionGroupfn();
-  }, []);
+  }, [matches]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -77,7 +90,8 @@ export default function BasicTabs() {
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs
-              centered
+              centered={centered}
+              variant={varient}
               value={value}
               onChange={handleChange}
               aria-label="Menu tabs"
@@ -91,7 +105,6 @@ export default function BasicTabs() {
 
           <TabPanel value={value} index={0}>
             <PublishedMenu />
-            {/* Published Menu */}
           </TabPanel>
           <TabPanel value={value} index={1}>
             <ViewMenu />
