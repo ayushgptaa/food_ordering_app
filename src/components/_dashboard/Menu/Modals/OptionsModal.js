@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { Select, MenuItem, InputLabel, FormControl, Grid } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -23,8 +22,8 @@ const style = {
 OptionsModal.propTypes = {
   open: PropTypes.bool,
   handleClose: PropTypes.func,
-  groupid: PropTypes.string,
-  editOptionGroup: PropTypes.func
+  optionid: PropTypes.string,
+  editOption: PropTypes.func
 };
 // -------------------------------------------------------------
 
