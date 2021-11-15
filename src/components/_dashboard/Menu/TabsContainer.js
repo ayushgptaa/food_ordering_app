@@ -1,8 +1,15 @@
-/* eslint-disable camelcase */
 import { Grid, Box } from '@mui/material';
+import PropTypes from 'prop-types';
 import TabsHeading from './Tabs/TabsHeading';
 
-export default function TabsContainer({ Heading, children, margintop }) {
+// -------------------------------------------------------
+
+TabsContainer.propTypes = {
+  Heading: PropTypes.string,
+  children: PropTypes.node
+};
+
+export default function TabsContainer({ Heading, children }) {
   return (
     <Grid
       container
