@@ -14,20 +14,23 @@ const Fetch = async (data, request, publishedid) => {
   const response = await fetch(`${URL}/${request}`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
     },
     body: JSON.stringify({
       menu_id,
       ...data
     })
   });
+  const contentType = response.headers.get('content-type');
 
   if (response.status === 400) {
     return response.text().then((text) => {
       throw new Error(text);
     });
   }
-  return response.json();
+  if (contentType.startsWith('application/json;')) return response.json();
+  if (contentType.startsWith('text/plain;')) return response.text();
 };
 
 export default Fetch;
