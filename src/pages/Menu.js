@@ -50,10 +50,10 @@ const MenuTabs = [
     label: 'Draft Menu'
   },
   {
-    label: 'Add Category'
+    label: ' Category'
   },
   {
-    label: 'Add Item'
+    label: ' Items'
   },
   {
     label: 'Options'
