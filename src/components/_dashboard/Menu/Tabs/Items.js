@@ -9,7 +9,6 @@ import Modal from '../Modals/ItemModal';
 import TabsContainer from '../TabsContainer';
 import { MenuContext } from '../MenuStore/Context-Provider';
 
-// eslint-disable-next-line react/prop-types
 export default function AddItem() {
   const {
     categories,
@@ -32,19 +31,29 @@ export default function AddItem() {
   };
   const [input, setInput] = useState(defaultStates);
   const [disabled, setDisabled] = useState(true);
+  const [error, setError] = useState(false);
+  const [helpertext, setHelpertext] = useState('');
 
   const inputhandler = (e) => {
+    setError(false);
+    setHelpertext('');
     const { value } = e.target;
-    setDisabled(false);
     setInput({
       ...input,
       [e.target.name]: value
     });
+    if (input.item_name && input.item_price) setDisabled(false);
   };
 
   // ************** ADD ITEM TO CATEGORY FUNCTION ***************** //
 
   const addItemtoCategory = async () => {
+    if (input.item_price === '' || input.item_name === '') {
+      setError(true);
+      setHelpertext('required');
+      return;
+    }
+
     setInput(defaultStates);
     const data = {
       ...input,
@@ -109,15 +118,9 @@ export default function AddItem() {
         onChange={inputhandler}
         name="item_name"
         value={input.item_name}
-      />
-      <CustomTextFeild
-        label="Item Description"
-        placeholder="Item Description"
-        multiline
-        rows={3}
-        onChange={inputhandler}
-        name="item_description"
-        value={input.item_description}
+        required
+        error={input.item_name ? false : error}
+        helperText={input.item_name ? '' : helpertext}
       />
       <CustomTextFeild
         margin="dense"
@@ -130,6 +133,18 @@ export default function AddItem() {
         name="item_price"
         type="number"
         value={input.item_price}
+        required
+        error={input.item_price ? false : error}
+        helperText={input.item_price ? '' : helpertext}
+      />
+      <CustomTextFeild
+        label="Item Description"
+        placeholder="Item Description"
+        multiline
+        rows={3}
+        onChange={inputhandler}
+        name="item_description"
+        value={input.item_description}
       />
       <LoadingButton
         disabled={disabled}
@@ -140,19 +155,12 @@ export default function AddItem() {
         ADD
       </LoadingButton>
 
-      <Box
-        sx={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'center'
-        }}
-      >
-        <ItemList
-          categories={categories}
-          deleteItemFromCategory={deleteItemFromCategory}
-          handleOpenmodal={handleOpenmodal}
-        />
-      </Box>
+      <ItemList
+        categories={categories}
+        deleteItemFromCategory={deleteItemFromCategory}
+        handleOpenmodal={handleOpenmodal}
+      />
+
       <SnackBar
         open={snackbar.open}
         severity={snackbar.severity}
