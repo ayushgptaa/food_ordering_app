@@ -43,10 +43,10 @@ export default function AddCategory() {
     const data = {
       category_name: inputval
     };
-    setInputval('');
     const SucessMsg = `${inputval} added to the Categories :)`;
     const ErrorMsg = `Unable to add  ${inputval} to Categories. Try again :(`;
     addfn('add_category', data, SucessMsg, ErrorMsg);
+    setInputval('');
   };
 
   // ************** DELETE CATEGORY FUNCTION ***************** //
