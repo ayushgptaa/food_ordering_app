@@ -12,6 +12,7 @@ const defaultvalues = {
   deletemodal: false,
   btnloading: false,
   modalid: '',
+  positionsnackbar: {},
   OpenDeletemodal: () => {},
   closeDeletemodal: () => {},
   closeSnackbar: () => {},
@@ -23,7 +24,9 @@ const defaultvalues = {
   addfn: () => {},
   deletefn: () => {},
   editfn: () => {},
-  publishMenu: () => {}
+  publishMenu: () => {},
+  OpenPositionedSnackbar: () => {},
+  ClosePositionedSnackbar: () => {}
 };
 
 export const MenuContext = createContext(defaultvalues);
@@ -41,7 +44,17 @@ export const ContextProvider = ({ children }) => {
   const [openmodal, setOpenmodal] = useState(false);
   const [deletemodal, setDeletemodal] = useState(false);
   const [modalid, setModalid] = useState('');
+  const [positionsnackbar, setPositionedSnackbar] = useState({
+    open: false
+  });
 
+  const OpenPositionedSnackbar = () => {
+    setPositionedSnackbar({ open: true });
+  };
+
+  const ClosePositionedSnackbar = () => {
+    setPositionedSnackbar({ open: false });
+  };
   const closeSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -84,6 +97,7 @@ export const ContextProvider = ({ children }) => {
   const publishMenu = async (success, error) => {
     Fetch({}, 'publish_menu')
       .then(() => {
+        getPublishedMenu();
         setBtnloading(false);
         setSnackbar({
           severity: 'success',
@@ -217,6 +231,7 @@ export const ContextProvider = ({ children }) => {
     openmodal,
     deletemodal,
     btnloading,
+    positionsnackbar,
     OpenDeletemodal,
     closeDeletemodal,
     closeSnackbar,
@@ -228,7 +243,9 @@ export const ContextProvider = ({ children }) => {
     addfn,
     deletefn,
     editfn,
-    publishMenu
+    publishMenu,
+    OpenPositionedSnackbar,
+    ClosePositionedSnackbar
   };
   return <MenuContext.Provider value={createContext}>{children}</MenuContext.Provider>;
 };
