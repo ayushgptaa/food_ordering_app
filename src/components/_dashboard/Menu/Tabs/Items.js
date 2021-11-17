@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { useState, useContext } from 'react';
-import { Select, Box, InputAdornment, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { Select, InputAdornment, MenuItem, InputLabel, FormControl } from '@mui/material';
 import CustomTextFeild from 'src/components/TextField';
 import LoadingButton from 'src/components/LoadingButton';
 import SnackBar from 'src/components/Snackbar';
@@ -8,6 +8,7 @@ import ItemList from '../Lists/ItemList';
 import Modal from '../Modals/ItemModal';
 import TabsContainer from '../TabsContainer';
 import { MenuContext } from '../MenuStore/Context-Provider';
+import PositionedSnackbar from '../../../PositionedSnackbar';
 
 export default function AddItem() {
   const {
@@ -21,7 +22,9 @@ export default function AddItem() {
     closeSnackbar,
     addfn,
     deletefn,
-    editfn
+    editfn,
+    OpenPositionedSnackbar,
+    ClosePositionedSnackbar
   } = useContext(MenuContext);
   const defaultStates = {
     item_name: '',
@@ -55,6 +58,7 @@ export default function AddItem() {
     }
 
     setInput(defaultStates);
+    ClosePositionedSnackbar();
     const data = {
       ...input,
       item_price: Number(input.item_price)
@@ -121,6 +125,7 @@ export default function AddItem() {
         required
         error={input.item_name ? false : error}
         helperText={input.item_name ? '' : helpertext}
+        onBlur={OpenPositionedSnackbar}
       />
       <CustomTextFeild
         margin="dense"
@@ -136,6 +141,7 @@ export default function AddItem() {
         required
         error={input.item_price ? false : error}
         helperText={input.item_price ? '' : helpertext}
+        onBlur={OpenPositionedSnackbar}
       />
       <CustomTextFeild
         label="Item Description"
@@ -145,6 +151,7 @@ export default function AddItem() {
         onChange={inputhandler}
         name="item_description"
         value={input.item_description}
+        onBlur={OpenPositionedSnackbar}
       />
       <LoadingButton
         disabled={disabled}
@@ -168,6 +175,7 @@ export default function AddItem() {
         message={snackbar.message}
       />
       <Modal open={openmodal} handleClose={handleClosemodal} itemid={modalid} editItem={editItem} />
+      <PositionedSnackbar />
     </TabsContainer>
   );
 }
