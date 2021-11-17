@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { Container, Card, Typography, Skeleton } from '@mui/material';
+import { Container, Card, Typography } from '@mui/material';
 import { useState, useContext, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
@@ -29,34 +29,50 @@ export default function ViewMenu() {
   return (
     <Container sx={{ p: 0 }}>
       <TabsContainer Heading="Draft Menu" />
-      {categories.length === 0
-        ? [0, 1, 2, 4].map((index) => {
-            return (
-              <Card sx={{ p: 4, maxWidth: 'sm', mx: 'auto', mt: 2.5 }} key={index}>
-                <Skeleton variant="text" width={200} height={75} />
-                <Skeleton variant="string" height={40} />
-                <Skeleton variant="string" height={40} />
-              </Card>
-            );
-          })
-        : categories.map(({ category, items }, index) => {
-            return (
-              <Card sx={{ p: 4, maxWidth: 'sm', mx: 'auto', mt: 2.5 }} key={index}>
-                <Typography variant="h4" sx={{ opacity: 0.8, color: 'primary.main' }} gutterBottom>
-                  Category : {category}
-                </Typography>
-                <CustomizedAccordions items={items} />
-              </Card>
-            );
-          })}
-      <LoadingButton
-        addCategory={PublishMenufn}
-        btnloading={btnloading}
-        loadingIndicator="Publishing..."
-        sx={{ mt: 3, px: 3, py: 1, fontSize: 'h3.fontSize', mx: 'auto', display: 'block' }}
-      >
-        Publish
-      </LoadingButton>
+      {categories.length === 0 ? (
+        <Typography
+          variant="h3"
+          sx={{
+            opacity: 0.8,
+            color: 'primary.main',
+            textAlign: 'center',
+            mt: 2
+          }}
+        >
+          No Category Added :(
+        </Typography>
+      ) : (
+        // [0, 1, 2, 4].map((index) => {
+        //   return (
+        //     <Card sx={{ p: 4, maxWidth: 'sm', mx: 'auto', mt: 2.5 }} key={index}>
+        //       <Skeleton variant="text" width={200} height={75} />
+        //       <Skeleton variant="string" height={40} />
+        //       <Skeleton variant="string" height={40} />
+        //     </Card>
+        //   );
+        // })
+        categories.map(({ category, items }, index) => {
+          return (
+            <Card sx={{ p: 4, maxWidth: 'sm', mx: 'auto', mt: 2.5 }} key={index}>
+              <Typography variant="h4" sx={{ opacity: 0.8, color: 'primary.main' }} gutterBottom>
+                Category : {category}
+              </Typography>
+              <CustomizedAccordions items={items} />
+            </Card>
+          );
+        })
+      )}
+      {categories.length === 0 ? null : (
+        <LoadingButton
+          addCategory={PublishMenufn}
+          btnloading={btnloading}
+          loadingIndicator="Publishing..."
+          sx={{ mt: 3, px: 3, py: 1, fontSize: 'h3.fontSize', mx: 'auto', display: 'block' }}
+        >
+          Publish
+        </LoadingButton>
+      )}
+
       <SnackBar
         open={snackbar.open}
         severity={snackbar.severity}
