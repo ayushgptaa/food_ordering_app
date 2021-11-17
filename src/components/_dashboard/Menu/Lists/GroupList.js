@@ -1,6 +1,10 @@
 /* eslint-disable camelcase */
 import { useState, useContext, useEffect } from 'react';
 import { List, ListItem, ListItemText, Typography, IconButton, ListSubheader } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Collapse from '@mui/material/Collapse';
@@ -24,16 +28,69 @@ GroupList.propTypes = {
   handleOptionmodal: PropType.func
 };
 
+const SelectUptoFeild = ({ options, groupId, select_upto }) => {
+  useEffect(() => {
+    if (select_upto) {
+      setSelectUpto(select_upto);
+    } else {
+      setSelectUpto('');
+    }
+  }, []);
+  const { editfn } = useContext(MenuContext);
+  const [selectUpto, setSelectUpto] = useState('');
+
+  const selectuptohandler = (e) => {
+    setSelectUpto(e.target.value);
+    const data = {
+      group_id: groupId,
+      select_upto: e.target.value
+    };
+    // ************** EDIT OPTION GROUP FUNCTION ***************** //
+    const SuccessMsg = `Changed select Upto to ${data.select_upto} :)`;
+    const ErrorMsg = ` Unable to add select upto. Try again :)`;
+    editfn('edit_option_group', data, SuccessMsg, ErrorMsg);
+  };
+
+  return (
+    <FormControl sx={{ m: 1, minWidth: 100, p: 0 }}>
+      <InputLabel id="simple-select-label">Select</InputLabel>
+      <Select
+        label="Select"
+        labelId="simple-select-label"
+        id="demo-simple-select-autowidth"
+        value={selectUpto}
+        onChange={selectuptohandler}
+      >
+        <MenuItem value={0}>0</MenuItem>
+        {options.map((options, index) => {
+          return (
+            <MenuItem value={index + 1} key={index + 1}>
+              {index + 1}
+            </MenuItem>
+          );
+        })}
+      </Select>
+    </FormControl>
+  );
+};
+
+SelectUptoFeild.propTypes = {
+  options: PropType.array,
+  groupId: PropType.string,
+  select_upto: PropType.number
+};
+
 // ------------------------------------------------------
 
 export default function GroupList({ deleteOptionGroup, deleteOption, handleOptionmodal }) {
   const { optiongroups, optionsarr, handleOpenmodal } = useContext(MenuContext);
   const [combinedOpgroup, setcombinedOpgroup] = useState([]);
+
   useEffect(() => {
     combinedOptionGroupfn();
   }, [optiongroups]);
 
-  const [selectedIndex, setSelectedIndex] = useState('');
+  const [selectedIndex, setSelectedIndex] = useState({});
   const handleClick = (index) => {
     if (selectedIndex === index) {
       setSelectedIndex('');
@@ -41,6 +98,7 @@ export default function GroupList({ deleteOptionGroup, deleteOption, handleOptio
       setSelectedIndex(index);
     }
   };
+
   // ************** CREATE COMBINED OPTION GROUP FUNCTION ***************** //
   const combinedOptionGroupfn = () => {
     const arr = optiongroups.map((optiongroup) => {
@@ -72,7 +130,7 @@ export default function GroupList({ deleteOptionGroup, deleteOption, handleOptio
         }
       >
         {combinedOpgroup &&
-          combinedOpgroup.map(({ group_name, group_id, options }, index) => {
+          combinedOpgroup.map(({ group_name, group_id, select_upto, options }, index) => {
             return (
               <div key={index}>
                 <ListItem key={group_id}>
@@ -86,8 +144,8 @@ export default function GroupList({ deleteOptionGroup, deleteOption, handleOptio
                   >
                     <DeleteIcon aria-label="delete" />
                   </IconButton>
-
-                  <ListItemText primary={group_name} key={group_id} sx={{ pl: 5 }} />
+                  <ListItemText primary={group_name} key={group_id} sx={{ pl: 2 }} />
+                  <SelectUptoFeild options={options} groupId={group_id} select_upto={select_upto} />
                   {index === selectedIndex ? (
                     <IconButton
                       onClick={() => {
