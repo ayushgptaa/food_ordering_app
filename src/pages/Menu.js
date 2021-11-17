@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Container, Tab, Tabs, Box } from '@mui/material';
-import AddItem from 'src/components/_dashboard/Menu/Tabs/AddItem';
+import AddItem from 'src/components/_dashboard/Menu/Tabs/Items';
 import PublishedMenu from 'src/components/_dashboard/Menu/Tabs/PublishedMenu';
 import ViewMenu from 'src/components/_dashboard/Menu/Tabs/ViewMenu';
 import AddOption from 'src/components/_dashboard/Menu/Tabs//Option/Option';
-import AddCategory from 'src/components/_dashboard/Menu/Tabs/AddCategory';
+import AddCategory from 'src/components/_dashboard/Menu/Tabs/Category';
 import { MenuContext } from 'src/components/_dashboard/Menu/MenuStore/Context-Provider';
 import Page from '../components/Page';
 
