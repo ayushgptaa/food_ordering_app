@@ -47,8 +47,11 @@ export default function Option() {
       <Box>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
           <Tab label="Create Option Group" {...a11yProps(0)} sx={{ fontSize: 'h6.fontSize' }} />
-          <Tab label="Add Option Group" {...a11yProps(1)} sx={{ fontSize: 'h6.fontSize' }} />
-          {/* <Tab label="Add Options" {...a11yProps(2)} sx={{ fontSize: 'h6.fontSize' }} /> */}
+          <Tab
+            label="Add Option Group to Item"
+            {...a11yProps(1)}
+            sx={{ fontSize: 'h6.fontSize' }}
+          />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
