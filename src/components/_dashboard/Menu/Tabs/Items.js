@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Select, InputAdornment, MenuItem, InputLabel, FormControl } from '@mui/material';
 import CustomTextFeild from 'src/components/TextField';
 import LoadingButton from 'src/components/LoadingButton';
@@ -11,6 +11,9 @@ import { MenuContext } from '../MenuStore/Context-Provider';
 import PositionedSnackbar from '../../../PositionedSnackbar';
 
 export default function AddItem() {
+  useEffect(() => {
+    ClosePositionedSnackbar();
+  }, []);
   const {
     categories,
     snackbar,
@@ -45,7 +48,7 @@ export default function AddItem() {
       ...input,
       [e.target.name]: value
     });
-    if (input.item_name && input.item_price) setDisabled(false);
+    setDisabled(false);
   };
 
   // ************** ADD ITEM TO CATEGORY FUNCTION ***************** //
