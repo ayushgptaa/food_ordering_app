@@ -13,7 +13,6 @@ import {
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import LoadingButton from 'src/components/LoadingButton';
 import CustomTextFeild from 'src/components/TextField';
-import PositionedSnackbar from 'src/components/PositionedSnackbar';
 import TabsContainer from '../../../TabsContainer';
 import GroupList from '../../../Lists/GroupList';
 import { MenuContext } from '../../../MenuStore/Context-Provider';
@@ -22,14 +21,7 @@ import OptionsModal from '../../../Modals/OptionsModal';
 // ------------------------------------------------
 
 export default function Options({ deleteOptionGroup }) {
-  const {
-    optiongroups,
-    btnloading,
-    addfn,
-    deletefn,
-    OpenPositionedSnackbar,
-    ClosePositionedSnackbar
-  } = useContext(MenuContext);
+  const { optiongroups, btnloading, addfn, deletefn } = useContext(MenuContext);
   const defaultStates = {
     option_name: '',
     option_price: ''
@@ -50,7 +42,6 @@ export default function Options({ deleteOptionGroup }) {
     };
 
     setInput(defaultStates);
-    ClosePositionedSnackbar();
     const SuccessMsg = `${input.option_name} added to Option Group :)`;
     const ErrorMsg = `Unable to add  ${input.option_name} to Option. Try again :(`;
     addfn('add_option', data, SuccessMsg, ErrorMsg);
@@ -113,7 +104,6 @@ export default function Options({ deleteOptionGroup }) {
           value={groupinfo.group_name}
           name="group_id"
           label="Select Option Group"
-          onBlur={OpenPositionedSnackbar}
         >
           {optiongroups.map(({ group_name, group_id }) => {
             return (
@@ -143,7 +133,6 @@ export default function Options({ deleteOptionGroup }) {
             fullWidth={false}
             onChange={inputhandler}
             value={input.option_name}
-            onBlur={OpenPositionedSnackbar}
           />
         </Grid>
         <Grid item xs={4}>
@@ -157,7 +146,6 @@ export default function Options({ deleteOptionGroup }) {
             name="option_price"
             type="number"
             value={input.option_price}
-            onBlur={OpenPositionedSnackbar}
           />
         </Grid>
         <Grid item sm={2}>
@@ -192,8 +180,6 @@ export default function Options({ deleteOptionGroup }) {
         optionid={optionid}
         editOption={editOption}
       />
-
-      <PositionedSnackbar />
     </TabsContainer>
   );
 }
