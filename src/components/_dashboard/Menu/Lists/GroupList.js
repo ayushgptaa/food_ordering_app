@@ -61,7 +61,6 @@ const SelectUptoFeild = ({ options, groupId, select_upto }) => {
         value={selectUpto}
         onChange={selectuptohandler}
       >
-        <MenuItem value={0}>0</MenuItem>
         {options.map((options, index) => {
           return (
             <MenuItem value={index + 1} key={index + 1}>
