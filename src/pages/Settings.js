@@ -1,5 +1,5 @@
 // material
-import { Typography, Card, Box, Button, Stack, Slider } from '@mui/material';
+import { Typography, Box, Button, Stack, Slider } from '@mui/material';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 

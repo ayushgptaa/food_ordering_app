@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { Container, Card, Typography } from '@mui/material';
+import { Container, Card, Typography, Grid } from '@mui/material';
 import { useState, useContext, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
@@ -158,8 +158,21 @@ function CustomizedAccordions({ items }) {
                           <Typography>Option group : {group_name}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                          {options.map(({ option_name }, index) => {
-                            return <Typography key={index}>{option_name}</Typography>;
+                          {options.map(({ option_name, option_price }, index) => {
+                            return (
+                              <Grid
+                                container
+                                key={index}
+                                direction="row"
+                                justifyContent="flex-start"
+                                alignItems="center"
+                                gap={5}
+                                sx={{ p: 0.7 }}
+                              >
+                                <Typography>Option name : {option_name}</Typography>
+                                <Typography>Price : {option_price}</Typography>
+                              </Grid>
+                            );
                           })}
                         </AccordionDetails>
                       </Accordion>
