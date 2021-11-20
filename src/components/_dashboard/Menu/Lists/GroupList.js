@@ -52,10 +52,10 @@ const SelectUptoFeild = ({ options, groupId, select_upto }) => {
   };
 
   return (
-    <FormControl sx={{ m: 1, minWidth: 100, p: 0 }}>
-      <InputLabel id="simple-select-label">Select</InputLabel>
+    <FormControl sx={{ m: 0, minWidth: 140, p: 0 }}>
+      <InputLabel id="simple-select-label">Select Upto</InputLabel>
       <Select
-        label="Select"
+        label="Select Upto"
         labelId="simple-select-label"
         id="demo-simple-select-autowidth"
         value={selectUpto}
