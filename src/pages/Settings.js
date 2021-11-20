@@ -77,7 +77,10 @@ export default function Settings() {
 }
 
 SliderBox.propTypes = {
-  text: PropTypes.string
+  text: PropTypes.string,
+  marks: PropTypes.array,
+  max: PropTypes.number,
+  defaultValue: PropTypes.number
 };
 
 function SliderBox({ text, marks, max, defaultValue }) {
