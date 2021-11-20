@@ -1,9 +1,11 @@
 // material
 import { Typography, Card, Box, Button, Stack, Slider } from '@mui/material';
 import PropTypes from 'prop-types';
+import { styled } from '@mui/material/styles';
+
 // ----------------------------------------------------------------------
 
-const marks = [
+const Discount = [
   {
     value: 0,
     label: '0%'
@@ -15,14 +17,62 @@ const marks = [
   }
 ];
 
+const Commission = [
+  {
+    value: 0,
+    label: '0%'
+  },
+
+  {
+    value: 5,
+    label: '5%'
+  }
+];
+
+const PrettoSlider = styled(Slider)(({ theme }) => ({
+  height: 5,
+  '& .MuiSlider-track': {
+    border: 'none'
+  },
+  '& .MuiSlider-thumb': {
+    height: 24,
+    width: 24,
+    backgroundColor: '#fff',
+    border: '2px solid currentColor',
+    '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+      boxShadow: 'inherit'
+    },
+    '&:before': {
+      display: 'none'
+    }
+  },
+  '& .MuiSlider-valueLabel': {
+    lineHeight: 1.2,
+    fontSize: 15,
+    background: 'unset',
+    padding: 0,
+    width: 40,
+    height: 40,
+    borderRadius: '50% 50% 50% 0',
+    backgroundColor: theme.palette.primary.main,
+    transformOrigin: 'bottom left',
+    transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
+    '&:before': { display: 'none' },
+    '&.MuiSlider-valueLabelOpen': {
+      transform: 'translate(50%, -100%) rotate(-45deg) scale(1)'
+    },
+    '& > *': {
+      transform: 'rotate(45deg)'
+    }
+  }
+}));
+
 export default function Settings() {
   return (
-    <Card sx={{ py: 6, maxWidth: 'md', mx: 'auto', mt: { md: 2 }, mb: 0 }}>
-      <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
-        <SliderBox text="Custom Discount" />
-        <SliderBox text="Affiliate Discount" />
-      </Stack>
-    </Card>
+    <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
+      <SliderBox text="Customer Discount" marks={Discount} max={25} defaultValue={5} />
+      <SliderBox text="Affiliate Commission" marks={Commission} max={5} defaultValue={1} />
+    </Stack>
   );
 }
 
@@ -30,25 +80,32 @@ SliderBox.propTypes = {
   text: PropTypes.string
 };
 
-function SliderBox({ text }) {
+function SliderBox({ text, marks, max, defaultValue }) {
   return (
     <>
       <Box
         sx={{
-          color: 'primary.darker',
-          py: 3,
+          py: 4,
           px: 5,
           width: { md: 500, xs: 300 },
-          backgroundColor: 'primary.lighter',
+          backgroundColor: 'background.paper',
           borderRadius: 2,
           m: 2,
-          textAlign: 'center'
+          textAlign: 'center',
+          boxShadow: 2
         }}
       >
-        <Typography gutterBottom variant="h4" sx={{ textAlign: 'left' }}>
+        <Typography gutterBottom variant="h4" sx={{ textAlign: 'center', opacity: 0.8, mb: 2 }}>
           {text}
         </Typography>
-        <Slider aria-label="Custom marks" marks={marks} valueLabelDisplay="auto" min={0} max={25} />
+        <PrettoSlider
+          aria-label="Custom marks"
+          marks={marks}
+          valueLabelDisplay="auto"
+          min={0}
+          max={max}
+          defaultValue={defaultValue}
+        />
         <Button variant="contained" sx={{ py: 1, px: 4 }}>
           SAVE
         </Button>
