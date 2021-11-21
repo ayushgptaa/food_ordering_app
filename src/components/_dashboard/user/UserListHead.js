@@ -1,15 +1,14 @@
 import PropTypes from 'prop-types';
 // material
-import { visuallyHidden } from '@mui/utils';
-import { Box, TableRow, TableCell, TableHead, TableSortLabel } from '@mui/material';
+
+import { TableRow, TableCell, TableHead } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
 UserListHead.propTypes = {
-  order: PropTypes.oneOf(['asc', 'desc']),
-  orderBy: PropTypes.string,
-  headLabel: PropTypes.array,
-  onRequestSort: PropTypes.func
+  // order: PropTypes.oneOf(['asc', 'desc']),
+  // orderBy: PropTypes.string,
+  headLabel: PropTypes.array
 };
 
 export default function UserListHead({ headLabel }) {
