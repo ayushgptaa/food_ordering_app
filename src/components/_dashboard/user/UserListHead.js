@@ -12,18 +12,10 @@ UserListHead.propTypes = {
   onRequestSort: PropTypes.func
 };
 
-export default function UserListHead({
-  order,
-  orderBy,
-  // rowCount,
-  headLabel,
-  // numSelected,
-  onRequestSort
-  // onSelectAllClick
-}) {
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
+export default function UserListHead({ headLabel }) {
+  // const createSortHandler = (property) => (event) => {
+  //   onRequestSort(event, property);
+  // };
 
   return (
     <TableHead>
@@ -33,22 +25,9 @@ export default function UserListHead({
             padding="small"
             key={headCell.id}
             align="center"
-            sortDirection={orderBy === headCell.id ? order : false}
+            sx={{ color: 'primary.main' }}
           >
-            <TableSortLabel
-              hideSortIcon
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-              sx={{ color: 'primary.maingreen' }}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box sx={{ ...visuallyHidden }}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </Box>
-              ) : null}
-            </TableSortLabel>
+            {headCell.label}
           </TableCell>
         ))}
       </TableRow>
