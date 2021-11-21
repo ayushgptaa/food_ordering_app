@@ -97,6 +97,7 @@ export const ContextProvider = ({ children }) => {
   const publishMenu = async (success, error) => {
     Fetch({}, 'publish_menu')
       .then(() => {
+        ClosePositionedSnackbar();
         getPublishedMenu();
         setBtnloading(false);
         setSnackbar({
@@ -146,6 +147,7 @@ export const ContextProvider = ({ children }) => {
     setBtnloading(true);
     Fetch(data, endpoint)
       .then(() => {
+        OpenPositionedSnackbar();
         getMenu();
         getDraftMenu();
         setBtnloading(false);
@@ -178,6 +180,7 @@ export const ContextProvider = ({ children }) => {
           open: true,
           message: success
         });
+        OpenPositionedSnackbar();
       })
       .catch((e) => {
         getMenu();
@@ -211,6 +214,7 @@ export const ContextProvider = ({ children }) => {
           open: true,
           message: success
         });
+        OpenPositionedSnackbar();
       })
       .catch(() => {
         setSnackbar({

@@ -12,19 +12,14 @@ export default function PositionedSnackbar() {
   const { open } = positionsnackbar;
 
   return (
-    <Snackbar
-      anchorOrigin={position}
-      open={open}
-      message="Your changes are not saved"
-      key="Positioned Snackbar"
-    >
+    <Snackbar anchorOrigin={position} open={open} key="Positioned Snackbar">
       <Alert
         onClose={ClosePositionedSnackbar}
         severity="warning"
         sx={{ width: '100%' }}
         variant="filled"
       >
-        Your Changes are unsaved. Add to save them.
+        Your changes are not Published. Go to Draft Menu to publish them.
       </Alert>
     </Snackbar>
   );

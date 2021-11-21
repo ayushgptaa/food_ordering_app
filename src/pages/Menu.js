@@ -9,6 +9,7 @@ import ViewMenu from 'src/components/_dashboard/Menu/Tabs/ViewMenu';
 import AddOption from 'src/components/_dashboard/Menu/Tabs//Option/Option';
 import AddCategory from 'src/components/_dashboard/Menu/Tabs/Category';
 import { MenuContext } from 'src/components/_dashboard/Menu/MenuStore/Context-Provider';
+import PositionedSnackbar from 'src/components/PositionedSnackbar';
 import Page from '../components/Page';
 
 // ----------------------------------------------------------------------
@@ -120,6 +121,7 @@ export default function BasicTabs() {
           </TabPanel>
         </Box>
       </Container>
+      <PositionedSnackbar />
     </Page>
   );
 }
