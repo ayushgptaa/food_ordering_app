@@ -1,7 +1,10 @@
+/* eslint-disable camelcase */
+import { useEffect, useState } from 'react';
 // material
 import { Typography, Box, Button, Stack, Slider } from '@mui/material';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
+import Fetch from 'src/components/_dashboard/Menu/Fetch';
 
 // ----------------------------------------------------------------------
 
@@ -48,7 +51,7 @@ const PrettoSlider = styled(Slider)(({ theme }) => ({
   },
   '& .MuiSlider-valueLabel': {
     lineHeight: 1.2,
-    fontSize: 15,
+    fontSize: 20,
     background: 'unset',
     padding: 0,
     width: 40,
@@ -68,10 +71,36 @@ const PrettoSlider = styled(Slider)(({ theme }) => ({
 }));
 
 export default function Settings() {
+  const [customerdiscount, setCustomerdiscount] = useState(5);
+  const [commission, setCommission] = useState(1);
+  useEffect(() => {
+    // ************** GET STORE INFO FUNCTION ***************** //
+    const getstoreInfo = async () => {
+      const data = {
+        store_id:
+          'store_ITi5BP3FmPa7gyMYgbNVXM9PdD0jsC2avDxYbETsXJ56vmAEFdAwVQaVoCoeXEKl92wY30Z52QXo9NMnk55pY2ReizFeLRo7v0Gx1635-720184-2931'
+      };
+
+      Fetch(data, 'get_store_info')
+        .then((res) => {
+          const { customer_discount, affiliate_commission } = res;
+          setCustomerdiscount(customer_discount);
+          setCommission(affiliate_commission);
+        })
+        .catch(() => {});
+    };
+    getstoreInfo();
+  }, []);
+
   return (
     <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
-      <SliderBox text="Customer Discount" marks={Discount} max={25} defaultValue={5} />
-      <SliderBox text="Affiliate Commission" marks={Commission} max={5} defaultValue={1} />
+      <SliderBox
+        text="Customer Discount"
+        marks={Discount}
+        max={25}
+        defaultValue={customerdiscount}
+      />
+      <SliderBox text="Affiliate Commission" marks={Commission} max={5} defaultValue={commission} />
     </Stack>
   );
 }
@@ -102,6 +131,7 @@ function SliderBox({ text, marks, max, defaultValue }) {
           {text}
         </Typography>
         <PrettoSlider
+          key={`slider-${defaultValue}`}
           aria-label="Custom marks"
           marks={marks}
           valueLabelDisplay="auto"
