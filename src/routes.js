@@ -21,7 +21,7 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="/dashboard/app" replace /> },
+        { path: '/dashboard', element: <Navigate to="/dashboard/app" /> },
         { path: 'app', element: <DashboardApp /> },
         { path: 'my-orders', element: <MyOrders /> },
         { path: 'promote', element: <Promote /> },
