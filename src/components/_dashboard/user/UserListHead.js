@@ -20,12 +20,7 @@ export default function UserListHead({ headLabel }) {
     <TableHead>
       <TableRow>
         {headLabel.map((headCell) => (
-          <TableCell
-            padding="small"
-            key={headCell.id}
-            align="center"
-            sx={{ color: 'primary.main' }}
-          >
+          <TableCell key={headCell.id} align="center" sx={{ color: 'primary.main' }}>
             {headCell.label}
           </TableCell>
         ))}
