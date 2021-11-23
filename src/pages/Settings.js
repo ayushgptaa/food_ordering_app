@@ -5,6 +5,7 @@ import { Typography, Box, Button, Stack, Slider } from '@mui/material';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Fetch from 'src/components/_dashboard/Menu/Fetch';
+import SnackBar from 'src/components/Snackbar';
 
 // ----------------------------------------------------------------------
 
@@ -95,24 +96,72 @@ export default function Settings() {
   return (
     <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
       <SliderBox
+        name="customer_discount"
         text="Customer Discount"
         marks={Discount}
         max={25}
         defaultValue={customerdiscount}
+        endpoint="change_customer_discount"
       />
-      <SliderBox text="Affiliate Commission" marks={Commission} max={5} defaultValue={commission} />
+      <SliderBox
+        name="affiliate_commission"
+        text="Affiliate Commission"
+        marks={Commission}
+        max={5}
+        defaultValue={commission}
+        endpoint="change_affiliate_commission"
+      />
     </Stack>
   );
 }
 
 SliderBox.propTypes = {
+  name: PropTypes.string,
+  endpoint: PropTypes.string,
   text: PropTypes.string,
   marks: PropTypes.array,
   max: PropTypes.number,
   defaultValue: PropTypes.number
 };
 
-function SliderBox({ text, marks, max, defaultValue }) {
+function SliderBox({ name, text, marks, max, defaultValue, endpoint }) {
+  const closeSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnackbar({ open: false });
+  };
+  // ************** SET CUSTOMER DISCOUNT FUNCTION ***************** //
+  const setSlider = async () => {
+    const data = {
+      store_id:
+        'store_ITi5BP3FmPa7gyMYgbNVXM9PdD0jsC2avDxYbETsXJ56vmAEFdAwVQaVoCoeXEKl92wY30Z52QXo9NMnk55pY2ReizFeLRo7v0Gx1635-720184-2931',
+      ...input
+    };
+    Fetch(data, endpoint)
+      .then(() => {
+        setSnackbar({
+          severity: 'success',
+          open: true,
+          message: `Successfully Changed the value :)`
+        });
+      })
+      .catch(() => {
+        setSnackbar({
+          severity: 'error',
+          open: true,
+          message: 'Unable to change the value. Try again :( '
+        });
+      });
+  };
+
+  const [input, setInput] = useState({});
+  const [snackbar, setSnackbar] = useState({ severity: 'success', open: false, message: '' });
+  const inputhandler = (e) => {
+    setInput({ [e.target.name]: Number(e.target.value) });
+  };
+
   return (
     <>
       <Box
@@ -131,6 +180,7 @@ function SliderBox({ text, marks, max, defaultValue }) {
           {text}
         </Typography>
         <PrettoSlider
+          name={name}
           key={`slider-${defaultValue}`}
           aria-label="Custom marks"
           marks={marks}
@@ -138,10 +188,17 @@ function SliderBox({ text, marks, max, defaultValue }) {
           min={0}
           max={max}
           defaultValue={defaultValue}
+          onChange={inputhandler}
         />
-        <Button variant="contained" sx={{ py: 1, px: 4 }}>
+        <Button variant="contained" sx={{ py: 1, px: 4 }} onClick={() => setSlider(endpoint)}>
           SAVE
         </Button>
+        <SnackBar
+          open={snackbar.open}
+          severity={snackbar.severity}
+          handleClose={closeSnackbar}
+          message={snackbar.message}
+        />
       </Box>
     </>
   );
