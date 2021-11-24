@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { useEffect, useState } from 'react';
 // material
-import { Typography, Box, Button, Stack, Slider, Container } from '@mui/material';
+import { Typography, Box, Button, Stack, Slider } from '@mui/material';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Fetch from 'src/components/_dashboard/Menu/Fetch';
