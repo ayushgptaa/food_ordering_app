@@ -12,10 +12,10 @@ export default function DashboardApp() {
       <Container maxWidth="xl">
         <Box
           sx={{
-            textAlign: { xs: 'center', md: 'left' }
+            textAlign: { xs: 'center' }
           }}
         >
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h3" gutterBottom sx={{ opacity: 0.72 }}>
             Hi, Welcome back
           </Typography>
         </Box>

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { useEffect, useState } from 'react';
 // material
-import { Typography, Box, Button, Stack, Slider } from '@mui/material';
+import { Typography, Box, Button, Stack, Slider, Container } from '@mui/material';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Fetch from 'src/components/_dashboard/Menu/Fetch';
@@ -95,6 +95,15 @@ export default function Settings() {
 
   return (
     <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
+      <Box
+        sx={{
+          textAlign: { xs: 'center', md: 'left' }
+        }}
+      >
+        <Typography variant="h3" gutterBottom sx={{ opacity: 0.7 }}>
+          Available Settings
+        </Typography>
+      </Box>
       <SliderBox
         name="customer_discount"
         text="Customer Discount"
