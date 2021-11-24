@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
-// import { filter } from 'lodash';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 // material
 import {
   Card,
@@ -24,10 +23,10 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Fetch from 'src/components/_dashboard/Menu/Fetch';
 import Page from '../components/Page';
 import Scrollbar from '../components/Scrollbar';
-// import SearchNotFound from '../components/SearchNotFound';
+import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead } from '../components/_dashboard/user';
 //
-import USERLIST from '../_mocks_/user';
+// import USERLIST from '../_mocks_/user';
 
 // ----------------------------------------------------------------------
 
@@ -75,6 +74,9 @@ const TABLE_HEAD = [
 export default function MyOrders() {
   const [orders, setOrders] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState('');
+  const [datecreated, setDatecreated] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [noOrders, setnoOrders] = useState(false);
   const handleClick = (index) => {
     if (selectedIndex === index) {
       setSelectedIndex('');
@@ -83,6 +85,7 @@ export default function MyOrders() {
     }
   };
   useEffect(() => {
+    setLoading(true);
     getOrders();
   }, []);
 
@@ -91,21 +94,44 @@ export default function MyOrders() {
     const data = {
       store_id:
         'store_8ncpU4CUjliKQ0l59XjQBA8DbllqxcWM8NSNUkRPGyQ5XYVHyyyI93SZ4xl5yeBh8D2P4xfO2nWwDCiZMKLHuSY9n8zA8XNgMuyf1635-612160-7001',
-      date_created: null
+      date_created: datecreated
     };
+
     Fetch(data, 'get_orders')
       .then((res) => {
         setOrders(res);
+        setLoading(false);
+        const { date_created } = res[res.length - 1];
+        setDatecreated(date_created);
+        setnoOrders(res.length === 0);
       })
-      .catch(() => {});
+      .catch(() => {
+        setLoading(false);
+      });
   };
 
   const [page, setPage] = useState(0);
-
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    const data = {
+      store_id:
+        'store_8ncpU4CUjliKQ0l59XjQBA8DbllqxcWM8NSNUkRPGyQ5XYVHyyyI93SZ4xl5yeBh8D2P4xfO2nWwDCiZMKLHuSY9n8zA8XNgMuyf1635-612160-7001',
+      date_created: datecreated
+    };
+
+    Fetch(data, 'get_orders')
+      .then((res) => {
+        setOrders(orders, res);
+        setLoading(false);
+        const { date_created } = res[res.length - 1];
+        setDatecreated(date_created);
+        setnoOrders(res.length === 0);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -131,18 +157,26 @@ export default function MyOrders() {
 
   // const filteredUsers = applySortFilter(USERLIST, getComparator('asc', 'name'));
 
-  // const isUserNotFound = orders.length === 0;
-
+  // console.log(orders);
   return (
     <Page title="My orders">
-      <Container sx={{ mt: 8 }}>
+      <Container sx={{ mt: 5 }}>
+        <Box
+          sx={{
+            textAlign: { xs: 'center' }
+          }}
+        >
+          <Typography variant="h3" gutterBottom sx={{ mb: 3, opacity: 0.7 }}>
+            Orders List
+          </Typography>
+        </Box>
         <Card>
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
                 <UserListHead headLabel={TABLE_HEAD} />
                 <TableBody>
-                  {orders.length === 0 ? (
+                  {loading ? (
                     <SkeletionRow />
                   ) : (
                     orders
@@ -160,8 +194,8 @@ export default function MyOrders() {
                         } = order;
 
                         return (
-                          <>
-                            <TableRow hover key={index}>
+                          <Fragment key={index}>
+                            <TableRow hover>
                               <TableCell align="center">{index + 1}</TableCell>
                               <TableCell align="center">
                                 <Typography variant="subtitle2" noWrap>
@@ -216,20 +250,20 @@ export default function MyOrders() {
                                 </Collapse>
                               </TableCell>
                             </TableRow>
-                          </>
+                          </Fragment>
                         );
                       })
                   )}
                 </TableBody>
-                {/* {isUserNotFound && (
-                    <TableBody>
-                      <TableRow>
-                        <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                          <SearchNotFound searchQuery="" />
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  )} */}
+                {noOrders && (
+                  <TableBody>
+                    <TableRow>
+                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                        <SearchNotFound searchQuery="" />
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                )}
               </Table>
             </TableContainer>
           </Scrollbar>
@@ -237,7 +271,7 @@ export default function MyOrders() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={USERLIST.length}
+            count={-1}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
