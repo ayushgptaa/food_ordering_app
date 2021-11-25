@@ -38,7 +38,12 @@ export default function AddItem() {
   const inputhandler = (e) => {
     setError(false);
     setHelpertext('');
-    const { value } = e.target;
+    let { value } = e.target;
+    value =
+      value.indexOf('.') >= 0
+        ? value.substr(0, value.indexOf('.')) + value.substr(value.indexOf('.'), 3)
+        : value;
+
     setInput({
       ...input,
       [e.target.name]: value
@@ -54,7 +59,11 @@ export default function AddItem() {
       setHelpertext('required');
       return;
     }
-
+    if (input.item_price > 500) {
+      setError(true);
+      setHelpertext("Can't add amount greater than $500");
+      return;
+    }
     setInput(defaultStates);
 
     const data = {
@@ -92,6 +101,7 @@ export default function AddItem() {
     const ErrorMsg = ` Unable to change item . Try again :)`;
     editfn('edit_item', data, SuccessMsg, ErrorMsg);
   };
+
   return (
     <TabsContainer Heading="Add Item to Category">
       <FormControl fullWidth sx={{ mt: 1.5 }}>
@@ -136,8 +146,8 @@ export default function AddItem() {
         type="number"
         value={input.item_price}
         required
-        error={input.item_price ? false : error}
-        helperText={input.item_price ? '' : helpertext}
+        error={input.item_price && input.item_price < 500 ? false : error}
+        helperText={input.item_price && input.item_price < 500 ? '' : helpertext}
       />
       <CustomTextFeild
         label="Item Description"
