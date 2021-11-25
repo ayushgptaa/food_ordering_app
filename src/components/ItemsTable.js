@@ -11,6 +11,8 @@ ItemsTable.propTypes = {
   selectedIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
+// -------------------------------------------------------------
+
 export default function ItemsTable({ items, index, selectedIndex }) {
   return (
     <TableRow>

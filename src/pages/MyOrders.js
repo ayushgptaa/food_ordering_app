@@ -7,13 +7,11 @@ import {
   TableRow,
   TableBody,
   TableCell,
-  TableHead,
   Box,
   Container,
   Typography,
   TableContainer,
   TablePagination,
-  Collapse,
   Skeleton
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
@@ -21,12 +19,11 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 // components
 import Fetch from 'src/components/_dashboard/Menu/Fetch';
+import ItemsTable from 'src/components/ItemsTable';
 import Page from '../components/Page';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead } from '../components/_dashboard/user';
-//
-// import USERLIST from '../_mocks_/user';
 
 // ----------------------------------------------------------------------
 
@@ -41,35 +38,6 @@ const TABLE_HEAD = [
 ];
 
 // ----------------------------------------------------------------------
-
-// function descendingComparator(a, b, orderBy) {
-//   if (b[orderBy] < a[orderBy]) {
-//     return -1;
-//   }
-//   if (b[orderBy] > a[orderBy]) {
-//     return 1;
-//   }
-//   return 0;
-// }
-
-// function getComparator(order, orderBy) {
-//   return order === 'desc'
-//     ? (a, b) => descendingComparator(a, b, orderBy)
-//     : (a, b) => -descendingComparator(a, b, orderBy);
-// }
-
-// function applySortFilter(array, comparator, query) {
-//   const stabilizedThis = array.map((el, index) => [el, index]);
-//   stabilizedThis.sort((a, b) => {
-//     const order = comparator(a[0], b[0]);
-//     if (order !== 0) return order;
-//     return a[1] - b[1];
-//   });
-//   if (query) {
-//     return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
-//   }
-//   return stabilizedThis.map((el) => el[0]);
-// }
 
 export default function MyOrders() {
   const [orders, setOrders] = useState([]);
@@ -115,6 +83,7 @@ export default function MyOrders() {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    setLoading(true);
     const data = {
       store_id:
         'store_8ncpU4CUjliKQ0l59XjQBA8DbllqxcWM8NSNUkRPGyQ5XYVHyyyI93SZ4xl5yeBh8D2P4xfO2nWwDCiZMKLHuSY9n8zA8XNgMuyf1635-612160-7001',
@@ -123,7 +92,7 @@ export default function MyOrders() {
 
     Fetch(data, 'get_orders')
       .then((res) => {
-        setOrders(orders, res);
+        setOrders((prevstate) => [...prevstate, ...res]);
         setLoading(false);
         const { date_created } = res[res.length - 1];
         setDatecreated(date_created);
@@ -140,13 +109,13 @@ export default function MyOrders() {
   };
 
   const SkeletionRow = () => {
-    return [0, 1, 2, 3, 4].map((index) => {
+    return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((index) => {
       return (
         <TableRow key={index}>
           {[0, 1, 2, 3, 4, 5, 6].map((index) => {
             return (
               <TableCell align="center" key={index}>
-                <Skeleton height={25} variant="text" />
+                <Skeleton height={25} variant="text" key={index} />
               </TableCell>
             );
           })}
@@ -155,9 +124,6 @@ export default function MyOrders() {
     });
   };
 
-  // const filteredUsers = applySortFilter(USERLIST, getComparator('asc', 'name'));
-
-  // console.log(orders);
   return (
     <Page title="My orders">
       <Container sx={{ mt: 5 }}>
@@ -226,30 +192,7 @@ export default function MyOrders() {
                                 </IconButton>
                               </TableCell>
                             </TableRow>
-                            <TableRow>
-                              <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
-                                <Collapse in={index === selectedIndex} timeout="auto" unmountOnExit>
-                                  <Box sx={{ margin: 1, mx: 'auto' }}>
-                                    <Table aria-label="items">
-                                      <TableHead>
-                                        <TableRow>
-                                          <TableCell align="center">Item Name</TableCell>
-                                          <TableCell align="center">Item Price</TableCell>
-                                        </TableRow>
-                                      </TableHead>
-                                      <TableBody>
-                                        {items.map(({ item_name, item_price }, index) => (
-                                          <TableRow key={index}>
-                                            <TableCell align="center">{item_name}</TableCell>
-                                            <TableCell align="center">{item_price}</TableCell>
-                                          </TableRow>
-                                        ))}
-                                      </TableBody>
-                                    </Table>
-                                  </Box>
-                                </Collapse>
-                              </TableCell>
-                            </TableRow>
+                            <ItemsTable items={items} index={index} selectedIndex={selectedIndex} />
                           </Fragment>
                         );
                       })
@@ -271,7 +214,7 @@ export default function MyOrders() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={-1}
+            count={orders.length + 1}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
