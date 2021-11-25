@@ -75,6 +75,7 @@ export default function MyOrders() {
       })
       .catch(() => {
         setLoading(false);
+        setnoOrders(true);
       });
   };
 
@@ -100,6 +101,7 @@ export default function MyOrders() {
       })
       .catch(() => {
         setLoading(false);
+        setnoOrders(true);
       });
   };
 
