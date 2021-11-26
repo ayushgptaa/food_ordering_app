@@ -55,8 +55,8 @@ const PrettoSlider = styled(Slider)(({ theme }) => ({
     fontSize: 20,
     background: 'unset',
     padding: 0,
-    width: 40,
-    height: 40,
+    width: 35,
+    height: 35,
     borderRadius: '50% 50% 50% 0',
     backgroundColor: theme.palette.primary.main,
     transformOrigin: 'bottom left',
@@ -176,6 +176,7 @@ function SliderBox({ name, text, marks, max, defaultValue, endpoint }) {
       <Box
         sx={{
           py: 4,
+          pt: 2,
           px: 5,
           width: { md: 500, xs: 300 },
           backgroundColor: 'background.paper',
@@ -185,7 +186,7 @@ function SliderBox({ name, text, marks, max, defaultValue, endpoint }) {
           boxShadow: 2
         }}
       >
-        <Typography gutterBottom variant="h4" sx={{ textAlign: 'center', opacity: 0.8, mb: 2 }}>
+        <Typography gutterBottom variant="h4" sx={{ textAlign: 'center', opacity: 0.8, mb: 7 }}>
           {text}
         </Typography>
         <PrettoSlider
@@ -193,7 +194,7 @@ function SliderBox({ name, text, marks, max, defaultValue, endpoint }) {
           key={`slider-${defaultValue}`}
           aria-label="Custom marks"
           marks={marks}
-          valueLabelDisplay="auto"
+          valueLabelDisplay="on"
           min={0}
           max={max}
           defaultValue={defaultValue}
