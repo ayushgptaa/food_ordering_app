@@ -25,7 +25,7 @@ export default function Options({ deleteOptionGroup }) {
   const { optiongroups, btnloading, addfn, deletefn } = useContext(MenuContext);
   const defaultStates = {
     option_name: '',
-    option_price: ''
+    option_price: '0.00'
   };
   const [disabled, setDisabled] = useState(true);
   const [input, setInput] = useState(defaultStates);
