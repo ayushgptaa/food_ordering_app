@@ -5,11 +5,22 @@ CustomTextFeild.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   name: PropTypes.string,
-  inputhandler: PropTypes.func
+  inputhandler: PropTypes.func,
+  errorTextstyle: PropTypes.bool
 };
 
 export default function CustomTextFeild(props) {
-  const { label, placeholder, name, inputhandler, ...rest } = props;
+  const { label, placeholder, name, inputhandler, errorTextstyle, ...rest } = props;
+  let errorstyle;
+  if (errorTextstyle) {
+    errorstyle = {
+      '& .MuiFormHelperText-root': {
+        top: '55px',
+        position: 'absolute'
+      }
+    };
+  }
+
   return (
     <MuiTextField
       name={name}
@@ -20,7 +31,10 @@ export default function CustomTextFeild(props) {
       fullWidth
       onChange={inputhandler}
       autoComplete="off"
-      sx={{ mt: 1.5 }}
+      sx={{
+        mt: 1.5,
+        ...errorstyle
+      }}
       {...rest}
     />
   );

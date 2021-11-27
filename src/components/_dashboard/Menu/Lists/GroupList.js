@@ -18,7 +18,7 @@ const ListContainer = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   boxShadow: theme.customShadows.z1,
   borderRadius: theme.shape.borderRadius,
-  marginTop: '1.5rem',
+  marginTop: '2.5rem',
   width: '100%'
 }));
 
@@ -52,7 +52,7 @@ const SelectUptoFeild = ({ options, groupId, select_upto }) => {
   };
 
   return (
-    <FormControl sx={{ m: 0, minWidth: 140, p: 0 }}>
+    <FormControl sx={{ m: 0, minWidth: 120, p: 0 }}>
       <InputLabel id="simple-select-label">Select Upto</InputLabel>
       <Select
         label="Select Upto"

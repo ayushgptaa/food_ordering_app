@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-boolean-value */
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
 import { useState, useContext } from 'react';
@@ -31,9 +32,37 @@ export default function Options({ deleteOptionGroup }) {
   const [optionmodal, setoptionmodal] = useState(false);
   const [optionid, setOptionid] = useState('');
   const [groupinfo, setGroupinfo] = useState({ group_id: '', group_name: '' });
+  const [error, setError] = useState(false);
+  const [helpertext, setHelpertext] = useState('');
+
+  const inputhandler = (e) => {
+    setError(false);
+    setHelpertext('');
+    let { value } = e.target;
+    value =
+      value.indexOf('.') >= 0
+        ? value.substr(0, value.indexOf('.')) + value.substr(value.indexOf('.'), 3)
+        : value;
+
+    setInput({
+      ...input,
+      [e.target.name]: value
+    });
+    setDisabled(false);
+  };
 
   // ************** ADD OPTION TO OPTION GROUP FUNCTION ***************** /
   const addOptions = () => {
+    if (input.option_price === '' || input.option_name === '') {
+      setError(true);
+      setHelpertext('required');
+      return;
+    }
+    if (input.option_price > 500) {
+      setError(true);
+      setHelpertext("Can't add amount greater than $500");
+      return;
+    }
     const data = {
       group_id: groupinfo.group_id,
       option: {
@@ -86,14 +115,6 @@ export default function Options({ deleteOptionGroup }) {
     });
   };
 
-  const inputhandler = (e) => {
-    const { value } = e.target;
-    setInput({
-      ...input,
-      [e.target.name]: value
-    });
-    setDisabled(false);
-  };
   return (
     <TabsContainer Heading="Add Options" margintop="true">
       <FormControl fullWidth sx={{ mt: 1.5 }}>
@@ -127,16 +148,20 @@ export default function Options({ deleteOptionGroup }) {
       >
         <Grid item xs={6}>
           <CustomTextFeild
+            errorTextstyle={true}
             label="Option name"
             placeholder="Enter Option name "
             name="option_name"
             fullWidth={false}
             onChange={inputhandler}
             value={input.option_name}
+            error={input.option_name ? false : error}
+            helperText={input.option_name ? '' : helpertext}
           />
         </Grid>
         <Grid item xs={4}>
           <CustomTextFeild
+            errorTextstyle={true}
             label="Amount"
             placeholder="Enter Amount"
             InputProps={{
@@ -146,6 +171,8 @@ export default function Options({ deleteOptionGroup }) {
             name="option_price"
             type="number"
             value={input.option_price}
+            error={input.option_price && input.option_price < 500 ? false : error}
+            helperText={input.option_price && input.option_price < 500 ? '' : helpertext}
           />
         </Grid>
         <Grid item sm={2}>
