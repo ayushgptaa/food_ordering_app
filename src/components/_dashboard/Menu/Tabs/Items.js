@@ -27,7 +27,7 @@ export default function AddItem() {
   const defaultStates = {
     item_name: '',
     item_description: '',
-    item_price: '',
+    item_price: '0.00',
     category_id: ''
   };
   const [input, setInput] = useState(defaultStates);
