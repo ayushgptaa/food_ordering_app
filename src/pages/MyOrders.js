@@ -28,7 +28,7 @@ import { UserListHead } from '../components/_dashboard/user';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'orderno', label: 'Order No' },
+  // { id: 'orderno', label: 'Order No' },
   { id: 'Customername', label: 'Customer Name' },
   { id: 'carttotal', label: 'Cart Total' },
   { id: 'totaldiscount', label: 'Total Discount' },
@@ -45,6 +45,7 @@ export default function MyOrders() {
   const [datecreated, setDatecreated] = useState(null);
   const [loading, setLoading] = useState(false);
   const [noOrders, setnoOrders] = useState(false);
+
   const handleClick = (index) => {
     if (selectedIndex === index) {
       setSelectedIndex('');
@@ -52,6 +53,7 @@ export default function MyOrders() {
       setSelectedIndex(index);
     }
   };
+
   useEffect(() => {
     setLoading(true);
     getOrders();
@@ -67,15 +69,14 @@ export default function MyOrders() {
 
     Fetch(data, 'get_orders')
       .then((res) => {
+        if (res.length === 0) setnoOrders(true);
         setOrders(res);
         setLoading(false);
         const { date_created } = res[res.length - 1];
         setDatecreated(date_created);
-        setnoOrders(res.length === 0);
       })
       .catch(() => {
         setLoading(false);
-        setnoOrders(true);
       });
   };
 
@@ -97,11 +98,9 @@ export default function MyOrders() {
         setLoading(false);
         const { date_created } = res[res.length - 1];
         setDatecreated(date_created);
-        setnoOrders(res.length === 0);
       })
       .catch(() => {
         setLoading(false);
-        setnoOrders(true);
       });
   };
 
@@ -114,7 +113,7 @@ export default function MyOrders() {
     return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((index) => {
       return (
         <TableRow key={index}>
-          {[0, 1, 2, 3, 4, 5, 6].map((index) => {
+          {TABLE_HEAD.map((_, index) => {
             return (
               <TableCell align="center" key={index}>
                 <Skeleton height={25} variant="text" key={index} />
@@ -126,6 +125,7 @@ export default function MyOrders() {
     });
   };
 
+  // console.log(noOr);
   return (
     <Page title="My orders">
       <Container sx={{ mt: 5 }}>
@@ -143,64 +143,68 @@ export default function MyOrders() {
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
                 <UserListHead headLabel={TABLE_HEAD} />
-                <TableBody>
-                  {loading ? (
-                    <SkeletionRow />
-                  ) : (
-                    orders
-                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                      .map((order, index) => {
-                        const {
-                          customer_name,
-                          cart_total,
-                          total_discount,
-                          customer_discount,
-                          affiliate_earned,
-                          affiliate_commission,
-                          store_earned,
-                          items
-                        } = order;
+                {!noOrders ? (
+                  <TableBody>
+                    {loading ? (
+                      <SkeletionRow />
+                    ) : (
+                      orders
+                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        .map((order, index) => {
+                          const {
+                            customer_name,
+                            cart_total,
+                            total_discount,
+                            customer_discount,
+                            affiliate_earned,
+                            affiliate_commission,
+                            store_earned,
+                            items
+                          } = order;
 
-                        return (
-                          <Fragment key={index}>
-                            <TableRow hover>
-                              <TableCell align="center">{index + 1}</TableCell>
-                              <TableCell align="center">
-                                <Typography variant="subtitle2" noWrap>
-                                  {customer_name}
-                                </Typography>
-                              </TableCell>
-                              <TableCell align="center">${cart_total}</TableCell>
-                              <TableCell align="center">
-                                ${total_discount}({customer_discount}%)
-                              </TableCell>
-                              <TableCell align="center">
-                                ${affiliate_earned}({affiliate_commission})
-                              </TableCell>
+                          return (
+                            <Fragment key={index}>
+                              <TableRow hover>
+                                <TableCell align="center">
+                                  <Typography variant="subtitle2" noWrap>
+                                    {customer_name}
+                                  </Typography>
+                                </TableCell>
+                                <TableCell align="center">${cart_total}</TableCell>
+                                <TableCell align="center">
+                                  ${total_discount}({customer_discount}%)
+                                </TableCell>
+                                <TableCell align="center">
+                                  ${affiliate_earned}({affiliate_commission})
+                                </TableCell>
 
-                              <TableCell align="center">${store_earned}</TableCell>
-                              <TableCell align="center">
-                                Items
-                                <IconButton
-                                  aria-label="expand row"
-                                  size="small"
-                                  onClick={() => handleClick(index)}
-                                >
-                                  {index === selectedIndex ? (
-                                    <KeyboardArrowUpIcon />
-                                  ) : (
-                                    <KeyboardArrowDownIcon />
-                                  )}
-                                </IconButton>
-                              </TableCell>
-                            </TableRow>
-                            <ItemsTable items={items} index={index} selectedIndex={selectedIndex} />
-                          </Fragment>
-                        );
-                      })
-                  )}
-                </TableBody>
-                {noOrders && (
+                                <TableCell align="center">${store_earned}</TableCell>
+                                <TableCell align="center">
+                                  Items
+                                  <IconButton
+                                    aria-label="expand row"
+                                    size="small"
+                                    onClick={() => handleClick(index)}
+                                  >
+                                    {index === selectedIndex ? (
+                                      <KeyboardArrowUpIcon />
+                                    ) : (
+                                      <KeyboardArrowDownIcon />
+                                    )}
+                                  </IconButton>
+                                </TableCell>
+                              </TableRow>
+                              <ItemsTable
+                                items={items}
+                                index={index}
+                                selectedIndex={selectedIndex}
+                              />
+                            </Fragment>
+                          );
+                        })
+                    )}
+                  </TableBody>
+                ) : (
                   <TableBody>
                     <TableRow>
                       <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
