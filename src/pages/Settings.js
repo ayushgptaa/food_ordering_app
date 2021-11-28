@@ -11,8 +11,8 @@ import SnackBar from 'src/components/Snackbar';
 
 const Discount = [
   {
-    value: 0,
-    label: '0%'
+    value: 5,
+    label: '5%'
   },
 
   {
@@ -23,8 +23,8 @@ const Discount = [
 
 const Commission = [
   {
-    value: 0,
-    label: '0%'
+    value: 1,
+    label: '1%'
   },
 
   {
@@ -108,6 +108,7 @@ export default function Settings() {
         name="customer_discount"
         text="Customer Discount"
         marks={Discount}
+        min={5}
         max={25}
         defaultValue={customerdiscount}
         endpoint="change_customer_discount"
@@ -116,6 +117,7 @@ export default function Settings() {
         name="affiliate_commission"
         text="Affiliate Commission"
         marks={Commission}
+        min={1}
         max={5}
         defaultValue={commission}
         endpoint="change_affiliate_commission"
@@ -130,10 +132,11 @@ SliderBox.propTypes = {
   text: PropTypes.string,
   marks: PropTypes.array,
   max: PropTypes.number,
+  min: PropTypes.number,
   defaultValue: PropTypes.number
 };
 
-function SliderBox({ name, text, marks, max, defaultValue, endpoint }) {
+function SliderBox({ name, text, marks, max, min, defaultValue, endpoint }) {
   const closeSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -195,7 +198,7 @@ function SliderBox({ name, text, marks, max, defaultValue, endpoint }) {
           aria-label="Custom marks"
           marks={marks}
           valueLabelDisplay="on"
-          min={0}
+          min={min}
           max={max}
           defaultValue={defaultValue}
           onChange={inputhandler}
