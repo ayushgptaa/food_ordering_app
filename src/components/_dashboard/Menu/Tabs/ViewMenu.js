@@ -147,37 +147,48 @@ function CustomizedAccordions({ items }) {
               </AccordionSummary>
               <AccordionDetails>
                 {option_groups &&
-                  option_groups.map(({ group_name, options }, index) => {
-                    return (
-                      <Accordion
-                        key={index}
-                        expanded={expanded2 === `pannel2-${index}`}
-                        onChange={handleChange2(`pannel2-${index}`)}
-                      >
-                        <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-                          <Typography>Option group : {group_name}</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                          {options.map(({ option_name, option_price }, index) => {
-                            return (
-                              <Grid
-                                container
-                                key={index}
-                                direction="row"
-                                justifyContent="flex-start"
-                                alignItems="center"
-                                gap={5}
-                                sx={{ p: 0.7 }}
-                              >
-                                <Typography>Option name : {option_name}</Typography>
-                                <Typography>Price : {option_price}</Typography>
-                              </Grid>
-                            );
-                          })}
-                        </AccordionDetails>
-                      </Accordion>
-                    );
-                  })}
+                  option_groups.map(
+                    ({ group_name, options, select_upto, required_or_optional }, index) => {
+                      return (
+                        <Accordion
+                          key={index}
+                          expanded={expanded2 === `pannel2-${index}`}
+                          onChange={handleChange2(`pannel2-${index}`)}
+                        >
+                          <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
+                            <Grid
+                              container
+                              direction="row"
+                              justifyContent="space-between"
+                              alignItems="center"
+                            >
+                              <Typography>Group : {group_name}</Typography>
+                              <Typography> Select Upto: {select_upto}</Typography>
+                              <Typography> {required_or_optional}</Typography>
+                            </Grid>
+                          </AccordionSummary>
+                          <AccordionDetails>
+                            {options.map(({ option_name, option_price }, index) => {
+                              return (
+                                <Grid
+                                  container
+                                  key={index}
+                                  direction="row"
+                                  justifyContent="flex-start"
+                                  alignItems="center"
+                                  gap={5}
+                                  sx={{ p: 0.7 }}
+                                >
+                                  <Typography>Option name : {option_name}</Typography>
+                                  <Typography>Price : ${option_price}</Typography>
+                                </Grid>
+                              );
+                            })}
+                          </AccordionDetails>
+                        </Accordion>
+                      );
+                    }
+                  )}
               </AccordionDetails>
             </Accordion>
           );
