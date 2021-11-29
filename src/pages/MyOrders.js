@@ -34,6 +34,7 @@ const TABLE_HEAD = [
   { id: 'totaldiscount', label: 'Total Discount' },
   { id: 'affiliatearned', label: 'Affiliate Earned' },
   { id: 'storeearned', label: 'Store Earned' },
+  { id: 'datecreated', label: 'Date Created' },
   { id: 'items', label: 'Items' }
 ];
 
@@ -59,6 +60,11 @@ export default function MyOrders() {
     getOrders();
   }, []);
 
+  const convertDate = ({ _seconds }) => {
+    const d = new Date(Date.UTC(1970, 0, 1));
+    d.setSeconds(_seconds);
+    return d.toLocaleDateString();
+  };
   // ************** GET ORDERS FUNCTION ***************** //
   const getOrders = async () => {
     const data = {
@@ -71,8 +77,10 @@ export default function MyOrders() {
       .then((res) => {
         if (res.length === 0) setnoOrders(true);
         setOrders(res);
+
         setLoading(false);
         const { date_created } = res[res.length - 1];
+
         setDatecreated(date_created);
       })
       .catch(() => {
@@ -159,7 +167,8 @@ export default function MyOrders() {
                             affiliate_earned,
                             affiliate_commission,
                             store_earned,
-                            items
+                            items,
+                            date_created
                           } = order;
 
                           return (
@@ -178,7 +187,10 @@ export default function MyOrders() {
                                   ${affiliate_earned}({affiliate_commission})
                                 </TableCell>
 
-                                <TableCell align="center">${store_earned}</TableCell>
+                                <TableCell align="center">
+                                  {store_earned ? `$${store_earned}` : 'Not Completed'}
+                                </TableCell>
+                                <TableCell align="center">{convertDate(date_created)}</TableCell>
                                 <TableCell align="center">
                                   Items
                                   <IconButton
