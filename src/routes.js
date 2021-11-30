@@ -12,6 +12,7 @@ import Menu from './pages/Menu';
 import Settings from './pages/Settings';
 import NotFound from './pages/Page404';
 import MyOrders from './pages/MyOrders';
+import SetHours from './pages/SetHours';
 
 // ----------------------------------------------------------------------
 
@@ -25,6 +26,7 @@ export default function Router() {
         { path: 'app', element: <DashboardApp /> },
         { path: 'my-orders', element: <MyOrders /> },
         { path: 'promote', element: <Promote /> },
+        { path: 'sethours', element: <SetHours /> },
         {
           path: 'menu',
           element: (
