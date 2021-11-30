@@ -31,12 +31,8 @@ const sidebarConfig = [
     title: 'Settings',
     path: '/dashboard/settings',
     icon: getIcon('feather:settings')
-  },
-  {
-    title: 'Set Hours',
-    path: '/dashboard/sethours',
-    icon: getIcon('feather:clock')
   }
+
   // {
   //   title: 'Not found',
   //   path: '/404',
