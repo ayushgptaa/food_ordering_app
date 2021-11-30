@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Fetch from 'src/components/_dashboard/Menu/Fetch';
 import SnackBar from 'src/components/Snackbar';
+import SetHours from 'src/components/SetHours';
 
 // ----------------------------------------------------------------------
 
@@ -94,35 +95,38 @@ export default function Settings() {
   }, []);
 
   return (
-    <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
-      <Box
-        sx={{
-          textAlign: { xs: 'center', md: 'left' }
-        }}
-      >
-        <Typography variant="h3" gutterBottom sx={{ opacity: 0.7 }}>
-          Available Settings
-        </Typography>
-      </Box>
-      <SliderBox
-        name="customer_discount"
-        text="Customer Discount"
-        marks={Discount}
-        min={5}
-        max={25}
-        defaultValue={customerdiscount}
-        endpoint="change_customer_discount"
-      />
-      <SliderBox
-        name="affiliate_commission"
-        text="Affiliate Commission"
-        marks={Commission}
-        min={1}
-        max={5}
-        defaultValue={commission}
-        endpoint="change_affiliate_commission"
-      />
-    </Stack>
+    <>
+      <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
+        <Box
+          sx={{
+            textAlign: { xs: 'center', md: 'left' }
+          }}
+        >
+          <Typography variant="h3" gutterBottom sx={{ opacity: 0.7 }}>
+            Available Settings
+          </Typography>
+        </Box>
+        <SliderBox
+          name="customer_discount"
+          text="Customer Discount"
+          marks={Discount}
+          min={5}
+          max={25}
+          defaultValue={customerdiscount}
+          endpoint="change_customer_discount"
+        />
+        <SliderBox
+          name="affiliate_commission"
+          text="Affiliate Commission"
+          marks={Commission}
+          min={1}
+          max={5}
+          defaultValue={commission}
+          endpoint="change_affiliate_commission"
+        />
+      </Stack>
+      <SetHours />
+    </>
   );
 }
 
