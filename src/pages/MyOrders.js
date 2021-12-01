@@ -19,11 +19,13 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Fetch from 'src/components/_dashboard/Menu/Fetch';
 import Page from 'src/components/Page';
 import PageTitle from 'src/components/PageTitle';
-import ItemsTable from 'src/components/_dashboard/MyOrders/ItemsTable';
-import SkeletionRow from 'src/components/_dashboard/MyOrders/SkeletionRow';
-import UserListHead from 'src/components/_dashboard/MyOrders/UserListHead';
+import {
+  ItemsTable,
+  SkeletionRow,
+  UserListHead,
+  SearchNotFound
+} from 'src/components/_dashboard/MyOrders';
 import Scrollbar from '../components/Scrollbar';
-import SearchNotFound from '../components/_dashboard/MyOrders/SearchNotFound';
 
 const TABLE_HEAD = [
   { id: 'Customername', label: 'Customer Name' },
