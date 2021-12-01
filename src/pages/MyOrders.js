@@ -10,22 +10,20 @@ import {
   Container,
   Typography,
   TableContainer,
-  TablePagination,
-  Skeleton
+  TablePagination
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 // components
 import Fetch from 'src/components/_dashboard/Menu/Fetch';
+import Page from 'src/components/Page';
 import PageTitle from 'src/components/PageTitle';
-import ItemsTable from 'src/components/ItemsTable';
-import Page from '../components/Page';
+import ItemsTable from 'src/components/_dashboard/MyOrders/ItemsTable';
+import SkeletionRow from 'src/components/_dashboard/MyOrders/SkeletionRow';
+import UserListHead from 'src/components/_dashboard/MyOrders/UserListHead';
 import Scrollbar from '../components/Scrollbar';
-import SearchNotFound from '../components/SearchNotFound';
-import { UserListHead } from '../components/_dashboard/user';
-
-// ----------------------------------------------------------------------
+import SearchNotFound from '../components/_dashboard/MyOrders/SearchNotFound';
 
 const TABLE_HEAD = [
   { id: 'Customername', label: 'Customer Name' },
@@ -116,23 +114,6 @@ export default function MyOrders() {
     setPage(0);
   };
 
-  const SkeletionRow = () => {
-    return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((index) => {
-      return (
-        <TableRow key={index}>
-          {TABLE_HEAD.map((_, index) => {
-            return (
-              <TableCell align="center" key={index}>
-                <Skeleton height={25} variant="text" key={index} />
-              </TableCell>
-            );
-          })}
-        </TableRow>
-      );
-    });
-  };
-
-  // console.log(noOr);
   return (
     <Page title="My orders">
       <Container sx={{ mt: 2 }}>
@@ -145,7 +126,7 @@ export default function MyOrders() {
                 {!noOrders ? (
                   <TableBody>
                     {loading ? (
-                      <SkeletionRow />
+                      <SkeletionRow TableHead={TABLE_HEAD} />
                     ) : (
                       orders
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
