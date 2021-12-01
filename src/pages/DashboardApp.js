@@ -2,7 +2,7 @@
 import { Grid, Container } from '@mui/material';
 import PageTitle from 'src/components/PageTitle';
 // components
-import { TodayAmount, TodayOrders, TotalOrders, TotalAmount } from '../components/_dashboard/app';
+import { TodayAmount, TodayOrders, TotalOrders, TotalAmount } from '../components/_dashboard/Home';
 import Page from '../components/Page';
 
 // ----------------------------------------------------------------------
