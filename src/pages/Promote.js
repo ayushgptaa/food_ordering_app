@@ -2,8 +2,9 @@
 import { Grid, Typography, Card, Box, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Icon } from '@iconify/react';
+// components
+import PageTitle from 'src/components/PageTitle';
 import Page from '../components/Page';
-// ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
   boxShadow: 'none',
@@ -21,9 +22,12 @@ const RootStyle = styled(Card)(({ theme }) => ({
 
 const DownloadIcon = () => <Icon icon="bx:bxs-download" color="white" />;
 
+// ----------------------------------------------------------
+
 export default function Promote() {
   return (
-    <Page title=" Dashboard : Promote">
+    <Page title="Promote">
+      <PageTitle title="Promote" />
       <Card sx={{ py: 6, maxWidth: 'md', mx: 'auto', mt: { md: 5 }, mb: 0 }}>
         <Grid
           container

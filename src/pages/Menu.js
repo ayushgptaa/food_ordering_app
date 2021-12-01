@@ -86,7 +86,7 @@ export default function BasicTabs() {
   };
 
   return (
-    <Page title="Dashboard: Add Menu ">
+    <Page title="Add Menu ">
       <Container>
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

@@ -7,7 +7,6 @@ import {
   TableRow,
   TableBody,
   TableCell,
-  Box,
   Container,
   Typography,
   TableContainer,
@@ -19,6 +18,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 // components
 import Fetch from 'src/components/_dashboard/Menu/Fetch';
+import PageTitle from 'src/components/PageTitle';
 import ItemsTable from 'src/components/ItemsTable';
 import Page from '../components/Page';
 import Scrollbar from '../components/Scrollbar';
@@ -28,7 +28,6 @@ import { UserListHead } from '../components/_dashboard/user';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  // { id: 'orderno', label: 'Order No' },
   { id: 'Customername', label: 'Customer Name' },
   { id: 'carttotal', label: 'Cart Total' },
   { id: 'totaldiscount', label: 'Total Discount' },
@@ -136,17 +135,9 @@ export default function MyOrders() {
   // console.log(noOr);
   return (
     <Page title="My orders">
-      <Container sx={{ mt: 5 }}>
-        <Box
-          sx={{
-            textAlign: { xs: 'center' }
-          }}
-        >
-          <Typography variant="h3" gutterBottom sx={{ mb: 3, opacity: 0.7 }}>
-            Orders List
-          </Typography>
-        </Box>
-        <Card>
+      <Container sx={{ mt: 2 }}>
+        <PageTitle title="Orders List" />
+        <Card sx={{ mt: 2 }}>
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>

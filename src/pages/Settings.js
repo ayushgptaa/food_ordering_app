@@ -4,9 +4,12 @@ import { useEffect, useState } from 'react';
 import { Typography, Box, Button, Stack, Slider } from '@mui/material';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
+// components
 import Fetch from 'src/components/_dashboard/Menu/Fetch';
+import PageTitle from 'src/components/PageTitle';
 import SnackBar from 'src/components/Snackbar';
 import SetHours from 'src/components/SetHours';
+import Page from '../components/Page';
 
 // ----------------------------------------------------------------------
 
@@ -95,17 +98,9 @@ export default function Settings() {
   }, []);
 
   return (
-    <>
+    <Page title="Settings">
+      <PageTitle title="Available Settings" />
       <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
-        <Box
-          sx={{
-            textAlign: { xs: 'center', md: 'left' }
-          }}
-        >
-          <Typography variant="h3" gutterBottom sx={{ opacity: 0.7 }}>
-            Available Settings
-          </Typography>
-        </Box>
         <SliderBox
           name="customer_discount"
           text="Customer Discount"
@@ -126,7 +121,7 @@ export default function Settings() {
         />
       </Stack>
       <SetHours />
-    </>
+    </Page>
   );
 }
 
