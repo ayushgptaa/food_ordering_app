@@ -5,8 +5,7 @@ import { Stack } from '@mui/material';
 // components
 import Fetch from 'src/components/_dashboard/Menu/Fetch';
 import PageTitle from 'src/components/PageTitle';
-import { SliderBox } from 'src/components/_dashboard/Settings';
-import SetHours from 'src/components/SetHours';
+import { SliderBox, SetHours } from 'src/components/_dashboard/Settings';
 import Page from '../components/Page';
 
 // ----------------------------------------------------------------------
