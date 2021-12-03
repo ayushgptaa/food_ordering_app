@@ -10,8 +10,8 @@ DayComponent.propTypes = {
   checked: PropTypes.bool,
   fromfn: PropTypes.func,
   tofn: PropTypes.func,
-  from: PropTypes.string,
-  to: PropTypes.string
+  from: PropTypes.instanceOf(Date),
+  to: PropTypes.instanceOf(Date)
 };
 
 export default function DayComponent({ day, switchChanger, checked, fromfn, tofn, from, to }) {
@@ -48,7 +48,7 @@ export default function DayComponent({ day, switchChanger, checked, fromfn, tofn
                 label="To"
                 value={to}
                 onChange={(newValue) => {
-                  tofn(newValue);
+                  tofn(newValue, day);
                 }}
                 renderInput={(params) => <TextField {...params} sx={{ maxWidth: 200 }} />}
               />
