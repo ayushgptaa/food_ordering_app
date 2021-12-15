@@ -34,6 +34,7 @@ const TABLE_HEAD = [
   { id: 'affiliatearned', label: 'Affiliate Earned' },
   { id: 'storeearned', label: 'Store Earned' },
   { id: 'datecreated', label: 'Date Created' },
+  { id: 'taxamount', label: 'Tax Price' },
   { id: 'items', label: 'Items' }
 ];
 
@@ -76,7 +77,6 @@ export default function MyOrders() {
       .then((res) => {
         if (res.length === 0) setnoOrders(true);
         setOrders(res);
-
         setLoading(false);
         const { date_created } = res[res.length - 1];
 
@@ -142,7 +142,8 @@ export default function MyOrders() {
                             affiliate_commission,
                             store_earned,
                             items,
-                            date_created
+                            date_created,
+                            tax_amount
                           } = order;
 
                           return (
@@ -165,6 +166,7 @@ export default function MyOrders() {
                                   {store_earned ? `$${store_earned}` : 'Not Completed'}
                                 </TableCell>
                                 <TableCell align="center">{convertDate(date_created)}</TableCell>
+                                <TableCell align="center">${tax_amount}</TableCell>
                                 <TableCell align="center">
                                   Items
                                   <IconButton
