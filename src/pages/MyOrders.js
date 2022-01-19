@@ -29,12 +29,13 @@ import Scrollbar from '../components/Scrollbar';
 
 const TABLE_HEAD = [
   { id: 'Customername', label: 'Customer Name' },
+  { id: 'datecreated', label: 'Date Created' },
   { id: 'carttotal', label: 'Cart Total' },
   { id: 'totaldiscount', label: 'Total Discount' },
-  { id: 'affiliatearned', label: 'Affiliate Earned' },
+  { id: 'discountedprice', label: 'Discounted Price' },
+  { id: 'taxamount', label: 'Tax Amount' },
   { id: 'storeearned', label: 'Store Earned' },
-  { id: 'datecreated', label: 'Date Created' },
-  { id: 'taxamount', label: 'Tax Price' },
+  { id: 'affiliatearned', label: 'Affiliate Earned' },
   { id: 'items', label: 'Items' }
 ];
 
@@ -143,7 +144,8 @@ export default function MyOrders() {
                             store_earned,
                             items,
                             date_created,
-                            tax_amount
+                            tax_amount,
+                            sub_total
                           } = order;
 
                           return (
@@ -154,19 +156,21 @@ export default function MyOrders() {
                                     {customer_name}
                                   </Typography>
                                 </TableCell>
+                                <TableCell align="center">{convertDate(date_created)}</TableCell>
                                 <TableCell align="center">${cart_total}</TableCell>
                                 <TableCell align="center">
                                   ${total_discount}({customer_discount}%)
                                 </TableCell>
+                                <TableCell align="center">${sub_total}</TableCell>
                                 <TableCell align="center">
-                                  ${affiliate_earned}({affiliate_commission})
+                                  {tax_amount ? `$${tax_amount}` : 'Not Completed'}
                                 </TableCell>
-
                                 <TableCell align="center">
                                   {store_earned ? `$${store_earned}` : 'Not Completed'}
                                 </TableCell>
-                                <TableCell align="center">{convertDate(date_created)}</TableCell>
-                                <TableCell align="center">${tax_amount}</TableCell>
+                                <TableCell align="center">
+                                  ${affiliate_earned}({affiliate_commission})
+                                </TableCell>
                                 <TableCell align="center">
                                   Items
                                   <IconButton
