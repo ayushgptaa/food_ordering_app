@@ -1,5 +1,3 @@
-// ----------------------------------------------------------------------
-
 const account = {
   displayName: 'Ayush Gupta',
   email: 'Test123@gmail.com',
