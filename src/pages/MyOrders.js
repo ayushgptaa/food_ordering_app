@@ -15,8 +15,10 @@ import {
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-// components
+
 import Fetch from 'src/components/_dashboard/Menu/Fetch';
+import dateConverter from 'src/utils/dateConverter';
+import TABLE_HEAD from 'src/constants/TableHead';
 import Page from 'src/components/Page';
 import PageTitle from 'src/components/PageTitle';
 import {
@@ -26,18 +28,6 @@ import {
   SearchNotFound
 } from 'src/components/_dashboard/MyOrders';
 import Scrollbar from '../components/Scrollbar';
-
-const TABLE_HEAD = [
-  { id: 'Customername', label: 'Customer Name' },
-  { id: 'datecreated', label: 'Date Created' },
-  { id: 'carttotal', label: 'Cart Total' },
-  { id: 'totaldiscount', label: 'Total Discount' },
-  { id: 'discountedprice', label: 'Discounted Price' },
-  { id: 'taxamount', label: 'Tax Amount' },
-  { id: 'storeearned', label: 'Store Earned' },
-  { id: 'affiliatearned', label: 'Affiliate Earned' },
-  { id: 'items', label: 'Items' }
-];
 
 // ----------------------------------------------------------------------
 
@@ -61,11 +51,6 @@ export default function MyOrders() {
     getOrders();
   }, []);
 
-  const convertDate = ({ _seconds }) => {
-    const d = new Date(Date.UTC(1970, 0, 1));
-    d.setSeconds(_seconds);
-    return d.toLocaleDateString();
-  };
   // ************** GET ORDERS FUNCTION ***************** //
   const getOrders = async () => {
     const data = {
@@ -80,7 +65,6 @@ export default function MyOrders() {
         setOrders(res);
         setLoading(false);
         const { date_created } = res[res.length - 1];
-
         setDatecreated(date_created);
       })
       .catch(() => {
@@ -156,7 +140,7 @@ export default function MyOrders() {
                                     {customer_name}
                                   </Typography>
                                 </TableCell>
-                                <TableCell align="center">{convertDate(date_created)}</TableCell>
+                                <TableCell align="center">{dateConverter(date_created)}</TableCell>
                                 <TableCell align="center">${cart_total}</TableCell>
                                 <TableCell align="center">
                                   ${total_discount}({customer_discount}%)
