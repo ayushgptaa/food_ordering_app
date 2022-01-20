@@ -26,7 +26,7 @@ const MENU_OPTIONS = [
     linkTo: '#'
   },
   {
-    label: 'Settings',
+    label: 'Account Settings',
     icon: settings2Fill,
     linkTo: '#'
   }
